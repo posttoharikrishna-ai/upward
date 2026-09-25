@@ -1,0 +1,10 @@
+{
+  "name": "UPWARD",
+  "short_name": "UPWARD",
+  "description": "Small actions. Real progress.",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#f5f7fb",
+  "theme_color": "#667eea",
+  "orientation": "portrait"
+}
