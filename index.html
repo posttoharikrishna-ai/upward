@@ -1,0 +1,1214 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="theme-color" content="#667eea">
+
+<title>UPWARD — Small actions. Real progress.</title>
+
+<style>
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+}
+
+:root{
+    --primary:#667eea;
+    --secondary:#764ba2;
+    --bg:#f4f6fb;
+    --card:#ffffff;
+    --text:#20243a;
+    --muted:#7b8197;
+    --border:#e8eaf2;
+    --success:#22c55e;
+    --danger:#ef4444;
+}
+
+body{
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;
+    background:var(--bg);
+    color:var(--text);
+    min-height:100vh;
+}
+
+.app{
+    max-width:1100px;
+    margin:auto;
+    padding-bottom:40px;
+}
+
+/* HEADER */
+
+.header{
+    background:linear-gradient(135deg,var(--primary),var(--secondary));
+    color:white;
+    padding:28px 22px 34px;
+    border-radius:0 0 28px 28px;
+    box-shadow:0 8px 30px rgba(102,126,234,.25);
+}
+
+.header-top{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:15px;
+}
+
+.logo{
+    font-size:28px;
+    font-weight:800;
+    letter-spacing:1px;
+}
+
+.tagline{
+    opacity:.9;
+    margin-top:5px;
+    font-size:14px;
+}
+
+.date{
+    margin-top:22px;
+    font-size:14px;
+    opacity:.9;
+}
+
+/* CONTENT */
+
+.content{
+    padding:20px;
+}
+
+.grid{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:15px;
+    margin-top:-5px;
+}
+
+.card{
+    background:var(--card);
+    border:1px solid var(--border);
+    border-radius:18px;
+    padding:18px;
+    box-shadow:0 4px 16px rgba(20,25,50,.05);
+}
+
+.stat{
+    font-size:28px;
+    font-weight:800;
+    margin-top:7px;
+}
+
+.stat-label{
+    color:var(--muted);
+    font-size:13px;
+}
+
+.section{
+    margin-top:20px;
+}
+
+.section-title{
+    font-size:20px;
+    font-weight:750;
+    margin-bottom:12px;
+}
+
+/* ADD ACTIVITY */
+
+.add-box{
+    display:grid;
+    grid-template-columns:1.4fr 1fr 100px 110px;
+    gap:10px;
+}
+
+input,select,button{
+    font:inherit;
+}
+
+input,select{
+    width:100%;
+    padding:13px 14px;
+    border:1px solid var(--border);
+    border-radius:12px;
+    background:white;
+    outline:none;
+}
+
+input:focus,select:focus{
+    border-color:var(--primary);
+    box-shadow:0 0 0 3px rgba(102,126,234,.12);
+}
+
+button{
+    border:0;
+    border-radius:12px;
+    padding:12px 16px;
+    cursor:pointer;
+    font-weight:700;
+}
+
+.primary{
+    color:white;
+    background:linear-gradient(135deg,var(--primary),var(--secondary));
+}
+
+.secondary{
+    background:#eef0ff;
+    color:#4f5ec7;
+}
+
+/* ACTIVITIES */
+
+.activity{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:15px;
+    padding:14px 0;
+    border-bottom:1px solid var(--border);
+}
+
+.activity:last-child{
+    border-bottom:0;
+}
+
+.activity-left{
+    display:flex;
+    align-items:center;
+    gap:12px;
+}
+
+.activity-icon{
+    width:42px;
+    height:42px;
+    border-radius:13px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:#eef0ff;
+    font-size:20px;
+}
+
+.activity-name{
+    font-weight:700;
+}
+
+.activity-meta{
+    font-size:12px;
+    color:var(--muted);
+    margin-top:3px;
+}
+
+.delete{
+    background:#fff0f0;
+    color:var(--danger);
+    padding:8px 10px;
+}
+
+/* PROGRESS */
+
+.progress-row{
+    margin:15px 0;
+}
+
+.progress-info{
+    display:flex;
+    justify-content:space-between;
+    margin-bottom:7px;
+    font-size:13px;
+}
+
+.progress{
+    height:10px;
+    background:#eceef5;
+    border-radius:20px;
+    overflow:hidden;
+}
+
+.progress-bar{
+    height:100%;
+    border-radius:20px;
+    background:linear-gradient(90deg,var(--primary),var(--secondary));
+    transition:.4s;
+}
+
+/* CHART */
+
+.chart-card{
+    padding:20px;
+}
+
+canvas{
+    width:100%;
+    height:260px;
+}
+
+/* GOALS */
+
+.goal{
+    margin-bottom:18px;
+}
+
+.goal-head{
+    display:flex;
+    justify-content:space-between;
+    font-weight:650;
+    margin-bottom:7px;
+}
+
+.goal small{
+    color:var(--muted);
+}
+
+/* EMPTY */
+
+.empty{
+    text-align:center;
+    padding:30px 10px;
+    color:var(--muted);
+}
+
+/* FOOTER */
+
+.footer{
+    text-align:center;
+    color:var(--muted);
+    font-size:12px;
+    padding:20px;
+}
+
+/* MOBILE */
+
+@media(max-width:800px){
+    .grid{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .add-box{
+        grid-template-columns:1fr 1fr;
+    }
+}
+
+@media(max-width:520px){
+    .header{
+        padding:24px 18px 30px;
+    }
+
+    .content{
+        padding:15px;
+    }
+
+    .grid{
+        gap:10px;
+    }
+
+    .card{
+        padding:15px;
+        border-radius:15px;
+    }
+
+    .stat{
+        font-size:24px;
+    }
+
+    .add-box{
+        grid-template-columns:1fr;
+    }
+
+    .section-title{
+        font-size:18px;
+    }
+
+    canvas{
+        height:220px;
+    }
+}
+</style>
+
+</head>
+
+<body>
+
+<div class="app">
+
+<header class="header">
+
+```
+<div class="header-top">
+    <div>
+        <div class="logo">UPWARD</div>
+        <div class="tagline">Small actions. Real progress.</div>
+    </div>
+
+    <div style="font-size:28px;">↑</div>
+</div>
+
+<div class="date" id="todayDate"></div>
+```
+
+</header>
+
+<main class="content">
+
+<!-- STATS -->
+
+<div class="grid">
+
+```
+<div class="card">
+    <div class="stat-label">Today's Activities</div>
+    <div class="stat" id="todayActivities">0</div>
+</div>
+
+<div class="card">
+    <div class="stat-label">Minutes Today</div>
+    <div class="stat" id="todayMinutes">0</div>
+</div>
+
+<div class="card">
+    <div class="stat-label">Current Streak</div>
+    <div class="stat" id="streak">0</div>
+</div>
+
+<div class="card">
+    <div class="stat-label">Total Minutes</div>
+    <div class="stat" id="totalMinutes">0</div>
+</div>
+```
+
+</div>
+
+<!-- ADD ACTIVITY -->
+
+<section class="section">
+
+```
+<div class="section-title">Add Activity</div>
+
+<div class="card">
+
+    <div class="add-box">
+
+        <input
+            id="activityName"
+            placeholder="Activity name"
+        >
+
+        <select id="category">
+
+            <option value="Exercise">🏃 Exercise</option>
+            <option value="Learning">📚 Learning</option>
+            <option value="Reading">📖 Reading</option>
+            <option value="Work">💼 Work</option>
+            <option value="Recreation">🎮 Recreation</option>
+            <option value="Meditation">🧘 Meditation</option>
+            <option value="Walking">🚶 Walking</option>
+            <option value="Other">✨ Other</option>
+
+        </select>
+
+        <input
+            id="minutes"
+            type="number"
+            min="1"
+            placeholder="Minutes"
+        >
+
+        <button class="primary" onclick="addActivity()">
+            + Add
+        </button>
+
+    </div>
+
+</div>
+```
+
+</section>
+
+<!-- TODAY -->
+
+<section class="section">
+
+```
+<div class="section-title">Today's Activities</div>
+
+<div class="card">
+
+    <div id="activityList"></div>
+
+</div>
+```
+
+</section>
+
+<!-- GOALS -->
+
+<section class="section">
+
+```
+<div class="section-title">Daily Goals</div>
+
+<div class="card">
+
+    <div class="goal">
+
+        <div class="goal-head">
+            <span>🏃 Movement</span>
+            <span id="movementText">0 / 30 min</span>
+        </div>
+
+        <div class="progress">
+            <div class="progress-bar" id="movementBar"></div>
+        </div>
+
+    </div>
+
+
+    <div class="goal">
+
+        <div class="goal-head">
+            <span>📚 Learning</span>
+            <span id="learningText">0 / 30 min</span>
+        </div>
+
+        <div class="progress">
+            <div class="progress-bar" id="learningBar"></div>
+        </div>
+
+    </div>
+
+
+    <div class="goal">
+
+        <div class="goal-head">
+            <span>🧘 Mindfulness</span>
+            <span id="mindText">0 / 10 min</span>
+        </div>
+
+        <div class="progress">
+            <div class="progress-bar" id="mindBar"></div>
+        </div>
+
+    </div>
+
+</div>
+```
+
+</section>
+
+<!-- CHART -->
+
+<section class="section">
+
+```
+<div class="section-title">Last 7 Days</div>
+
+<div class="card chart-card">
+
+    <canvas id="activityChart"></canvas>
+
+</div>
+```
+
+</section>
+
+<!-- INSIGHTS -->
+
+<section class="section">
+
+```
+<div class="section-title">Your Progress</div>
+
+<div class="card">
+
+    <div id="insight">
+        Start adding activities to see your progress.
+    </div>
+
+</div>
+```
+
+</section>
+
+<!-- ACTIONS -->
+
+<section class="section">
+
+```
+<div class="card">
+
+    <div style="display:flex;gap:10px;flex-wrap:wrap;">
+
+        <button class="secondary" onclick="exportData()">
+            Export Data
+        </button>
+
+        <button class="secondary" onclick="clearAll()">
+            Clear All Data
+        </button>
+
+    </div>
+
+</div>
+```
+
+</section>
+
+</main>
+
+<div class="footer">
+    UPWARD • Small actions. Real progress.
+</div>
+
+</div>
+
+<script>
+
+let activities =
+    JSON.parse(localStorage.getItem("upwardActivities") || "[]");
+
+
+function save(){
+
+    localStorage.setItem(
+        "upwardActivities",
+        JSON.stringify(activities)
+    );
+
+}
+
+
+function todayKey(){
+
+    let d = new Date();
+
+    return d.toISOString().split("T")[0];
+
+}
+
+
+function formatDate(date){
+
+    return date.toLocaleDateString(
+        undefined,
+        {
+            weekday:"long",
+            year:"numeric",
+            month:"long",
+            day:"numeric"
+        }
+    );
+
+}
+
+
+function addActivity(){
+
+    const name =
+        document.getElementById("activityName").value.trim();
+
+    const category =
+        document.getElementById("category").value;
+
+    const minutes =
+        Number(document.getElementById("minutes").value);
+
+
+    if(!name){
+
+        alert("Please enter an activity name.");
+
+        return;
+
+    }
+
+
+    if(!minutes || minutes <= 0){
+
+        alert("Please enter the number of minutes.");
+
+        return;
+
+    }
+
+
+    activities.push({
+
+        id:Date.now(),
+
+        name:name,
+
+        category:category,
+
+        minutes:minutes,
+
+        date:todayKey(),
+
+        created:new Date().toISOString()
+
+    });
+
+
+    save();
+
+    document.getElementById("activityName").value="";
+
+    document.getElementById("minutes").value="";
+
+    render();
+
+}
+
+
+function deleteActivity(id){
+
+    activities =
+        activities.filter(a => a.id !== id);
+
+    save();
+
+    render();
+
+}
+
+
+function getToday(){
+
+    return activities.filter(
+        a => a.date === todayKey()
+    );
+
+}
+
+
+function categoryIcon(category){
+
+    const icons = {
+
+        Exercise:"🏃",
+        Learning:"📚",
+        Reading:"📖",
+        Work:"💼",
+        Recreation:"🎮",
+        Meditation:"🧘",
+        Walking:"🚶",
+        Other:"✨"
+
+    };
+
+    return icons[category] || "✨";
+
+}
+
+
+function renderActivities(){
+
+    const list =
+        document.getElementById("activityList");
+
+    const today =
+        getToday();
+
+
+    if(today.length === 0){
+
+        list.innerHTML = `
+            <div class="empty">
+                No activities recorded today.<br>
+                Add your first activity above.
+            </div>
+        `;
+
+        return;
+
+    }
+
+
+    list.innerHTML =
+        today
+        .slice()
+        .reverse()
+        .map(a => `
+
+        <div class="activity">
+
+            <div class="activity-left">
+
+                <div class="activity-icon">
+                    ${categoryIcon(a.category)}
+                </div>
+
+                <div>
+
+                    <div class="activity-name">
+                        ${escapeHtml(a.name)}
+                    </div>
+
+                    <div class="activity-meta">
+                        ${a.category} • ${a.minutes} minutes
+                    </div>
+
+                </div>
+
+            </div>
+
+            <button
+                class="delete"
+                onclick="deleteActivity(${a.id})"
+            >
+                Delete
+            </button>
+
+        </div>
+
+        `)
+        .join("");
+
+}
+
+
+function escapeHtml(text){
+
+    const div =
+        document.createElement("div");
+
+    div.textContent=text;
+
+    return div.innerHTML;
+
+}
+
+
+function updateStats(){
+
+    const today =
+        getToday();
+
+
+    const todayMinutes =
+        today.reduce(
+            (sum,a)=>sum + a.minutes,
+            0
+        );
+
+
+    const totalMinutes =
+        activities.reduce(
+            (sum,a)=>sum + a.minutes,
+            0
+        );
+
+
+    document.getElementById(
+        "todayActivities"
+    ).textContent=today.length;
+
+
+    document.getElementById(
+        "todayMinutes"
+    ).textContent=todayMinutes;
+
+
+    document.getElementById(
+        "totalMinutes"
+    ).textContent=totalMinutes;
+
+
+    document.getElementById(
+        "streak"
+    ).textContent=calculateStreak();
+
+}
+
+
+function calculateStreak(){
+
+    const dates =
+        new Set(
+            activities.map(a=>a.date)
+        );
+
+
+    let streak=0;
+
+    let d=new Date();
+
+
+    while(true){
+
+        const key =
+            d.toISOString().split("T")[0];
+
+
+        if(dates.has(key)){
+
+            streak++;
+
+            d.setDate(
+                d.getDate()-1
+            );
+
+        }else{
+
+            break;
+
+        }
+
+    }
+
+
+    return streak;
+
+}
+
+
+function updateGoals(){
+
+    const today =
+        getToday();
+
+
+    const movement =
+        today
+        .filter(a =>
+            ["Exercise","Walking"].includes(a.category)
+        )
+        .reduce(
+            (s,a)=>s+a.minutes,
+            0
+        );
+
+
+    const learning =
+        today
+        .filter(a =>
+            ["Learning","Reading"].includes(a.category)
+        )
+        .reduce(
+            (s,a)=>s+a.minutes,
+            0
+        );
+
+
+    const mind =
+        today
+        .filter(a =>
+            a.category==="Meditation"
+        )
+        .reduce(
+            (s,a)=>s+a.minutes,
+            0
+        );
+
+
+    setGoal(
+        movement,
+        30,
+        "movementBar",
+        "movementText"
+    );
+
+
+    setGoal(
+        learning,
+        30,
+        "learningBar",
+        "learningText"
+    );
+
+
+    setGoal(
+        mind,
+        10,
+        "mindBar",
+        "mindText"
+    );
+
+}
+
+
+function setGoal(value,target,barId,textId){
+
+    const percentage =
+        Math.min(
+            100,
+            (value/target)*100
+        );
+
+
+    document.getElementById(
+        barId
+    ).style.width=percentage+"%";
+
+
+    document.getElementById(
+        textId
+    ).textContent=
+        value+" / "+target+" min";
+
+}
+
+
+function drawChart(){
+
+    const canvas =
+        document.getElementById("activityChart");
+
+    const ctx =
+        canvas.getContext("2d");
+
+
+    const rect =
+        canvas.getBoundingClientRect();
+
+
+    const dpr =
+        window.devicePixelRatio || 1;
+
+
+    canvas.width =
+        rect.width*dpr;
+
+    canvas.height =
+        260*dpr;
+
+
+    ctx.scale(dpr,dpr);
+
+
+    const width=rect.width;
+
+    const height=260;
+
+
+    ctx.clearRect(
+        0,
+        0,
+        width,
+        height
+    );
+
+
+    const data=[];
+
+    const labels=[];
+
+
+    for(let i=6;i>=0;i--){
+
+        const d=new Date();
+
+        d.setDate(
+            d.getDate()-i
+        );
+
+
+        const key =
+            d.toISOString().split("T")[0];
+
+
+        const total =
+            activities
+            .filter(a=>a.date===key)
+            .reduce(
+                (s,a)=>s+a.minutes,
+                0
+            );
+
+
+        data.push(total);
+
+        labels.push(
+            d.toLocaleDateString(
+                undefined,
+                {weekday:"short"}
+            )
+        );
+
+    }
+
+
+    const max =
+        Math.max(
+            30,
+            ...data
+        );
+
+
+    const left=35;
+
+    const right=15;
+
+    const top=20;
+
+    const bottom=40;
+
+
+    const chartWidth =
+        width-left-right;
+
+    const chartHeight =
+        height-top-bottom;
+
+
+    /* GRID */
+
+    ctx.strokeStyle="#e8eaf2";
+
+    ctx.lineWidth=1;
+
+
+    for(let i=0;i<=4;i++){
+
+        const y =
+            top+
+            chartHeight-
+            (i/4)*chartHeight;
+
+
+        ctx.beginPath();
+
+        ctx.moveTo(left,y);
+
+        ctx.lineTo(
+            width-right,
+            y
+        );
+
+        ctx.stroke();
+
+
+        ctx.fillStyle="#8a90a5";
+
+        ctx.font="11px Arial";
+
+        ctx.fillText(
+            Math.round(max*i/4),
+            5,
+            y+4
+        );
+
+    }
+
+
+    /* LINE */
+
+    ctx.beginPath();
+
+
+    data.forEach(
+        (value,index)=>{
+
+            const x =
+                left+
+                index*
+                (chartWidth/(data.length-1));
+
+
+            const y =
+                top+
+                chartHeight-
+                (value/max)*chartHeight;
+
+
+            if(index===0){
+
+                ctx.moveTo(x,y);
+
+            }else{
+
+                ctx.lineTo(x,y);
+
+            }
+
+        }
+    );
+
+
+    ctx.strokeStyle="#667eea";
+
+    ctx.lineWidth=3;
+
+    ctx.stroke();
+
+
+    /* POINTS */
+
+    data.forEach(
+        (value,index)=>{
+
+            const x =
+                left+
+                index*
+                (chartWidth/(data.length-1));
+
+
+            const y =
+                top+
+                chartHeight-
+                (value/max)*chartHeight;
+
+
+            ctx.beginPath();
+
+            ctx.arc(
+                x,
+                y,
+                5,
+                0,
+                Math.PI*2
+            );
+
+
+            ctx.fillStyle="#667eea";
+
+            ctx.fill();
+
+
+            ctx.fillStyle="#5f6578";
+
+            ctx.font="11px Arial";
+
+            ctx.textAlign="center";
+
+            ctx.fillText(
+                labels[index],
+                x,
+                height-15
+            );
+
+        }
+    );
+
+}
+
+
+function updateInsight(){
+
+    const today =
+        getToday();
+
+
+    const minutes =
+        today.reduce(
+            (s,a)=>s+a.minutes,
+            0
+        );
+
+
+    let message;
+
+
+    if(minutes===0){
+
+        message =
+            "Start with one small activity. Progress begins with action.";
+
+    }else if(minutes<30){
+
+        message =
+            "Good start. A little more movement or learning
