@@ -12,7 +12,6 @@
 <link rel="manifest" href="./manifest.json">
 
 <style>
-
 *{
     box-sizing:border-box;
     -webkit-tap-highlight-color:transparent;
@@ -39,10 +38,7 @@ body{
     padding-bottom:80px;
 }
 
-button,
-input,
-textarea,
-select{
+button,input,textarea,select{
     font:inherit;
 }
 
@@ -119,14 +115,20 @@ header{
 }
 
 .goal{
-    margin:14px 0;
+    margin:16px 0;
 }
 
 .goal-header{
     display:flex;
     justify-content:space-between;
+    gap:10px;
     margin-bottom:7px;
     font-size:14px;
+}
+
+.goal-percent{
+    color:var(--primary);
+    font-weight:700;
 }
 
 .progress-bar{
@@ -178,9 +180,7 @@ label{
     margin-bottom:7px;
 }
 
-input,
-textarea,
-select{
+input,textarea,select{
     width:100%;
     padding:12px;
     border:1px solid var(--border);
@@ -189,9 +189,7 @@ select{
     outline:none;
 }
 
-input:focus,
-textarea:focus,
-select:focus{
+input:focus,textarea:focus,select:focus{
     border-color:var(--primary);
 }
 
@@ -375,8 +373,77 @@ canvas{
     color:var(--primary);
 }
 
-@media(min-width:700px){
+.category-box{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:12px;
+    border:1px solid var(--border);
+    border-radius:12px;
+    margin:8px 0;
+}
 
+.category-minutes{
+    color:var(--primary);
+    font-weight:700;
+}
+
+.notification-status{
+    padding:12px;
+    border-radius:12px;
+    background:#f8f9ff;
+    margin-bottom:15px;
+}
+
+.switch-row{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:15px;
+    margin:15px 0;
+}
+
+.switch{
+    width:52px;
+    height:28px;
+    position:relative;
+}
+
+.switch input{
+    opacity:0;
+    width:0;
+    height:0;
+}
+
+.slider{
+    position:absolute;
+    inset:0;
+    background:#d1d5db;
+    border-radius:30px;
+    transition:.2s;
+}
+
+.slider:before{
+    content:"";
+    position:absolute;
+    width:22px;
+    height:22px;
+    left:3px;
+    top:3px;
+    background:white;
+    border-radius:50%;
+    transition:.2s;
+}
+
+.switch input:checked + .slider{
+    background:var(--primary);
+}
+
+.switch input:checked + .slider:before{
+    transform:translateX(24px);
+}
+
+@media(min-width:700px){
     .stats{
         grid-template-columns:repeat(4,1fr);
     }
@@ -384,9 +451,7 @@ canvas{
     .summary-grid{
         grid-template-columns:repeat(4,1fr);
     }
-
 }
-
 </style>
 </head>
 
@@ -399,9 +464,7 @@ canvas{
     <div class="tagline">Small actions. Real progress.</div>
 </header>
 
-
 <!-- HOME -->
-
 <section id="home" class="screen active">
 
     <div class="stats">
@@ -428,7 +491,6 @@ canvas{
 
     </div>
 
-
     <div class="card">
 
         <h2>🎯 Daily Goals</h2>
@@ -437,7 +499,10 @@ canvas{
 
             <div class="goal-header">
                 <span>🏃 Movement</span>
-                <strong id="movementGoal">0 / 30 min</strong>
+                <strong>
+                    <span id="movementGoal">0 / 30 min</span>
+                    <span class="goal-percent" id="movementPercent">0%</span>
+                </strong>
             </div>
 
             <div class="progress-bar">
@@ -446,12 +511,14 @@ canvas{
 
         </div>
 
-
         <div class="goal">
 
             <div class="goal-header">
                 <span>📚 Learning</span>
-                <strong id="learningGoal">0 / 30 min</strong>
+                <strong>
+                    <span id="learningGoal">0 / 30 min</span>
+                    <span class="goal-percent" id="learningPercent">0%</span>
+                </strong>
             </div>
 
             <div class="progress-bar">
@@ -460,12 +527,14 @@ canvas{
 
         </div>
 
-
         <div class="goal">
 
             <div class="goal-header">
                 <span>🧘 Mindfulness</span>
-                <strong id="mindfulnessGoal">0 / 10 min</strong>
+                <strong>
+                    <span id="mindfulnessGoal">0 / 10 min</span>
+                    <span class="goal-percent" id="mindfulnessPercent">0%</span>
+                </strong>
             </div>
 
             <div class="progress-bar">
@@ -476,6 +545,13 @@ canvas{
 
     </div>
 
+    <div class="card">
+
+        <h2>📊 Today's Category Totals</h2>
+
+        <div id="todayCategorySummary"></div>
+
+    </div>
 
     <div class="card">
 
@@ -484,7 +560,6 @@ canvas{
         <div id="todayList"></div>
 
     </div>
-
 
     <div class="card">
 
@@ -496,38 +571,25 @@ canvas{
 
 </section>
 
-
-
 <!-- ADD ACTIVITY -->
-
 <section id="add" class="screen">
 
     <div class="card">
 
-        <h2>➕ Add Activity</h2>
+        <h2 id="activityFormTitle">➕ Add Activity</h2>
 
         <form id="activityForm">
 
+            <input type="hidden" id="activityEditId">
+
             <div class="form-group">
-
                 <label>Activity Name</label>
-
-                <input
-                    type="text"
-                    id="activityName"
-                    placeholder="e.g. Walking"
-                    required
-                >
-
+                <input type="text" id="activityName" placeholder="e.g. Walking" required>
             </div>
 
-
             <div class="form-group">
-
                 <label>Category</label>
-
                 <select id="activityCategory">
-
                     <option>Exercise</option>
                     <option>Learning</option>
                     <option>Reading</option>
@@ -536,82 +598,51 @@ canvas{
                     <option>Meditation</option>
                     <option>Walking</option>
                     <option>Other</option>
-
                 </select>
-
             </div>
 
-
             <div class="form-group">
-
                 <label>Minutes</label>
-
-                <input
-                    type="number"
-                    id="activityMinutes"
-                    min="1"
-                    placeholder="30"
-                    required
-                >
-
+                <input type="number" id="activityMinutes" min="1" placeholder="30" required>
             </div>
 
-
             <div class="form-group">
-
                 <label>How did you feel?</label>
-
                 <select id="activityFeeling">
-
                     <option>😀 Great</option>
                     <option>🙂 Good</option>
                     <option>😐 Okay</option>
                     <option>😕 Not great</option>
                     <option>😴 Tired</option>
-
                 </select>
-
             </div>
 
-
             <div class="form-group">
-
                 <label>What did you do?</label>
-
-                <textarea
-                    id="activityDid"
-                    placeholder="Describe what you did..."
-                ></textarea>
-
+                <textarea id="activityDid" placeholder="Describe what you did..."></textarea>
             </div>
 
-
             <div class="form-group">
-
                 <label>What did you learn?</label>
-
-                <textarea
-                    id="activityLearned"
-                    placeholder="What did you learn or improve?"
-                ></textarea>
-
+                <textarea id="activityLearned" placeholder="What did you learn or improve?"></textarea>
             </div>
-
 
             <div class="form-group">
-
                 <label>Progress / Achievement</label>
-
-                <textarea
-                    id="activityProgress"
-                    placeholder="Any progress, achievement or small win?"
-                ></textarea>
-
+                <textarea id="activityProgress" placeholder="Any progress, achievement or small win?"></textarea>
             </div>
 
-
-            <button class="primary-btn" type="submit">
+            <button class="primary-btn" type="submit" id="activitySaveButton">
                 Save Activity
+            </button>
+
+            <button
+                class="secondary-btn"
+                type="button"
+                id="activityCancelButton"
+                style="display:none;width:100%;margin-top:10px;"
+            >
+                Cancel Edit
             </button>
 
         </form>
@@ -620,10 +651,7 @@ canvas{
 
 </section>
 
-
-
 <!-- PROGRESS -->
-
 <section id="progress" class="screen">
 
     <div class="card">
@@ -633,49 +661,24 @@ canvas{
         <form id="progressForm">
 
             <div class="form-group">
-
                 <label>Date</label>
-
                 <input type="date" id="progressDate" required>
-
             </div>
 
-
             <div class="form-group">
-
                 <label>What went well?</label>
-
-                <textarea
-                    id="progressWentWell"
-                    placeholder="Write about today's positive progress..."
-                ></textarea>
-
+                <textarea id="progressWentWell" placeholder="Write about today's positive progress..."></textarea>
             </div>
 
-
             <div class="form-group">
-
                 <label>What could be improved?</label>
-
-                <textarea
-                    id="progressImprove"
-                    placeholder="What would you like to improve?"
-                ></textarea>
-
+                <textarea id="progressImprove" placeholder="What would you like to improve?"></textarea>
             </div>
-
 
             <div class="form-group">
-
                 <label>Main goal for tomorrow</label>
-
-                <textarea
-                    id="progressTomorrow"
-                    placeholder="Your next small step..."
-                ></textarea>
-
+                <textarea id="progressTomorrow" placeholder="Your next small step..."></textarea>
             </div>
-
 
             <button class="primary-btn" type="submit">
                 Save / Update Progress
@@ -684,7 +687,6 @@ canvas{
         </form>
 
     </div>
-
 
     <div class="card">
 
@@ -716,7 +718,6 @@ canvas{
 
     </div>
 
-
     <div class="card">
 
         <h2>🗓 Progress History</h2>
@@ -727,10 +728,7 @@ canvas{
 
 </section>
 
-
-
 <!-- JOURNAL -->
-
 <section id="journal" class="screen">
 
     <div class="card">
@@ -742,44 +740,19 @@ canvas{
             <input type="hidden" id="journalEditId">
 
             <div class="form-group">
-
                 <label>Title</label>
-
-                <input
-                    type="text"
-                    id="journalTitle"
-                    placeholder="Today's thoughts..."
-                    required
-                >
-
+                <input type="text" id="journalTitle" placeholder="Today's thoughts..." required>
             </div>
 
-
             <div class="form-group">
-
                 <label>Date</label>
-
-                <input
-                    type="date"
-                    id="journalDate"
-                    required
-                >
-
+                <input type="date" id="journalDate" required>
             </div>
-
 
             <div class="form-group">
-
                 <label>Your Writing</label>
-
-                <textarea
-                    id="journalText"
-                    placeholder="Write your thoughts, ideas, experiences or reflections..."
-                    required
-                ></textarea>
-
+                <textarea id="journalText" placeholder="Write your thoughts, ideas, experiences or reflections..." required></textarea>
             </div>
-
 
             <button class="primary-btn" type="submit" id="journalSaveButton">
                 Save Writing
@@ -789,16 +762,11 @@ canvas{
 
     </div>
 
-
     <div class="card">
 
         <h2>📖 My Entries</h2>
 
-        <input
-            type="search"
-            id="journalSearch"
-            placeholder="Search your writing..."
-        >
+        <input type="search" id="journalSearch" placeholder="Search your writing...">
 
         <div id="journalList"></div>
 
@@ -806,10 +774,7 @@ canvas{
 
 </section>
 
-
-
 <!-- MORE -->
-
 <section id="more" class="screen">
 
     <div class="card">
@@ -825,6 +790,65 @@ canvas{
 
     </div>
 
+    <div class="card">
+
+        <h2>🔔 Notifications</h2>
+
+        <div class="notification-status" id="notificationStatus">
+            Checking notification status...
+        </div>
+
+        <div class="switch-row">
+
+            <div>
+                <strong>Daily reminder</strong>
+                <div class="small">
+                    Remind yourself to record today's progress.
+                </div>
+            </div>
+
+            <label class="switch">
+                <input type="checkbox" id="notificationEnabled">
+                <span class="slider"></span>
+            </label>
+
+        </div>
+
+        <div class="form-group">
+
+            <label>Reminder time</label>
+
+            <input
+                type="time"
+                id="notificationTime"
+                value="19:00"
+            >
+
+        </div>
+
+        <button
+            class="primary-btn"
+            type="button"
+            id="notificationPermissionBtn"
+        >
+            Enable Notifications
+        </button>
+
+        <button
+            class="secondary-btn"
+            type="button"
+            id="testNotificationBtn"
+            style="width:100%;margin-top:10px;"
+        >
+            🧪 Send Test Notification
+        </button>
+
+        <p class="small" style="margin-bottom:0;">
+            Notification behavior depends on your browser and device.
+            UPWARD does not send your activity data anywhere.
+        </p>
+
+    </div>
 
     <div class="card">
 
@@ -836,33 +860,19 @@ canvas{
 
         <div class="actions">
 
-            <button
-                class="primary-btn"
-                id="exportBtn"
-                type="button"
-            >
+            <button class="primary-btn" id="exportBtn" type="button">
                 Export My Data
             </button>
 
-            <button
-                class="secondary-btn"
-                id="importBtn"
-                type="button"
-            >
+            <button class="secondary-btn" id="importBtn" type="button">
                 Import Backup
             </button>
 
         </div>
 
-        <input
-            type="file"
-            id="importFile"
-            accept=".json"
-            hidden
-        >
+        <input type="file" id="importFile" accept=".json" hidden>
 
     </div>
-
 
     <div class="card">
 
@@ -871,7 +881,6 @@ canvas{
         <div id="categorySummary"></div>
 
     </div>
-
 
     <div class="card">
 
@@ -884,7 +893,6 @@ canvas{
 
     </div>
 
-
     <div class="card">
 
         <h2>⚠️ Data Management</h2>
@@ -894,11 +902,7 @@ canvas{
             Export a backup before clearing your browser data.
         </p>
 
-        <button
-            class="danger-btn"
-            id="clearAllBtn"
-            type="button"
-        >
+        <button class="danger-btn" id="clearAllBtn" type="button">
             Clear All Data
         </button>
 
@@ -906,13 +910,9 @@ canvas{
 
 </section>
 
-
 </div>
 
-
-
 <!-- BOTTOM NAVIGATION -->
-
 <nav class="bottom-nav">
 
     <button class="nav-btn active" data-screen="home">
@@ -942,72 +942,89 @@ canvas{
 
 </nav>
 
-
 <div class="toast" id="toast"></div>
-
-
 
 <script>
 
 const ACTIVITY_KEY = "upwardActivities";
 const JOURNAL_KEY = "upwardJournal";
 const PROGRESS_KEY = "upwardDailyProgress";
+const NOTIFICATION_KEY = "upwardNotificationSettings";
 
 
 function getActivities(){
-
-    return JSON.parse(
-        localStorage.getItem(ACTIVITY_KEY) || "[]"
-    );
-
+    try{
+        return JSON.parse(localStorage.getItem(ACTIVITY_KEY) || "[]");
+    }catch{
+        return [];
+    }
 }
 
 
 function getJournal(){
-
-    return JSON.parse(
-        localStorage.getItem(JOURNAL_KEY) || "[]"
-    );
-
+    try{
+        return JSON.parse(localStorage.getItem(JOURNAL_KEY) || "[]");
+    }catch{
+        return [];
+    }
 }
 
 
 function getProgress(){
+    try{
+        return JSON.parse(localStorage.getItem(PROGRESS_KEY) || "[]");
+    }catch{
+        return [];
+    }
+}
 
-    return JSON.parse(
-        localStorage.getItem(PROGRESS_KEY) || "[]"
-    );
+
+function getNotificationSettings(){
+
+    try{
+
+        const saved =
+            JSON.parse(
+                localStorage.getItem(NOTIFICATION_KEY) || "null"
+            );
+
+        return saved || {
+            enabled:false,
+            time:"19:00"
+        };
+
+    }catch{
+
+        return {
+            enabled:false,
+            time:"19:00"
+        };
+
+    }
 
 }
 
 
 function saveActivities(data){
-
-    localStorage.setItem(
-        ACTIVITY_KEY,
-        JSON.stringify(data)
-    );
-
+    localStorage.setItem(ACTIVITY_KEY,JSON.stringify(data));
 }
 
 
 function saveJournal(data){
-
-    localStorage.setItem(
-        JOURNAL_KEY,
-        JSON.stringify(data)
-    );
-
+    localStorage.setItem(JOURNAL_KEY,JSON.stringify(data));
 }
 
 
 function saveProgress(data){
+    localStorage.setItem(PROGRESS_KEY,JSON.stringify(data));
+}
 
+
+function saveNotificationSettings(data){
     localStorage.setItem(
-        PROGRESS_KEY,
+        NOTIFICATION_KEY,
         JSON.stringify(data)
     );
-
 }
 
 
@@ -1029,16 +1046,15 @@ function displayDate(date){
 
     if(!date) return "";
 
-    return new Date(
-        date + "T00:00:00"
-    ).toLocaleDateString(
-        undefined,
-        {
-            day:"numeric",
-            month:"short",
-            year:"numeric"
-        }
-    );
+    return new Date(date+"T00:00:00")
+        .toLocaleDateString(
+            undefined,
+            {
+                day:"numeric",
+                month:"short",
+                year:"numeric"
+            }
+        );
 
 }
 
@@ -1072,37 +1088,30 @@ function showToast(message){
 }
 
 
-
 /* NAVIGATION */
 
 document.querySelectorAll(".nav-btn")
 .forEach(button => {
 
-    button.addEventListener("click", () => {
+    button.addEventListener("click",() => {
 
         const target =
             button.dataset.screen;
 
         document.querySelectorAll(".screen")
-        .forEach(screen => {
-
-            screen.classList.remove("active");
-
-        });
+        .forEach(screen =>
+            screen.classList.remove("active")
+        );
 
         document.getElementById(target)
             .classList.add("active");
 
-
         document.querySelectorAll(".nav-btn")
-        .forEach(btn => {
-
-            btn.classList.remove("active");
-
-        });
+        .forEach(btn =>
+            btn.classList.remove("active")
+        );
 
         button.classList.add("active");
-
 
         if(target === "home"){
             updateDashboard();
@@ -1118,6 +1127,7 @@ document.querySelectorAll(".nav-btn")
 
         if(target === "more"){
             renderCategorySummary();
+            updateNotificationUI();
         }
 
     });
@@ -1125,82 +1135,187 @@ document.querySelectorAll(".nav-btn")
 });
 
 
-
-/* ACTIVITY */
+/* ACTIVITY FORM */
 
 document
 .getElementById("activityForm")
-.addEventListener("submit", function(event){
+.addEventListener("submit",function(event){
 
     event.preventDefault();
 
+    const activities = getActivities();
 
-    const activities =
-        getActivities();
+    const editId =
+        document.getElementById("activityEditId").value;
 
+    const item = {
 
-    const activity = {
+        id:
+            editId
+            ? Number(editId)
+            : Date.now(),
 
-        id: Date.now(),
-
-        date: localDate(),
+        date:localDate(),
 
         name:
-            document.getElementById(
-                "activityName"
-            ).value.trim(),
+            document.getElementById("activityName")
+            .value.trim(),
 
         category:
-            document.getElementById(
-                "activityCategory"
-            ).value,
+            document.getElementById("activityCategory")
+            .value,
 
         minutes:
             Number(
-                document.getElementById(
-                    "activityMinutes"
-                ).value
+                document.getElementById("activityMinutes")
+                .value
             ),
 
         feeling:
-            document.getElementById(
-                "activityFeeling"
-            ).value,
+            document.getElementById("activityFeeling")
+            .value,
 
         did:
-            document.getElementById(
-                "activityDid"
-            ).value.trim(),
+            document.getElementById("activityDid")
+            .value.trim(),
 
         learned:
-            document.getElementById(
-                "activityLearned"
-            ).value.trim(),
+            document.getElementById("activityLearned")
+            .value.trim(),
 
         progress:
-            document.getElementById(
-                "activityProgress"
-            ).value.trim()
+            document.getElementById("activityProgress")
+            .value.trim()
 
     };
 
 
-    activities.push(activity);
+    if(editId){
+
+        const index =
+            activities.findIndex(
+                activity => activity.id === Number(editId)
+            );
+
+        if(index >= 0){
+
+            activities[index] = {
+                ...activities[index],
+                ...item
+            };
+
+        }
+
+        showToast("Activity updated!");
+
+    }else{
+
+        activities.push(item);
+
+        showToast("Activity saved!");
+
+    }
+
 
     saveActivities(activities);
 
-
-    this.reset();
-
-
-    showToast("Activity saved successfully!");
+    resetActivityForm();
 
     updateDashboard();
 
 });
 
 
+function resetActivityForm(){
+
+    const form =
+        document.getElementById("activityForm");
+
+    form.reset();
+
+    document.getElementById("activityEditId")
+        .value = "";
+
+    document.getElementById("activitySaveButton")
+        .textContent = "Save Activity";
+
+    document.getElementById("activityFormTitle")
+        .textContent = "➕ Add Activity";
+
+    document.getElementById("activityCancelButton")
+        .style.display = "none";
+
+}
+
+
+function editActivity(id){
+
+    const item =
+        getActivities().find(
+            activity => activity.id === id
+        );
+
+    if(!item) return;
+
+    document.getElementById("activityEditId")
+        .value = item.id;
+
+    document.getElementById("activityName")
+        .value = item.name || "";
+
+    document.getElementById("activityCategory")
+        .value = item.category || "Other";
+
+    document.getElementById("activityMinutes")
+        .value = item.minutes || "";
+
+    document.getElementById("activityFeeling")
+        .value = item.feeling || "😐 Okay";
+
+    document.getElementById("activityDid")
+        .value = item.did || "";
+
+    document.getElementById("activityLearned")
+        .value = item.learned || "";
+
+    document.getElementById("activityProgress")
+        .value = item.progress || "";
+
+    document.getElementById("activitySaveButton")
+        .textContent = "Update Activity";
+
+    document.getElementById("activityFormTitle")
+        .textContent = "✏️ Edit Activity";
+
+    document.getElementById("activityCancelButton")
+        .style.display = "block";
+
+    document.querySelector(
+        '[data-screen="add"]'
+    ).click();
+
+    window.scrollTo({
+        top:0,
+        behavior:"smooth"
+    });
+
+}
+
+
+document
+.getElementById("activityCancelButton")
+.addEventListener("click",() => {
+
+    resetActivityForm();
+
+});
+
+
 function deleteActivity(id){
+
+    if(!confirm("Delete this activity?")){
+        return;
+    }
 
     const activities =
         getActivities()
@@ -1218,19 +1333,14 @@ function deleteActivity(id){
 function renderToday(){
 
     const list =
-        document.getElementById(
-            "todayList"
-        );
+        document.getElementById("todayList");
 
-    const today =
-        localDate();
-
+    const today = localDate();
 
     const activities =
         getActivities()
         .filter(item => item.date === today)
         .sort((a,b) => b.id - a.id);
-
 
     if(!activities.length){
 
@@ -1240,7 +1350,6 @@ function renderToday(){
         return;
 
     }
-
 
     list.innerHTML =
         activities.map(item => `
@@ -1256,26 +1365,34 @@ function renderToday(){
                         </div>
 
                         <div class="activity-meta">
-
                             ${escapeHtml(item.category)}
                             •
-                            ${item.minutes} min
+                            ${Number(item.minutes || 0)} min
                             •
                             ${escapeHtml(item.feeling)}
-
                         </div>
 
                     </div>
 
-                    <button
-                        class="danger-btn"
-                        onclick="deleteActivity(${item.id})"
-                    >
-                        Delete
-                    </button>
+                    <div class="actions" style="margin-top:0;">
+
+                        <button
+                            class="success-btn"
+                            onclick="editActivity(${item.id})"
+                        >
+                            Edit
+                        </button>
+
+                        <button
+                            class="danger-btn"
+                            onclick="deleteActivity(${item.id})"
+                        >
+                            Delete
+                        </button>
+
+                    </div>
 
                 </div>
-
 
                 ${
                     item.did
@@ -1286,7 +1403,6 @@ function renderToday(){
                     : ""
                 }
 
-
                 ${
                     item.learned
                     ? `<div class="activity-meta">
@@ -1295,7 +1411,6 @@ function renderToday(){
                        </div>`
                     : ""
                 }
-
 
                 ${
                     item.progress
@@ -1313,69 +1428,51 @@ function renderToday(){
 }
 
 
-
 /* DASHBOARD */
 
 function updateDashboard(){
 
-    const activities =
-        getActivities();
+    const activities = getActivities();
 
-    const today =
-        localDate();
-
+    const today = localDate();
 
     const todayActivities =
         activities.filter(
             item => item.date === today
         );
 
-
     const todayMinutes =
         todayActivities.reduce(
-            (sum,item) => sum + Number(item.minutes || 0),
+            (sum,item) =>
+                sum + Number(item.minutes || 0),
             0
         );
-
 
     const totalMinutes =
         activities.reduce(
-            (sum,item) => sum + Number(item.minutes || 0),
+            (sum,item) =>
+                sum + Number(item.minutes || 0),
             0
         );
 
+    document.getElementById("todayActivities")
+        .textContent = todayActivities.length;
 
-    document.getElementById(
-        "todayActivities"
-    ).textContent =
-        todayActivities.length;
+    document.getElementById("todayMinutes")
+        .textContent = todayMinutes;
 
+    document.getElementById("totalMinutes")
+        .textContent = totalMinutes;
 
-    document.getElementById(
-        "todayMinutes"
-    ).textContent =
-        todayMinutes;
-
-
-    document.getElementById(
-        "totalMinutes"
-    ).textContent =
-        totalMinutes;
-
-
-    document.getElementById(
-        "currentStreak"
-    ).textContent =
-        calculateStreak(activities);
+    document.getElementById("currentStreak")
+        .textContent = calculateStreak(activities);
 
 
     const movement =
         todayActivities
         .filter(item =>
-            [
-                "Exercise",
-                "Walking"
-            ].includes(item.category)
+            ["Exercise","Walking"]
+            .includes(item.category)
         )
         .reduce(
             (sum,item) =>
@@ -1387,10 +1484,8 @@ function updateDashboard(){
     const learning =
         todayActivities
         .filter(item =>
-            [
-                "Learning",
-                "Reading"
-            ].includes(item.category)
+            ["Learning","Reading"]
+            .includes(item.category)
         )
         .reduce(
             (sum,item) =>
@@ -1414,28 +1509,31 @@ function updateDashboard(){
     updateGoal(
         "movementGoal",
         "movementFill",
+        "movementPercent",
         movement,
         30
     );
 
-
     updateGoal(
         "learningGoal",
         "learningFill",
+        "learningPercent",
         learning,
         30
     );
 
-
     updateGoal(
         "mindfulnessGoal",
         "mindfulnessFill",
+        "mindfulnessPercent",
         mindfulness,
         10
     );
 
 
     renderToday();
+
+    renderTodayCategorySummary();
 
     drawChart();
 
@@ -1447,6 +1545,7 @@ function updateDashboard(){
 function updateGoal(
     textId,
     fillId,
+    percentId,
     value,
     target
 ){
@@ -1455,20 +1554,19 @@ function updateGoal(
         .textContent =
         `${value} / ${target} min`;
 
-
     const percent =
         Math.min(
             100,
-            (value / target) * 100
+            Math.round((value / target) * 100)
         );
 
-
     document.getElementById(fillId)
-        .style.width =
-        percent + "%";
+        .style.width = percent + "%";
+
+    document.getElementById(percentId)
+        .textContent = `${percent}%`;
 
 }
-
 
 
 function calculateStreak(activities){
@@ -1480,11 +1578,9 @@ function calculateStreak(activities){
             )
         );
 
-
     let streak = 0;
 
     const d = new Date();
-
 
     while(true){
 
@@ -1497,7 +1593,6 @@ function calculateStreak(activities){
             )
             .toISOString()
             .split("T")[0];
-
 
         if(dates.has(date)){
 
@@ -1515,11 +1610,71 @@ function calculateStreak(activities){
 
     }
 
-
     return streak;
 
 }
 
+
+/* TODAY CATEGORY SUMMARY */
+
+function renderTodayCategorySummary(){
+
+    const container =
+        document.getElementById(
+            "todayCategorySummary"
+        );
+
+    const today = localDate();
+
+    const activities =
+        getActivities()
+        .filter(item => item.date === today);
+
+    if(!activities.length){
+
+        container.innerHTML =
+            '<div class="empty">No category activity yet today.</div>';
+
+        return;
+
+    }
+
+    const categories = {};
+
+    activities.forEach(item => {
+
+        const category =
+            item.category || "Other";
+
+        if(!categories[category]){
+            categories[category] = 0;
+        }
+
+        categories[category] +=
+            Number(item.minutes || 0);
+
+    });
+
+    container.innerHTML =
+        Object.entries(categories)
+        .sort((a,b) => b[1] - a[1])
+        .map(([category,minutes]) => `
+
+            <div class="category-box">
+
+                <span>
+                    ${escapeHtml(category)}
+                </span>
+
+                <span class="category-minutes">
+                    ${minutes} min
+                </span>
+
+            </div>
+
+        `).join("");
+
+}
 
 
 /* CHART */
@@ -1527,45 +1682,27 @@ function calculateStreak(activities){
 function drawChart(){
 
     const canvas =
-        document.getElementById(
-            "activityChart"
-        );
+        document.getElementById("activityChart");
 
     const ctx =
         canvas.getContext("2d");
 
+    const width = canvas.width;
+    const height = canvas.height;
 
-    const width =
-        canvas.width;
+    ctx.clearRect(0,0,width,height);
 
-    const height =
-        canvas.height;
-
-
-    ctx.clearRect(
-        0,
-        0,
-        width,
-        height
-    );
-
-
-    const activities =
-        getActivities();
-
+    const activities = getActivities();
 
     const values = [];
 
-
     for(let i = 6; i >= 0; i--){
 
-        const d =
-            new Date();
+        const d = new Date();
 
         d.setDate(
             d.getDate() - i
         );
-
 
         const offset =
             d.getTimezoneOffset() * 60000;
@@ -1577,18 +1714,14 @@ function drawChart(){
             .toISOString()
             .split("T")[0];
 
-
         const minutes =
             activities
-            .filter(item =>
-                item.date === date
-            )
+            .filter(item => item.date === date)
             .reduce(
                 (sum,item) =>
                     sum + Number(item.minutes || 0),
                 0
             );
-
 
         values.push({
             date,
@@ -1597,18 +1730,14 @@ function drawChart(){
 
     }
 
-
     const max =
         Math.max(
             30,
             ...values.map(v => v.minutes)
         );
 
-
     const barWidth = 70;
-
     const gap = 35;
-
 
     values.forEach((item,index) => {
 
@@ -1621,9 +1750,7 @@ function drawChart(){
         const y =
             165 - barHeight;
 
-
-        ctx.fillStyle =
-            "#667eea";
+        ctx.fillStyle = "#667eea";
 
         ctx.fillRect(
             x,
@@ -1632,23 +1759,17 @@ function drawChart(){
             barHeight
         );
 
+        ctx.fillStyle = "#555";
 
-        ctx.fillStyle =
-            "#555";
+        ctx.font = "14px Arial";
 
-        ctx.font =
-            "14px Arial";
-
-        ctx.textAlign =
-            "center";
-
+        ctx.textAlign = "center";
 
         ctx.fillText(
             item.minutes,
             x + barWidth / 2,
             y - 8
         );
-
 
         const shortDate =
             new Date(
@@ -1661,7 +1782,6 @@ function drawChart(){
                 }
             );
 
-
         ctx.fillText(
             shortDate,
             x + barWidth / 2,
@@ -1673,17 +1793,12 @@ function drawChart(){
 }
 
 
-
 /* DAILY PROGRESS */
 
 const progressDate =
-    document.getElementById(
-        "progressDate"
-    );
+    document.getElementById("progressDate");
 
-progressDate.value =
-    localDate();
-
+progressDate.value = localDate();
 
 progressDate.addEventListener(
     "change",
@@ -1693,71 +1808,55 @@ progressDate.addEventListener(
 
 document
 .getElementById("progressForm")
-.addEventListener("submit", function(event){
+.addEventListener("submit",function(event){
 
     event.preventDefault();
 
-
-    const progress =
-        getProgress();
-
+    const progress = getProgress();
 
     const date =
-        document.getElementById(
-            "progressDate"
-        ).value;
-
+        document.getElementById("progressDate")
+        .value;
 
     const existingIndex =
         progress.findIndex(
             item => item.date === date
         );
 
-
     const item = {
 
         date,
 
         wentWell:
-            document.getElementById(
-                "progressWentWell"
-            ).value.trim(),
+            document.getElementById("progressWentWell")
+            .value.trim(),
 
         improve:
-            document.getElementById(
-                "progressImprove"
-            ).value.trim(),
+            document.getElementById("progressImprove")
+            .value.trim(),
 
         tomorrow:
-            document.getElementById(
-                "progressTomorrow"
-            ).value.trim(),
+            document.getElementById("progressTomorrow")
+            .value.trim(),
 
         updatedAt:
             new Date().toISOString()
 
     };
 
-
     if(existingIndex >= 0){
 
-        progress[existingIndex] =
-            item;
+        progress[existingIndex] = item;
 
-        showToast(
-            "Progress updated!"
-        );
+        showToast("Progress updated!");
 
     }else{
 
         progress.push(item);
 
-        showToast(
-            "Progress saved!"
-        );
+        showToast("Progress saved!");
 
     }
-
 
     saveProgress(progress);
 
@@ -1773,29 +1872,19 @@ function loadProgressForDate(){
     const date =
         progressDate.value;
 
-
     const item =
         getProgress().find(
             p => p.date === date
         );
 
+    document.getElementById("progressWentWell")
+        .value = item ? item.wentWell : "";
 
-    document.getElementById(
-        "progressWentWell"
-    ).value =
-        item ? item.wentWell : "";
+    document.getElementById("progressImprove")
+        .value = item ? item.improve : "";
 
-
-    document.getElementById(
-        "progressImprove"
-    ).value =
-        item ? item.improve : "";
-
-
-    document.getElementById(
-        "progressTomorrow"
-    ).value =
-        item ? item.tomorrow : "";
+    document.getElementById("progressTomorrow")
+        .value = item ? item.tomorrow : "";
 
 }
 
@@ -1804,12 +1893,10 @@ function renderProgress(){
 
     loadProgressForDate();
 
-
     const history =
         document.getElementById(
             "progressHistory"
         );
-
 
     const progress =
         getProgress()
@@ -1817,7 +1904,6 @@ function renderProgress(){
             (a,b) =>
                 b.date.localeCompare(a.date)
         );
-
 
     if(!progress.length){
 
@@ -1829,7 +1915,6 @@ function renderProgress(){
         return;
 
     }
-
 
     history.innerHTML =
         progress.map(item => `
@@ -1874,31 +1959,23 @@ function renderProgress(){
 }
 
 
-
 /* JOURNAL */
 
-document
-.getElementById("journalDate")
-.value =
-localDate();
+document.getElementById("journalDate")
+    .value = localDate();
 
 
 document
 .getElementById("journalForm")
-.addEventListener("submit", function(event){
+.addEventListener("submit",function(event){
 
     event.preventDefault();
 
-
-    const journal =
-        getJournal();
-
+    const journal = getJournal();
 
     const editId =
-        document.getElementById(
-            "journalEditId"
-        ).value;
-
+        document.getElementById("journalEditId")
+        .value;
 
     const item = {
 
@@ -1908,25 +1985,21 @@ document
             : Date.now(),
 
         title:
-            document.getElementById(
-                "journalTitle"
-            ).value.trim(),
+            document.getElementById("journalTitle")
+            .value.trim(),
 
         date:
-            document.getElementById(
-                "journalDate"
-            ).value,
+            document.getElementById("journalDate")
+            .value,
 
         text:
-            document.getElementById(
-                "journalText"
-            ).value.trim(),
+            document.getElementById("journalText")
+            .value.trim(),
 
         updatedAt:
             new Date().toISOString()
 
     };
-
 
     if(editId){
 
@@ -1935,52 +2008,32 @@ document
                 j => j.id === Number(editId)
             );
 
-
         if(index >= 0){
-
-            journal[index] =
-                item;
-
+            journal[index] = item;
         }
 
-
-        showToast(
-            "Writing updated!"
-        );
+        showToast("Writing updated!");
 
     }else{
 
         journal.push(item);
 
-        showToast(
-            "Writing saved!"
-        );
+        showToast("Writing saved!");
 
     }
 
-
     saveJournal(journal);
-
 
     this.reset();
 
+    document.getElementById("journalEditId")
+        .value = "";
 
-    document.getElementById(
-        "journalEditId"
-    ).value = "";
+    document.getElementById("journalDate")
+        .value = localDate();
 
-
-    document.getElementById(
-        "journalDate"
-    ).value =
-    localDate();
-
-
-    document.getElementById(
-        "journalSaveButton"
-    ).textContent =
-    "Save Writing";
-
+    document.getElementById("journalSaveButton")
+        .textContent = "Save Writing";
 
     renderJournal();
 
@@ -1992,34 +2045,29 @@ document
 function renderJournal(){
 
     const list =
-        document.getElementById(
-            "journalList"
-        );
-
+        document.getElementById("journalList");
 
     const search =
         (
-            document.getElementById(
-                "journalSearch"
-            ).value || ""
-        )
-        .toLowerCase();
-
+            document.getElementById("journalSearch")
+            .value || ""
+        ).toLowerCase();
 
     const entries =
         getJournal()
         .filter(item =>
-            item.title.toLowerCase()
-            .includes(search) ||
+            String(item.title || "")
+                .toLowerCase()
+                .includes(search) ||
 
-            item.text.toLowerCase()
-            .includes(search)
+            String(item.text || "")
+                .toLowerCase()
+                .includes(search)
         )
         .sort(
             (a,b) =>
                 b.date.localeCompare(a.date)
         );
-
 
     if(!entries.length){
 
@@ -2029,7 +2077,6 @@ function renderJournal(){
         return;
 
     }
-
 
     list.innerHTML =
         entries.map(item => `
@@ -2047,7 +2094,6 @@ function renderJournal(){
                 <div class="journal-text">
                     ${escapeHtml(item.text)}
                 </div>
-
 
                 <div class="actions">
 
@@ -2086,48 +2132,28 @@ function editJournal(id){
 
     const item =
         getJournal()
-        .find(
-            j => j.id === id
-        );
-
+        .find(j => j.id === id);
 
     if(!item) return;
 
+    document.getElementById("journalEditId")
+        .value = item.id;
 
-    document.getElementById(
-        "journalEditId"
-    ).value =
-    item.id;
+    document.getElementById("journalTitle")
+        .value = item.title;
 
+    document.getElementById("journalDate")
+        .value = item.date;
 
-    document.getElementById(
-        "journalTitle"
-    ).value =
-    item.title;
+    document.getElementById("journalText")
+        .value = item.text;
 
-
-    document.getElementById(
-        "journalDate"
-    ).value =
-    item.date;
-
-
-    document.getElementById(
-        "journalText"
-    ).value =
-    item.text;
-
-
-    document.getElementById(
-        "journalSaveButton"
-    ).textContent =
-    "Update Writing";
-
+    document.getElementById("journalSaveButton")
+        .textContent = "Update Writing";
 
     document.querySelector(
         '[data-screen="journal"]'
     ).click();
-
 
     window.scrollTo({
         top:0,
@@ -2143,13 +2169,11 @@ function deleteJournal(id){
         "Delete this writing entry?"
     )) return;
 
-
     const journal =
         getJournal()
         .filter(
             item => item.id !== id
         );
-
 
     saveJournal(journal);
 
@@ -2157,27 +2181,18 @@ function deleteJournal(id){
 
     updateOverview();
 
-    showToast(
-        "Writing deleted."
-    );
+    showToast("Writing deleted.");
 
 }
-
 
 
 /* OVERVIEW */
 
 function updateOverview(){
 
-    const activities =
-        getActivities();
-
-    const journal =
-        getJournal();
-
-    const progress =
-        getProgress();
-
+    const activities = getActivities();
+    const journal = getJournal();
+    const progress = getProgress();
 
     const activeDays =
         new Set(
@@ -2186,7 +2201,6 @@ function updateOverview(){
             )
         ).size;
 
-
     const totalMinutes =
         activities.reduce(
             (sum,item) =>
@@ -2194,32 +2208,19 @@ function updateOverview(){
             0
         );
 
+    document.getElementById("progressCount")
+        .textContent = progress.length;
 
-    document.getElementById(
-        "progressCount"
-    ).textContent =
-    progress.length;
+    document.getElementById("journalCount")
+        .textContent = journal.length;
 
+    document.getElementById("activeDays")
+        .textContent = activeDays;
 
-    document.getElementById(
-        "journalCount"
-    ).textContent =
-    journal.length;
-
-
-    document.getElementById(
-        "activeDays"
-    ).textContent =
-    activeDays;
-
-
-    document.getElementById(
-        "allMinutes"
-    ).textContent =
-    totalMinutes;
+    document.getElementById("allMinutes")
+        .textContent = totalMinutes;
 
 }
-
 
 
 /* CATEGORY SUMMARY */
@@ -2231,10 +2232,7 @@ function renderCategorySummary(){
             "categorySummary"
         );
 
-
-    const activities =
-        getActivities();
-
+    const activities = getActivities();
 
     if(!activities.length){
 
@@ -2245,45 +2243,52 @@ function renderCategorySummary(){
 
     }
 
-
     const categories = {};
-
 
     activities.forEach(item => {
 
-        if(!categories[item.category]){
+        const category =
+            item.category || "Other";
 
-            categories[item.category] = {
+        if(!categories[category]){
+
+            categories[category] = {
                 count:0,
                 minutes:0
             };
 
         }
 
+        categories[category].count++;
 
-        categories[item.category].count++;
-
-        categories[item.category].minutes +=
+        categories[category].minutes +=
             Number(item.minutes || 0);
 
     });
 
-
     container.innerHTML =
         Object.entries(categories)
+        .sort(
+            (a,b) =>
+                b[1].minutes - a[1].minutes
+        )
         .map(([category,data]) => `
 
-            <div class="history-item">
+            <div class="category-box">
 
-                <strong>
-                    ${escapeHtml(category)}
-                </strong>
+                <div>
+                    <strong>
+                        ${escapeHtml(category)}
+                    </strong>
 
-                <div class="small">
-                    ${data.count} activities
-                    •
-                    ${data.minutes} minutes
+                    <div class="small">
+                        ${data.count} activities
+                    </div>
                 </div>
+
+                <span class="category-minutes">
+                    ${data.minutes} min
+                </span>
 
             </div>
 
@@ -2292,18 +2297,376 @@ function renderCategorySummary(){
 }
 
 
+/* NOTIFICATIONS */
+
+function updateNotificationUI(){
+
+    const settings =
+        getNotificationSettings();
+
+    const enabled =
+        document.getElementById(
+            "notificationEnabled"
+        );
+
+    const time =
+        document.getElementById(
+            "notificationTime"
+        );
+
+    const status =
+        document.getElementById(
+            "notificationStatus"
+        );
+
+    enabled.checked =
+        settings.enabled;
+
+    time.value =
+        settings.time || "19:00";
+
+
+    if(!("Notification" in window)){
+
+        status.textContent =
+            "This browser does not support notifications.";
+
+        return;
+
+    }
+
+
+    if(Notification.permission === "granted"){
+
+        status.textContent =
+            settings.enabled
+            ? "🔔 Notifications are enabled."
+            : "🔕 Browser permission is allowed. Daily reminder is currently off.";
+
+    }else if(Notification.permission === "denied"){
+
+        status.textContent =
+            "🚫 Notifications are blocked by your browser. You may need to allow them in browser settings.";
+
+    }else{
+
+        status.textContent =
+            "🔔 Notification permission has not been granted yet.";
+
+    }
+
+}
+
+
+document
+.getElementById("notificationPermissionBtn")
+.addEventListener("click",async () => {
+
+    if(!("Notification" in window)){
+
+        showToast(
+            "Notifications are not supported."
+        );
+
+        return;
+
+    }
+
+    try{
+
+        const permission =
+            await Notification.requestPermission();
+
+        updateNotificationUI();
+
+        if(permission === "granted"){
+
+            showToast(
+                "Notifications enabled!"
+            );
+
+        }else{
+
+            showToast(
+                "Notification permission was not granted."
+            );
+
+        }
+
+    }catch(error){
+
+        showToast(
+            "Could not request notification permission."
+        );
+
+    }
+
+});
+
+
+document
+.getElementById("testNotificationBtn")
+.addEventListener("click",async () => {
+
+    if(!("Notification" in window)){
+
+        showToast(
+            "Notifications are not supported."
+        );
+
+        return;
+
+    }
+
+    if(Notification.permission !== "granted"){
+
+        try{
+
+            const permission =
+                await Notification.requestPermission();
+
+            if(permission !== "granted"){
+
+                showToast(
+                    "Please allow notifications first."
+                );
+
+                updateNotificationUI();
+
+                return;
+
+            }
+
+        }catch{
+
+            showToast(
+                "Notification permission failed."
+            );
+
+            return;
+
+        }
+
+    }
+
+
+    try{
+
+        new Notification(
+            "UPWARD 🌱",
+            {
+                body:"Small actions. Real progress. Keep moving upward!",
+                icon:"./icon-192.png"
+            }
+        );
+
+        showToast(
+            "Test notification sent."
+        );
+
+    }catch{
+
+        showToast(
+            "Your browser could not display the notification."
+        );
+
+    }
+
+});
+
+
+document
+.getElementById("notificationEnabled")
+.addEventListener("change",async function(){
+
+    const settings =
+        getNotificationSettings();
+
+    if(this.checked){
+
+        if(
+            !("Notification" in window) ||
+            Notification.permission !== "granted"
+        ){
+
+            try{
+
+                const permission =
+                    await Notification.requestPermission();
+
+                if(permission !== "granted"){
+
+                    this.checked = false;
+
+                    showToast(
+                        "Please allow notifications first."
+                    );
+
+                    updateNotificationUI();
+
+                    return;
+
+                }
+
+            }catch{
+
+                this.checked = false;
+
+                return;
+
+            }
+
+        }
+
+    }
+
+    settings.enabled =
+        this.checked;
+
+    saveNotificationSettings(settings);
+
+    updateNotificationUI();
+
+    scheduleReminder();
+
+});
+
+
+document
+.getElementById("notificationTime")
+.addEventListener("change",function(){
+
+    const settings =
+        getNotificationSettings();
+
+    settings.time =
+        this.value || "19:00";
+
+    saveNotificationSettings(settings);
+
+    scheduleReminder();
+
+    showToast(
+        "Reminder time saved."
+    );
+
+});
+
+
+let reminderTimer = null;
+
+
+function scheduleReminder(){
+
+    if(reminderTimer){
+        clearTimeout(reminderTimer);
+        reminderTimer = null;
+    }
+
+    const settings =
+        getNotificationSettings();
+
+    if(
+        !settings.enabled ||
+        !("Notification" in window) ||
+        Notification.permission !== "granted"
+    ){
+        return;
+    }
+
+    const parts =
+        String(settings.time || "19:00")
+        .split(":");
+
+    const hour =
+        Number(parts[0]);
+
+    const minute =
+        Number(parts[1]);
+
+    const now =
+        new Date();
+
+    let target =
+        new Date(now);
+
+    target.setHours(
+        hour,
+        minute,
+        0,
+        0
+    );
+
+    if(target <= now){
+        target.setDate(
+            target.getDate() + 1
+        );
+    }
+
+    const delay =
+        target.getTime() - now.getTime();
+
+    reminderTimer =
+        setTimeout(() => {
+
+            sendDailyReminder();
+
+            scheduleReminder();
+
+        },delay);
+
+}
+
+
+function sendDailyReminder(){
+
+    const today =
+        localDate();
+
+    const activities =
+        getActivities()
+        .filter(
+            item => item.date === today
+        );
+
+    if(activities.length > 0){
+
+        new Notification(
+            "UPWARD 🌱",
+            {
+                body:
+                    "You've already made progress today. Keep going upward!",
+                icon:"./icon-192.png"
+            }
+        );
+
+    }else{
+
+        new Notification(
+            "UPWARD 🌱",
+            {
+                body:
+                    "Take one small action today and record it in UPWARD.",
+                icon:"./icon-192.png"
+            }
+        );
+
+    }
+
+}
+
 
 /* EXPORT */
 
 document
 .getElementById("exportBtn")
-.addEventListener("click", () => {
+.addEventListener("click",() => {
 
     const backup = {
 
         app:"UPWARD",
 
-        version:"2.0",
+        version:"2.1",
 
         exportedAt:
             new Date().toISOString(),
@@ -2315,10 +2678,12 @@ document
             getJournal(),
 
         progress:
-            getProgress()
+            getProgress(),
+
+        notificationSettings:
+            getNotificationSettings()
 
     };
-
 
     const blob =
         new Blob(
@@ -2334,14 +2699,11 @@ document
             }
         );
 
-
     const url =
         URL.createObjectURL(blob);
 
-
     const link =
         document.createElement("a");
-
 
     link.href = url;
 
@@ -2350,12 +2712,9 @@ document
         localDate() +
         ".json";
 
-
     link.click();
 
-
     URL.revokeObjectURL(url);
-
 
     showToast(
         "Backup exported."
@@ -2364,12 +2723,11 @@ document
 });
 
 
-
 /* IMPORT */
 
 document
 .getElementById("importBtn")
-.addEventListener("click", () => {
+.addEventListener("click",() => {
 
     document
         .getElementById("importFile")
@@ -2380,18 +2738,15 @@ document
 
 document
 .getElementById("importFile")
-.addEventListener("change", function(){
+.addEventListener("change",function(){
 
     const file =
         this.files[0];
 
-
     if(!file) return;
-
 
     const reader =
         new FileReader();
-
 
     reader.onload = function(){
 
@@ -2401,7 +2756,6 @@ document
                 JSON.parse(
                     reader.result
                 );
-
 
             if(
                 !data ||
@@ -2414,11 +2768,9 @@ document
 
             }
 
-
             if(!confirm(
                 "Import this backup? Current UPWARD data will be replaced."
             )) return;
-
 
             saveActivities(
                 Array.isArray(data.activities)
@@ -2426,13 +2778,11 @@ document
                 : []
             );
 
-
             saveJournal(
                 Array.isArray(data.journal)
                 ? data.journal
                 : []
             );
-
 
             saveProgress(
                 Array.isArray(data.progress)
@@ -2440,6 +2790,13 @@ document
                 : []
             );
 
+            if(data.notificationSettings){
+
+                saveNotificationSettings(
+                    data.notificationSettings
+                );
+
+            }
 
             updateDashboard();
 
@@ -2449,11 +2806,13 @@ document
 
             renderCategorySummary();
 
+            updateNotificationUI();
+
+            scheduleReminder();
 
             showToast(
                 "Backup imported successfully."
             );
-
 
         }catch(error){
 
@@ -2465,40 +2824,26 @@ document
 
     };
 
-
     reader.readAsText(file);
 
 });
-
 
 
 /* CLEAR ALL */
 
 document
 .getElementById("clearAllBtn")
-.addEventListener("click", () => {
+.addEventListener("click",() => {
 
     if(!confirm(
         "This will permanently delete all UPWARD activities, progress and writing. Continue?"
     )){
-
         return;
-
     }
 
-
-    localStorage.removeItem(
-        ACTIVITY_KEY
-    );
-
-    localStorage.removeItem(
-        JOURNAL_KEY
-    );
-
-    localStorage.removeItem(
-        PROGRESS_KEY
-    );
-
+    localStorage.removeItem(ACTIVITY_KEY);
+    localStorage.removeItem(JOURNAL_KEY);
+    localStorage.removeItem(PROGRESS_KEY);
 
     updateDashboard();
 
@@ -2508,13 +2853,11 @@ document
 
     renderCategorySummary();
 
-
     showToast(
         "All UPWARD data cleared."
     );
 
 });
-
 
 
 /* START APP */
@@ -2527,13 +2870,14 @@ renderJournal();
 
 renderCategorySummary();
 
+updateNotificationUI();
+
+scheduleReminder();
 
 
 /* SERVICE WORKER */
 
-if(
-    "serviceWorker" in navigator
-){
+if("serviceWorker" in navigator){
 
     window.addEventListener(
         "load",
