@@ -1,10 +1,12 @@
-const CACHE_NAME = "upward-v2-20260926";
+const CACHE_NAME = "upward-v2-20260926b";
 
 const APP_FILES = [
     "./",
     "./index.html",
     "./manifest.json",
-    "./sw.js"
+    "./sw.js",
+    "./icon-192.png",
+    "./icon-512.png"
 ];
 
 self.addEventListener("install", event => {
