@@ -1,10 +1,17 @@
 {
-  "name": "UPWARD",
+  "name": "UPWARD — Small actions. Real progress.",
   "short_name": "UPWARD",
-  "description": "Small actions. Real progress.",
+  "description": "A personal activity, progress and journal tracker.",
   "start_url": "./index.html",
+  "scope": "./",
   "display": "standalone",
+  "orientation": "portrait-primary",
   "background_color": "#f5f7fb",
   "theme_color": "#667eea",
-  "orientation": "portrait"
+  "lang": "en",
+  "categories": [
+    "lifestyle",
+    "productivity",
+    "health"
+  ]
 }
