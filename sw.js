@@ -30,7 +30,6 @@ self.addEventListener("activate", event => {
 });
 
 self.addEventListener("fetch", event => {
-
     if (event.request.method !== "GET") {
         return;
     }
@@ -38,14 +37,12 @@ self.addEventListener("fetch", event => {
     event.respondWith(
         caches.match(event.request)
             .then(cached => {
-
                 if (cached) {
                     return cached;
                 }
 
                 return fetch(event.request)
                     .then(response => {
-
                         if (
                             !response ||
                             response.status !== 200 ||
@@ -62,7 +59,6 @@ self.addEventListener("fetch", event => {
                             });
 
                         return response;
-
                     })
                     .catch(() => caches.match("./index.html"));
             })
