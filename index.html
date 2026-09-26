@@ -3,43 +3,40 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
 <meta name="theme-color" content="#667eea">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="default">
-<meta name="apple-mobile-web-app-title" content="UPWARD">
+<meta name="description" content="UPWARD — Small actions. Real progress. Personal activity, progress and journal tracker.">
 
 <title>UPWARD — Small actions. Real progress.</title>
 
 <link rel="manifest" href="./manifest.json">
 
 <style>
-:root{
-    --bg:#f5f7fb;
-    --card:#ffffff;
-    --text:#20242d;
-    --muted:#737b8c;
-    --primary:#667eea;
-    --primary-dark:#5365d8;
-    --border:#e7eaf1;
-    --success:#22a06b;
-    --danger:#e05252;
-    --shadow:0 8px 25px rgba(30,40,80,.08);
-    --radius:18px;
-}
 
 *{
     box-sizing:border-box;
+    -webkit-tap-highlight-color:transparent;
 }
 
-html{
-    scroll-behavior:smooth;
+:root{
+    --bg:#f5f7fb;
+    --card:#ffffff;
+    --text:#202124;
+    --muted:#6b7280;
+    --primary:#667eea;
+    --primary-dark:#4f46c5;
+    --border:#e5e7eb;
+    --danger:#ef4444;
+    --success:#16a34a;
+    --shadow:0 8px 25px rgba(0,0,0,.07);
 }
 
 body{
     margin:0;
-    font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;
+    font-family:Arial,Helvetica,sans-serif;
     background:var(--bg);
     color:var(--text);
+    padding-bottom:80px;
 }
 
 button,
@@ -54,128 +51,130 @@ button{
 }
 
 .app{
-    max-width:1100px;
+    max-width:900px;
     margin:auto;
-    padding:20px;
+    padding:18px;
 }
 
-/* HEADER */
-
-.header{
-    background:linear-gradient(135deg,#667eea,#764ba2);
-    color:white;
-    border-radius:24px;
-    padding:28px;
-    margin-bottom:20px;
-    box-shadow:var(--shadow);
-}
-
-.header-top{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    gap:15px;
+header{
+    text-align:center;
+    padding:15px 0 20px;
 }
 
 .logo{
     font-size:34px;
     font-weight:800;
-    letter-spacing:1px;
+    letter-spacing:2px;
 }
 
 .tagline{
+    color:var(--muted);
     margin-top:5px;
-    opacity:.9;
-    font-size:15px;
 }
 
-.today{
-    margin-top:18px;
-    font-size:14px;
-    opacity:.9;
+.screen{
+    display:none;
 }
 
-/* STATS */
+.screen.active{
+    display:block;
+}
+
+.card{
+    background:var(--card);
+    border-radius:18px;
+    padding:18px;
+    margin-bottom:16px;
+    box-shadow:var(--shadow);
+}
+
+.card h2{
+    margin-top:0;
+}
 
 .stats{
     display:grid;
-    grid-template-columns:repeat(4,1fr);
-    gap:14px;
-    margin-bottom:20px;
+    grid-template-columns:repeat(2,1fr);
+    gap:12px;
 }
 
 .stat{
     background:var(--card);
-    border:1px solid var(--border);
-    border-radius:var(--radius);
-    padding:20px;
+    padding:18px;
+    border-radius:18px;
     box-shadow:var(--shadow);
+    text-align:center;
 }
 
 .stat-number{
     font-size:30px;
     font-weight:800;
-    margin-bottom:5px;
+    color:var(--primary);
 }
 
 .stat-label{
     color:var(--muted);
     font-size:13px;
+    margin-top:5px;
 }
 
-/* GRID */
-
-.grid{
-    display:grid;
-    grid-template-columns:1fr 1fr;
-    gap:20px;
+.goal{
+    margin:14px 0;
 }
 
-.card{
-    background:var(--card);
+.goal-header{
+    display:flex;
+    justify-content:space-between;
+    margin-bottom:7px;
+    font-size:14px;
+}
+
+.progress-bar{
+    width:100%;
+    height:10px;
+    background:#e5e7eb;
+    border-radius:20px;
+    overflow:hidden;
+}
+
+.progress-fill{
+    height:100%;
+    background:var(--primary);
+    border-radius:20px;
+    transition:.3s;
+}
+
+.activity{
     border:1px solid var(--border);
-    border-radius:var(--radius);
-    padding:22px;
-    box-shadow:var(--shadow);
-    margin-bottom:20px;
+    border-radius:14px;
+    padding:14px;
+    margin:10px 0;
 }
 
-.card.full{
-    grid-column:1/-1;
+.activity-top{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:10px;
 }
 
-.card-title{
-    font-size:20px;
-    font-weight:750;
-    margin-bottom:5px;
+.activity-name{
+    font-weight:700;
 }
 
-.card-subtitle{
+.activity-meta{
     color:var(--muted);
     font-size:13px;
-    margin-bottom:20px;
+    margin-top:6px;
 }
 
-/* FORMS */
-
-.form-grid{
-    display:grid;
-    grid-template-columns:1fr 1fr;
-    gap:14px;
-}
-
-.field{
-    margin-bottom:14px;
-}
-
-.field.full{
-    grid-column:1/-1;
+.form-group{
+    margin-bottom:15px;
 }
 
 label{
     display:block;
-    font-size:13px;
-    font-weight:650;
+    font-weight:600;
     margin-bottom:7px;
 }
 
@@ -183,346 +182,211 @@ input,
 textarea,
 select{
     width:100%;
+    padding:12px;
     border:1px solid var(--border);
-    background:#fafbfe;
     border-radius:12px;
-    padding:12px 13px;
-    color:var(--text);
+    background:white;
     outline:none;
-    transition:.2s;
 }
 
 input:focus,
 textarea:focus,
 select:focus{
     border-color:var(--primary);
-    background:white;
-    box-shadow:0 0 0 3px rgba(102,126,234,.12);
 }
 
 textarea{
-    min-height:100px;
+    min-height:130px;
     resize:vertical;
 }
 
-textarea.large{
-    min-height:160px;
-}
-
-/* BUTTONS */
-
-.btn{
+.primary-btn{
+    width:100%;
     border:0;
-    border-radius:12px;
-    padding:12px 18px;
-    font-weight:700;
-    transition:.2s;
-}
-
-.btn-primary{
     background:var(--primary);
     color:white;
+    padding:13px;
+    border-radius:12px;
+    font-weight:700;
 }
 
-.btn-primary:hover{
+.primary-btn:hover{
     background:var(--primary-dark);
-    transform:translateY(-1px);
 }
 
-.btn-secondary{
-    background:#eef1ff;
-    color:var(--primary-dark);
+.secondary-btn{
+    border:1px solid var(--border);
+    background:white;
+    padding:9px 13px;
+    border-radius:10px;
 }
 
-.btn-danger{
-    background:#fff0f0;
-    color:var(--danger);
-}
-
-.btn-success{
-    background:#eaf8f1;
-    color:var(--success);
-}
-
-.btn-small{
+.danger-btn{
+    border:0;
+    background:#fee2e2;
+    color:#b91c1c;
     padding:8px 11px;
-    font-size:12px;
+    border-radius:9px;
 }
 
-.button-row{
-    display:flex;
-    gap:10px;
-    flex-wrap:wrap;
-    margin-top:8px;
+.success-btn{
+    border:0;
+    background:#dcfce7;
+    color:#166534;
+    padding:8px 11px;
+    border-radius:9px;
 }
 
-/* ACTIVITIES */
-
-.activity-list{
-    display:flex;
-    flex-direction:column;
-    gap:10px;
+.empty{
+    text-align:center;
+    color:var(--muted);
+    padding:25px 10px;
 }
 
-.activity-item{
+canvas{
+    width:100%;
+    height:220px;
+    display:block;
+}
+
+.history-item{
+    border-left:4px solid var(--primary);
+    padding:12px;
+    margin:10px 0;
+    background:#f8f9ff;
+    border-radius:8px;
+}
+
+.journal-item{
     border:1px solid var(--border);
     border-radius:14px;
-    padding:14px;
-    background:#fbfcff;
+    padding:15px;
+    margin:12px 0;
 }
 
-.activity-top{
-    display:flex;
-    justify-content:space-between;
-    align-items:flex-start;
-    gap:10px;
+.journal-title{
+    font-weight:800;
+    font-size:18px;
 }
 
-.activity-name{
-    font-weight:750;
-}
-
-.activity-meta{
+.journal-date{
     color:var(--muted);
     font-size:12px;
-    margin-top:4px;
+    margin:5px 0 10px;
 }
 
-.activity-notes{
-    margin-top:9px;
-    font-size:13px;
-    line-height:1.5;
-    color:#4d5565;
+.journal-text{
     white-space:pre-wrap;
+    line-height:1.5;
+}
+
+.actions{
+    display:flex;
+    gap:8px;
+    flex-wrap:wrap;
+    margin-top:12px;
+}
+
+.actions button{
+    flex:1;
+}
+
+.bottom-nav{
+    position:fixed;
+    bottom:0;
+    left:0;
+    right:0;
+    background:white;
+    border-top:1px solid var(--border);
+    display:grid;
+    grid-template-columns:repeat(5,1fr);
+    padding:8px 5px;
+    z-index:1000;
+}
+
+.nav-btn{
+    border:0;
+    background:white;
+    color:var(--muted);
+    padding:7px 2px;
+    font-size:11px;
+}
+
+.nav-icon{
+    display:block;
+    font-size:20px;
+    margin-bottom:3px;
+}
+
+.nav-btn.active{
+    color:var(--primary);
+    font-weight:700;
+}
+
+.toast{
+    position:fixed;
+    left:50%;
+    bottom:90px;
+    transform:translateX(-50%);
+    background:#222;
+    color:white;
+    padding:12px 18px;
+    border-radius:25px;
+    display:none;
+    z-index:2000;
+    max-width:90%;
+    text-align:center;
+}
+
+.toast.show{
+    display:block;
 }
 
 .badge{
     display:inline-block;
     padding:5px 9px;
     border-radius:20px;
-    background:#eef1ff;
-    color:var(--primary-dark);
-    font-size:11px;
-    font-weight:700;
-}
-
-.empty{
-    text-align:center;
-    color:var(--muted);
-    padding:20px 10px;
-    font-size:14px;
-}
-
-/* GOALS */
-
-.goal{
-    margin-bottom:18px;
-}
-
-.goal-header{
-    display:flex;
-    justify-content:space-between;
-    margin-bottom:7px;
-    font-size:13px;
-    font-weight:650;
-}
-
-.progress-bar{
-    width:100%;
-    height:9px;
-    background:#edf0f5;
-    border-radius:20px;
-    overflow:hidden;
-}
-
-.progress-fill{
-    height:100%;
-    width:0%;
-    background:linear-gradient(90deg,#667eea,#764ba2);
-    border-radius:20px;
-    transition:.4s;
-}
-
-/* CHART */
-
-.chart-wrap{
-    width:100%;
-    overflow:hidden;
-}
-
-canvas{
-    display:block;
-    width:100%;
-    height:240px;
-}
-
-/* JOURNAL */
-
-.journal-entry{
-    border:1px solid var(--border);
-    border-radius:15px;
-    padding:17px;
-    margin-bottom:12px;
-    background:#fcfcff;
-}
-
-.journal-title{
-    font-size:16px;
-    font-weight:750;
-}
-
-.journal-date{
+    background:#eef2ff;
+    color:#4f46c5;
     font-size:12px;
+}
+
+.small{
     color:var(--muted);
-    margin:4px 0 12px;
+    font-size:13px;
 }
 
-.journal-text{
-    font-size:14px;
-    line-height:1.65;
-    white-space:pre-wrap;
-    color:#454c5a;
-}
-
-.journal-actions{
-    display:flex;
-    gap:7px;
-    margin-top:14px;
-}
-
-/* PROGRESS */
-
-.progress-summary{
+.summary-grid{
     display:grid;
-    grid-template-columns:repeat(3,1fr);
-    gap:12px;
-    margin-bottom:15px;
+    grid-template-columns:repeat(2,1fr);
+    gap:10px;
 }
 
-.mini{
-    background:#f7f8fc;
-    border-radius:14px;
-    padding:14px;
-}
-
-.mini strong{
-    display:block;
-    font-size:20px;
-    margin-bottom:4px;
-}
-
-.mini span{
-    color:var(--muted);
-    font-size:12px;
-}
-
-/* INSIGHT */
-
-.insight{
-    background:linear-gradient(135deg,#f0f2ff,#f8f2ff);
-    border-radius:15px;
-    padding:18px;
-    line-height:1.6;
-    font-size:14px;
-}
-
-/* FOOTER */
-
-.footer{
-    text-align:center;
-    color:var(--muted);
-    padding:20px 0 35px;
-    font-size:12px;
-}
-
-/* TOAST */
-
-.toast{
-    position:fixed;
-    left:50%;
-    bottom:25px;
-    transform:translateX(-50%) translateY(20px);
-    background:#20242d;
-    color:white;
-    padding:12px 18px;
+.summary-box{
+    padding:15px;
+    background:#f8f9ff;
     border-radius:12px;
-    font-size:13px;
-    opacity:0;
-    pointer-events:none;
-    transition:.25s;
-    z-index:9999;
+    text-align:center;
 }
 
-.toast.show{
-    opacity:1;
-    transform:translateX(-50%) translateY(0);
+.summary-box strong{
+    display:block;
+    font-size:24px;
+    color:var(--primary);
 }
 
-/* MOBILE */
-
-@media(max-width:800px){
-
-    .app{
-        padding:12px;
-    }
-
-    .header{
-        padding:22px;
-        border-radius:20px;
-    }
-
-    .logo{
-        font-size:29px;
-    }
+@media(min-width:700px){
 
     .stats{
-        grid-template-columns:repeat(2,1fr);
+        grid-template-columns:repeat(4,1fr);
     }
 
-    .grid{
-        grid-template-columns:1fr;
-        gap:0;
+    .summary-grid{
+        grid-template-columns:repeat(4,1fr);
     }
 
-    .form-grid{
-        grid-template-columns:1fr;
-    }
-
-    .field.full{
-        grid-column:auto;
-    }
-
-    .card.full{
-        grid-column:auto;
-    }
-
-    .progress-summary{
-        grid-template-columns:1fr 1fr;
-    }
 }
 
-@media(max-width:430px){
-
-    .stats{
-        gap:9px;
-    }
-
-    .stat{
-        padding:15px;
-    }
-
-    .stat-number{
-        font-size:24px;
-    }
-
-    .card{
-        padding:17px;
-    }
-
-    .progress-summary{
-        grid-template-columns:1fr;
-    }
-}
 </style>
 </head>
 
@@ -530,23 +394,17 @@ canvas{
 
 <div class="app">
 
-    <!-- HEADER -->
-
-    <header class="header">
-        <div class="header-top">
-            <div>
-                <div class="logo">UPWARD</div>
-                <div class="tagline">Small actions. Real progress.</div>
-            </div>
-        </div>
-
-        <div class="today" id="todayText"></div>
-    </header>
+<header>
+    <div class="logo">UPWARD</div>
+    <div class="tagline">Small actions. Real progress.</div>
+</header>
 
 
-    <!-- STATS -->
+<!-- HOME -->
 
-    <section class="stats">
+<section id="home" class="screen active">
+
+    <div class="stats">
 
         <div class="stat">
             <div class="stat-number" id="todayActivities">0</div>
@@ -568,535 +426,528 @@ canvas{
             <div class="stat-label">Total Minutes</div>
         </div>
 
-    </section>
+    </div>
 
 
-    <div class="grid">
+    <div class="card">
 
-        <!-- ADD ACTIVITY -->
+        <h2>🎯 Daily Goals</h2>
 
-        <section class="card">
+        <div class="goal">
 
-            <div class="card-title">➕ Add Activity</div>
-            <div class="card-subtitle">
-                Record something you did today.
+            <div class="goal-header">
+                <span>🏃 Movement</span>
+                <strong id="movementGoal">0 / 30 min</strong>
             </div>
 
-            <form id="activityForm">
-
-                <div class="form-grid">
-
-                    <div class="field">
-                        <label for="activityName">Activity</label>
-                        <input
-                            id="activityName"
-                            type="text"
-                            placeholder="e.g. Walking, Reading"
-                            required
-                        >
-                    </div>
-
-                    <div class="field">
-                        <label for="activityCategory">Category</label>
-
-                        <select id="activityCategory">
-                            <option>Exercise</option>
-                            <option>Learning</option>
-                            <option>Reading</option>
-                            <option>Work</option>
-                            <option>Recreation</option>
-                            <option>Meditation</option>
-                            <option>Walking</option>
-                            <option>Other</option>
-                        </select>
-
-                    </div>
-
-                    <div class="field">
-                        <label for="activityMinutes">Minutes</label>
-                        <input
-                            id="activityMinutes"
-                            type="number"
-                            min="1"
-                            max="1440"
-                            placeholder="30"
-                            required
-                        >
-                    </div>
-
-                    <div class="field">
-                        <label for="activityFeeling">How did you feel?</label>
-
-                        <select id="activityFeeling">
-                            <option>😊 Great</option>
-                            <option>🙂 Good</option>
-                            <option>😐 Okay</option>
-                            <option>😕 Difficult</option>
-                            <option>😴 Tired</option>
-                        </select>
-
-                    </div>
-
-                    <div class="field full">
-                        <label for="activityNotes">
-                            What did you do?
-                        </label>
-
-                        <textarea
-                            id="activityNotes"
-                            placeholder="Write a few details about what you actually did..."
-                        ></textarea>
-                    </div>
-
-                    <div class="field full">
-                        <label for="activityLearned">
-                            What did you learn?
-                        </label>
-
-                        <textarea
-                            id="activityLearned"
-                            placeholder="Optional — write what you learned or discovered..."
-                        ></textarea>
-                    </div>
-
-                    <div class="field full">
-                        <label for="activityAchievement">
-                            Progress / Achievement
-                        </label>
-
-                        <textarea
-                            id="activityAchievement"
-                            placeholder="Optional — what progress did you make?"
-                        ></textarea>
-                    </div>
-
-                </div>
-
-                <div class="button-row">
-
-                    <button
-                        type="submit"
-                        class="btn btn-primary"
-                    >
-                        + Add Activity
-                    </button>
-
-                    <button
-                        type="button"
-                        class="btn btn-secondary"
-                        id="resetActivity"
-                    >
-                        Reset
-                    </button>
-
-                </div>
-
-            </form>
-
-        </section>
-
-
-        <!-- DAILY GOALS -->
-
-        <section class="card">
-
-            <div class="card-title">🎯 Daily Goals</div>
-
-            <div class="card-subtitle">
-                Track your small daily targets.
+            <div class="progress-bar">
+                <div class="progress-fill" id="movementFill"></div>
             </div>
 
-            <div class="goal">
+        </div>
 
-                <div class="goal-header">
-                    <span>Movement</span>
-                    <span id="movementGoalText">0 / 30 min</span>
-                </div>
 
-                <div class="progress-bar">
-                    <div
-                        class="progress-fill"
-                        id="movementGoal"
-                    ></div>
-                </div>
+        <div class="goal">
 
+            <div class="goal-header">
+                <span>📚 Learning</span>
+                <strong id="learningGoal">0 / 30 min</strong>
             </div>
 
-
-            <div class="goal">
-
-                <div class="goal-header">
-                    <span>Learning</span>
-                    <span id="learningGoalText">0 / 30 min</span>
-                </div>
-
-                <div class="progress-bar">
-                    <div
-                        class="progress-fill"
-                        id="learningGoal"
-                    ></div>
-                </div>
-
+            <div class="progress-bar">
+                <div class="progress-fill" id="learningFill"></div>
             </div>
 
+        </div>
 
-            <div class="goal">
 
-                <div class="goal-header">
-                    <span>Mindfulness</span>
-                    <span id="mindfulnessGoalText">0 / 10 min</span>
-                </div>
+        <div class="goal">
 
-                <div class="progress-bar">
-                    <div
-                        class="progress-fill"
-                        id="mindfulnessGoal"
-                    ></div>
-                </div>
-
+            <div class="goal-header">
+                <span>🧘 Mindfulness</span>
+                <strong id="mindfulnessGoal">0 / 10 min</strong>
             </div>
 
-
-            <div class="insight" id="insight">
-                Start with one small action today.
+            <div class="progress-bar">
+                <div class="progress-fill" id="mindfulnessFill"></div>
             </div>
 
-        </section>
+        </div>
 
+    </div>
 
-        <!-- TODAY'S ACTIVITIES -->
 
-        <section class="card">
+    <div class="card">
 
-            <div class="card-title">📋 Today's Activities</div>
+        <h2>📅 Today's Activities</h2>
 
-            <div class="card-subtitle">
-                Your activities for today.
-            </div>
+        <div id="todayList"></div>
 
-            <div
-                id="activityList"
-                class="activity-list"
-            ></div>
+    </div>
 
-        </section>
 
+    <div class="card">
 
-        <!-- CHART -->
+        <h2>📊 Last 7 Days</h2>
 
-        <section class="card">
+        <canvas id="activityChart" width="800" height="220"></canvas>
 
-            <div class="card-title">📈 Last 7 Days</div>
+    </div>
 
-            <div class="card-subtitle">
-                Your activity minutes.
-            </div>
+</section>
 
-            <div class="chart-wrap">
-                <canvas id="activityChart"></canvas>
-            </div>
 
-        </section>
 
+<!-- ADD ACTIVITY -->
 
-        <!-- DAILY PROGRESS -->
+<section id="add" class="screen">
 
-        <section class="card full">
+    <div class="card">
 
-            <div class="card-title">🌱 My Daily Progress</div>
+        <h2>➕ Add Activity</h2>
 
-            <div class="card-subtitle">
-                Record how your day is moving forward. You can update this whenever you want.
-            </div>
+        <form id="activityForm">
 
+            <div class="form-group">
 
-            <div class="form-grid">
-
-                <div class="field full">
-
-                    <label for="progressText">
-                        What progress did I make today?
-                    </label>
-
-                    <textarea
-                        id="progressText"
-                        class="large"
-                        placeholder="Write about the progress you made today..."
-                    ></textarea>
-
-                </div>
-
-
-                <div class="field">
-
-                    <label for="progressGood">
-                        What went well?
-                    </label>
-
-                    <textarea
-                        id="progressGood"
-                        placeholder="What went well today?"
-                    ></textarea>
-
-                </div>
-
-
-                <div class="field">
-
-                    <label for="progressImprove">
-                        What can I improve?
-                    </label>
-
-                    <textarea
-                        id="progressImprove"
-                        placeholder="What would you like to improve?"
-                    ></textarea>
-
-                </div>
-
-
-                <div class="field full">
-
-                    <label for="progressTomorrow">
-                        Tomorrow's focus
-                    </label>
-
-                    <textarea
-                        id="progressTomorrow"
-                        placeholder="What is one thing you want to focus on tomorrow?"
-                    ></textarea>
-
-                </div>
-
-            </div>
-
-
-            <div class="button-row">
-
-                <button
-                    class="btn btn-primary"
-                    id="saveProgress"
-                >
-                    💾 Save / Update Today's Progress
-                </button>
-
-                <button
-                    class="btn btn-secondary"
-                    id="clearProgressForm"
-                >
-                    Clear
-                </button>
-
-            </div>
-
-        </section>
-
-
-        <!-- MY WRITING -->
-
-        <section class="card full">
-
-            <div class="card-title">✍️ My Writing</div>
-
-            <div class="card-subtitle">
-                Write anything you want — thoughts, reflections, ideas, plans or personal notes.
-            </div>
-
-
-            <form id="journalForm">
-
-                <div class="form-grid">
-
-                    <div class="field">
-
-                        <label for="journalTitle">
-                            Title
-                        </label>
-
-                        <input
-                            id="journalTitle"
-                            type="text"
-                            placeholder="e.g. What I learned today"
-                            required
-                        >
-
-                    </div>
-
-
-                    <div class="field">
-
-                        <label for="journalDate">
-                            Date
-                        </label>
-
-                        <input
-                            id="journalDate"
-                            type="date"
-                            required
-                        >
-
-                    </div>
-
-
-                    <div class="field full">
-
-                        <label for="journalText">
-                            Your Writing
-                        </label>
-
-                        <textarea
-                            id="journalText"
-                            class="large"
-                            placeholder="Start writing here..."
-                            required
-                        ></textarea>
-
-                    </div>
-
-                </div>
-
+                <label>Activity Name</label>
 
                 <input
-                    type="hidden"
-                    id="journalEditId"
+                    type="text"
+                    id="activityName"
+                    placeholder="e.g. Walking"
+                    required
                 >
 
-
-                <div class="button-row">
-
-                    <button
-                        type="submit"
-                        class="btn btn-primary"
-                        id="journalSaveButton"
-                    >
-                        ✍️ Save Writing
-                    </button>
-
-                    <button
-                        type="button"
-                        class="btn btn-secondary"
-                        id="journalCancelEdit"
-                        style="display:none"
-                    >
-                        Cancel Edit
-                    </button>
-
-                </div>
-
-            </form>
-
-
-            <hr style="border:0;border-top:1px solid var(--border);margin:25px 0;">
-
-
-            <div class="card-title" style="font-size:17px;">
-                Previous Writing
-            </div>
-
-            <div
-                id="journalList"
-                style="margin-top:15px;"
-            ></div>
-
-        </section>
-
-
-        <!-- PROGRESS OVERVIEW -->
-
-        <section class="card full">
-
-            <div class="card-title">🌟 Your Progress</div>
-
-            <div class="card-subtitle">
-                A simple overview of your consistency and reflection.
             </div>
 
 
-            <div class="progress-summary">
+            <div class="form-group">
 
-                <div class="mini">
-                    <strong id="progressDays">0</strong>
-                    <span>Days with activity</span>
-                </div>
+                <label>Category</label>
 
-                <div class="mini">
-                    <strong id="journalCount">0</strong>
-                    <span>Writing entries</span>
-                </div>
+                <select id="activityCategory">
 
-                <div class="mini">
-                    <strong id="progressSaved">0</strong>
-                    <span>Daily progress entries</span>
-                </div>
+                    <option>Exercise</option>
+                    <option>Learning</option>
+                    <option>Reading</option>
+                    <option>Work</option>
+                    <option>Recreation</option>
+                    <option>Meditation</option>
+                    <option>Walking</option>
+                    <option>Other</option>
+
+                </select>
 
             </div>
 
 
-            <div
-                class="insight"
-                id="progressInsight"
+            <div class="form-group">
+
+                <label>Minutes</label>
+
+                <input
+                    type="number"
+                    id="activityMinutes"
+                    min="1"
+                    placeholder="30"
+                    required
+                >
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>How did you feel?</label>
+
+                <select id="activityFeeling">
+
+                    <option>😀 Great</option>
+                    <option>🙂 Good</option>
+                    <option>😐 Okay</option>
+                    <option>😕 Not great</option>
+                    <option>😴 Tired</option>
+
+                </select>
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>What did you do?</label>
+
+                <textarea
+                    id="activityDid"
+                    placeholder="Describe what you did..."
+                ></textarea>
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>What did you learn?</label>
+
+                <textarea
+                    id="activityLearned"
+                    placeholder="What did you learn or improve?"
+                ></textarea>
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>Progress / Achievement</label>
+
+                <textarea
+                    id="activityProgress"
+                    placeholder="Any progress, achievement or small win?"
+                ></textarea>
+
+            </div>
+
+
+            <button class="primary-btn" type="submit">
+                Save Activity
+            </button>
+
+        </form>
+
+    </div>
+
+</section>
+
+
+
+<!-- PROGRESS -->
+
+<section id="progress" class="screen">
+
+    <div class="card">
+
+        <h2>📈 My Daily Progress</h2>
+
+        <form id="progressForm">
+
+            <div class="form-group">
+
+                <label>Date</label>
+
+                <input type="date" id="progressDate" required>
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>What went well?</label>
+
+                <textarea
+                    id="progressWentWell"
+                    placeholder="Write about today's positive progress..."
+                ></textarea>
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>What could be improved?</label>
+
+                <textarea
+                    id="progressImprove"
+                    placeholder="What would you like to improve?"
+                ></textarea>
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>Main goal for tomorrow</label>
+
+                <textarea
+                    id="progressTomorrow"
+                    placeholder="Your next small step..."
+                ></textarea>
+
+            </div>
+
+
+            <button class="primary-btn" type="submit">
+                Save / Update Progress
+            </button>
+
+        </form>
+
+    </div>
+
+
+    <div class="card">
+
+        <h2>📊 Progress Overview</h2>
+
+        <div class="summary-grid">
+
+            <div class="summary-box">
+                <strong id="progressCount">0</strong>
+                <span class="small">Progress Entries</span>
+            </div>
+
+            <div class="summary-box">
+                <strong id="journalCount">0</strong>
+                <span class="small">Writing Entries</span>
+            </div>
+
+            <div class="summary-box">
+                <strong id="activeDays">0</strong>
+                <span class="small">Active Days</span>
+            </div>
+
+            <div class="summary-box">
+                <strong id="allMinutes">0</strong>
+                <span class="small">Total Minutes</span>
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div class="card">
+
+        <h2>🗓 Progress History</h2>
+
+        <div id="progressHistory"></div>
+
+    </div>
+
+</section>
+
+
+
+<!-- JOURNAL -->
+
+<section id="journal" class="screen">
+
+    <div class="card">
+
+        <h2>✍️ My Writing</h2>
+
+        <form id="journalForm">
+
+            <input type="hidden" id="journalEditId">
+
+            <div class="form-group">
+
+                <label>Title</label>
+
+                <input
+                    type="text"
+                    id="journalTitle"
+                    placeholder="Today's thoughts..."
+                    required
+                >
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>Date</label>
+
+                <input
+                    type="date"
+                    id="journalDate"
+                    required
+                >
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>Your Writing</label>
+
+                <textarea
+                    id="journalText"
+                    placeholder="Write your thoughts, ideas, experiences or reflections..."
+                    required
+                ></textarea>
+
+            </div>
+
+
+            <button class="primary-btn" type="submit" id="journalSaveButton">
+                Save Writing
+            </button>
+
+        </form>
+
+    </div>
+
+
+    <div class="card">
+
+        <h2>📖 My Entries</h2>
+
+        <input
+            type="search"
+            id="journalSearch"
+            placeholder="Search your writing..."
+        >
+
+        <div id="journalList"></div>
+
+    </div>
+
+</section>
+
+
+
+<!-- MORE -->
+
+<section id="more" class="screen">
+
+    <div class="card">
+
+        <h2>⚙️ UPWARD</h2>
+
+        <p>
+            UPWARD keeps your personal activity, progress and writing
+            data stored locally on this device.
+        </p>
+
+        <span class="badge">Private • Local Storage</span>
+
+    </div>
+
+
+    <div class="card">
+
+        <h2>💾 Backup</h2>
+
+        <p class="small">
+            Export your data regularly so you can keep a backup.
+        </p>
+
+        <div class="actions">
+
+            <button
+                class="primary-btn"
+                id="exportBtn"
+                type="button"
             >
-                Your progress will appear here as you build your record.
-            </div>
+                Export My Data
+            </button>
 
-        </section>
+            <button
+                class="secondary-btn"
+                id="importBtn"
+                type="button"
+            >
+                Import Backup
+            </button>
 
+        </div>
 
-        <!-- DATA -->
-
-        <section class="card full">
-
-            <div class="card-title">💾 Your Data</div>
-
-            <div class="card-subtitle">
-                Your UPWARD information is stored locally in this browser.
-            </div>
-
-            <div class="button-row">
-
-                <button
-                    class="btn btn-success"
-                    id="exportData"
-                >
-                    ⬇ Export My Data
-                </button>
-
-                <button
-                    class="btn btn-danger"
-                    id="clearAll"
-                >
-                    Clear All Data
-                </button>
-
-            </div>
-
-        </section>
+        <input
+            type="file"
+            id="importFile"
+            accept=".json"
+            hidden
+        >
 
     </div>
 
 
-    <div class="footer">
-        UPWARD • Small actions. Real progress.
+    <div class="card">
+
+        <h2>📊 Category Summary</h2>
+
+        <div id="categorySummary"></div>
+
     </div>
+
+
+    <div class="card">
+
+        <h2>📱 Install UPWARD</h2>
+
+        <p class="small">
+            If your browser supports PWA installation,
+            use the browser's Install App or Add to Home Screen option.
+        </p>
+
+    </div>
+
+
+    <div class="card">
+
+        <h2>⚠️ Data Management</h2>
+
+        <p class="small">
+            Clearing browser/site data may remove your UPWARD records.
+            Export a backup before clearing your browser data.
+        </p>
+
+        <button
+            class="danger-btn"
+            id="clearAllBtn"
+            type="button"
+        >
+            Clear All Data
+        </button>
+
+    </div>
+
+</section>
+
 
 </div>
 
 
-<div
-    class="toast"
-    id="toast"
-></div>
+
+<!-- BOTTOM NAVIGATION -->
+
+<nav class="bottom-nav">
+
+    <button class="nav-btn active" data-screen="home">
+        <span class="nav-icon">🏠</span>
+        Home
+    </button>
+
+    <button class="nav-btn" data-screen="add">
+        <span class="nav-icon">➕</span>
+        Add
+    </button>
+
+    <button class="nav-btn" data-screen="progress">
+        <span class="nav-icon">📈</span>
+        Progress
+    </button>
+
+    <button class="nav-btn" data-screen="journal">
+        <span class="nav-icon">✍️</span>
+        Journal
+    </button>
+
+    <button class="nav-btn" data-screen="more">
+        <span class="nav-icon">⚙️</span>
+        More
+    </button>
+
+</nav>
+
+
+<div class="toast" id="toast"></div>
+
 
 
 <script>
-
-/* =========================================================
-   UPWARD
-   Personal Activity + Progress + Writing Tracker
-   ========================================================= */
-
-
-/* ---------- STORAGE ---------- */
 
 const ACTIVITY_KEY = "upwardActivities";
 const JOURNAL_KEY = "upwardJournal";
@@ -1105,13 +956,27 @@ const PROGRESS_KEY = "upwardDailyProgress";
 
 function getActivities(){
 
-    try{
-        return JSON.parse(
-            localStorage.getItem(ACTIVITY_KEY)
-        ) || [];
-    }catch(e){
-        return [];
-    }
+    return JSON.parse(
+        localStorage.getItem(ACTIVITY_KEY) || "[]"
+    );
+
+}
+
+
+function getJournal(){
+
+    return JSON.parse(
+        localStorage.getItem(JOURNAL_KEY) || "[]"
+    );
+
+}
+
+
+function getProgress(){
+
+    return JSON.parse(
+        localStorage.getItem(PROGRESS_KEY) || "[]"
+    );
 
 }
 
@@ -1126,19 +991,6 @@ function saveActivities(data){
 }
 
 
-function getJournal(){
-
-    try{
-        return JSON.parse(
-            localStorage.getItem(JOURNAL_KEY)
-        ) || [];
-    }catch(e){
-        return [];
-    }
-
-}
-
-
 function saveJournal(data){
 
     localStorage.setItem(
@@ -1149,20 +1001,7 @@ function saveJournal(data){
 }
 
 
-function getProgress(){
-
-    try{
-        return JSON.parse(
-            localStorage.getItem(PROGRESS_KEY)
-        ) || {};
-    }catch(e){
-        return {};
-    }
-
-}
-
-
-function saveProgressData(data){
+function saveProgress(data){
 
     localStorage.setItem(
         PROGRESS_KEY,
@@ -1172,36 +1011,27 @@ function saveProgressData(data){
 }
 
 
-/* ---------- DATE HELPERS ---------- */
-
 function localDate(){
 
     const d = new Date();
 
-    const year = d.getFullYear();
+    const offset =
+        d.getTimezoneOffset() * 60000;
 
-    const month = String(
-        d.getMonth()+1
-    ).padStart(2,"0");
-
-    const day = String(
-        d.getDate()
-    ).padStart(2,"0");
-
-    return `${year}-${month}-${day}`;
+    return new Date(
+        d.getTime() - offset
+    ).toISOString().split("T")[0];
 
 }
 
 
-function formatDate(dateString){
+function displayDate(date){
 
-    if(!dateString) return "";
+    if(!date) return "";
 
-    const d = new Date(
-        dateString + "T00:00:00"
-    );
-
-    return d.toLocaleDateString(
+    return new Date(
+        date + "T00:00:00"
+    ).toLocaleDateString(
         undefined,
         {
             day:"numeric",
@@ -1213,47 +1043,17 @@ function formatDate(dateString){
 }
 
 
-function getDayName(dateString){
+function escapeHtml(value){
 
-    const d = new Date(
-        dateString + "T00:00:00"
-    );
-
-    return d.toLocaleDateString(
-        undefined,
-        {
-            weekday:"short"
-        }
-    );
+    return String(value || "")
+        .replace(/&/g,"&amp;")
+        .replace(/</g,"&lt;")
+        .replace(/>/g,"&gt;")
+        .replace(/"/g,"&quot;")
+        .replace(/'/g,"&#039;");
 
 }
 
-
-/* ---------- TODAY ---------- */
-
-function updateToday(){
-
-    const d = new Date();
-
-    document.getElementById(
-        "todayText"
-    ).textContent =
-        d.toLocaleDateString(
-            undefined,
-            {
-                weekday:"long",
-                day:"numeric",
-                month:"long",
-                year:"numeric"
-            }
-        );
-
-}
-
-
-/* ---------- TOAST ---------- */
-
-let toastTimer;
 
 function showToast(message){
 
@@ -1264,346 +1064,259 @@ function showToast(message){
 
     toast.classList.add("show");
 
-    clearTimeout(toastTimer);
-
-    toastTimer = setTimeout(
-        ()=>{
-            toast.classList.remove("show");
-        },
+    setTimeout(
+        () => toast.classList.remove("show"),
         2200
     );
 
 }
 
 
-/* =========================================================
-   ACTIVITY FORM
-   ========================================================= */
 
-document
-.getElementById("activityForm")
-.addEventListener(
-    "submit",
-    function(e){
+/* NAVIGATION */
 
-        e.preventDefault();
+document.querySelectorAll(".nav-btn")
+.forEach(button => {
 
-        const name =
-            document
-            .getElementById("activityName")
-            .value
-            .trim();
+    button.addEventListener("click", () => {
 
-        const category =
-            document
-            .getElementById("activityCategory")
-            .value;
+        const target =
+            button.dataset.screen;
 
-        const minutes =
-            Number(
-                document
-                .getElementById("activityMinutes")
-                .value
-            );
+        document.querySelectorAll(".screen")
+        .forEach(screen => {
 
-        const feeling =
-            document
-            .getElementById("activityFeeling")
-            .value;
-
-        const notes =
-            document
-            .getElementById("activityNotes")
-            .value
-            .trim();
-
-        const learned =
-            document
-            .getElementById("activityLearned")
-            .value
-            .trim();
-
-        const achievement =
-            document
-            .getElementById("activityAchievement")
-            .value
-            .trim();
-
-
-        if(!name){
-
-            showToast(
-                "Please enter an activity."
-            );
-
-            return;
-
-        }
-
-
-        if(!minutes || minutes < 1){
-
-            showToast(
-                "Please enter valid minutes."
-            );
-
-            return;
-
-        }
-
-
-        const activities =
-            getActivities();
-
-
-        activities.push({
-
-            id:
-                Date.now(),
-
-            date:
-                localDate(),
-
-            name:
-                name,
-
-            category:
-                category,
-
-            minutes:
-                minutes,
-
-            feeling:
-                feeling,
-
-            notes:
-                notes,
-
-            learned:
-                learned,
-
-            achievement:
-                achievement,
-
-            createdAt:
-                new Date().toISOString()
+            screen.classList.remove("active");
 
         });
 
-
-        saveActivities(
-            activities
-        );
+        document.getElementById(target)
+            .classList.add("active");
 
 
-        this.reset();
+        document.querySelectorAll(".nav-btn")
+        .forEach(btn => {
+
+            btn.classList.remove("active");
+
+        });
+
+        button.classList.add("active");
 
 
-        renderAll();
+        if(target === "home"){
+            updateDashboard();
+        }
+
+        if(target === "progress"){
+            renderProgress();
+        }
+
+        if(target === "journal"){
+            renderJournal();
+        }
+
+        if(target === "more"){
+            renderCategorySummary();
+        }
+
+    });
+
+});
 
 
-        showToast(
-            "Activity added successfully."
-        );
 
-    }
-);
-
-
-/* ---------- RESET ACTIVITY ---------- */
+/* ACTIVITY */
 
 document
-.getElementById("resetActivity")
-.addEventListener(
-    "click",
-    function(){
+.getElementById("activityForm")
+.addEventListener("submit", function(event){
 
-        document
-        .getElementById("activityForm")
-        .reset();
-
-    }
-);
+    event.preventDefault();
 
 
-/* =========================================================
-   ACTIVITY LIST
-   ========================================================= */
+    const activities =
+        getActivities();
 
-function renderActivities(){
 
-    const container =
-        document.getElementById(
-            "activityList"
-        );
+    const activity = {
+
+        id: Date.now(),
+
+        date: localDate(),
+
+        name:
+            document.getElementById(
+                "activityName"
+            ).value.trim(),
+
+        category:
+            document.getElementById(
+                "activityCategory"
+            ).value,
+
+        minutes:
+            Number(
+                document.getElementById(
+                    "activityMinutes"
+                ).value
+            ),
+
+        feeling:
+            document.getElementById(
+                "activityFeeling"
+            ).value,
+
+        did:
+            document.getElementById(
+                "activityDid"
+            ).value.trim(),
+
+        learned:
+            document.getElementById(
+                "activityLearned"
+            ).value.trim(),
+
+        progress:
+            document.getElementById(
+                "activityProgress"
+            ).value.trim()
+
+    };
+
+
+    activities.push(activity);
+
+    saveActivities(activities);
+
+
+    this.reset();
+
+
+    showToast("Activity saved successfully!");
+
+    updateDashboard();
+
+});
+
+
+function deleteActivity(id){
 
     const activities =
         getActivities()
-        .filter(
-            a =>
-                a.date === localDate()
-        )
-        .sort(
-            (a,b)=>
-                b.id-a.id
+        .filter(item => item.id !== id);
+
+    saveActivities(activities);
+
+    updateDashboard();
+
+    showToast("Activity deleted.");
+
+}
+
+
+function renderToday(){
+
+    const list =
+        document.getElementById(
+            "todayList"
         );
 
+    const today =
+        localDate();
 
-    if(activities.length === 0){
 
-        container.innerHTML =
-            `<div class="empty">
-                No activities recorded today.<br>
-                Start with one small action.
-            </div>`;
+    const activities =
+        getActivities()
+        .filter(item => item.date === today)
+        .sort((a,b) => b.id - a.id);
+
+
+    if(!activities.length){
+
+        list.innerHTML =
+            '<div class="empty">No activities yet today.<br>Start with one small action.</div>';
 
         return;
 
     }
 
 
-    container.innerHTML =
-        activities.map(
-            a => `
+    list.innerHTML =
+        activities.map(item => `
 
-            <div
-                class="activity-item"
-                data-id="${a.id}"
-            >
+            <div class="activity">
 
                 <div class="activity-top">
 
                     <div>
 
                         <div class="activity-name">
-                            ${escapeHtml(a.name)}
+                            ${escapeHtml(item.name)}
                         </div>
 
                         <div class="activity-meta">
-                            ${a.minutes} minutes
-                            • ${escapeHtml(a.feeling)}
+
+                            ${escapeHtml(item.category)}
+                            •
+                            ${item.minutes} min
+                            •
+                            ${escapeHtml(item.feeling)}
+
                         </div>
 
                     </div>
 
-                    <span class="badge">
-                        ${escapeHtml(a.category)}
-                    </span>
-
-                </div>
-
-                ${
-                    a.notes
-                    ?
-                    `<div class="activity-notes">
-                        <strong>What I did:</strong>
-                        ${escapeHtml(a.notes)}
-                    </div>`
-                    :
-                    ""
-                }
-
-                ${
-                    a.learned
-                    ?
-                    `<div class="activity-notes">
-                        <strong>Learned:</strong>
-                        ${escapeHtml(a.learned)}
-                    </div>`
-                    :
-                    ""
-                }
-
-                ${
-                    a.achievement
-                    ?
-                    `<div class="activity-notes">
-                        <strong>Progress:</strong>
-                        ${escapeHtml(a.achievement)}
-                    </div>`
-                    :
-                    ""
-                }
-
-                <div class="button-row">
-
                     <button
-                        class="btn btn-danger btn-small delete-activity"
-                        data-id="${a.id}"
+                        class="danger-btn"
+                        onclick="deleteActivity(${item.id})"
                     >
                         Delete
                     </button>
 
                 </div>
 
+
+                ${
+                    item.did
+                    ? `<div class="activity-meta">
+                        <strong>Did:</strong>
+                        ${escapeHtml(item.did)}
+                       </div>`
+                    : ""
+                }
+
+
+                ${
+                    item.learned
+                    ? `<div class="activity-meta">
+                        <strong>Learned:</strong>
+                        ${escapeHtml(item.learned)}
+                       </div>`
+                    : ""
+                }
+
+
+                ${
+                    item.progress
+                    ? `<div class="activity-meta">
+                        <strong>Progress:</strong>
+                        ${escapeHtml(item.progress)}
+                       </div>`
+                    : ""
+                }
+
             </div>
 
-        `
-        ).join("");
+        `).join("");
 
 }
 
 
-/* ---------- DELETE ACTIVITY ---------- */
 
-document
-.getElementById("activityList")
-.addEventListener(
-    "click",
-    function(e){
+/* DASHBOARD */
 
-        if(
-            !e.target.classList.contains(
-                "delete-activity"
-            )
-        ){
-            return;
-        }
-
-
-        const id =
-            Number(
-                e.target.dataset.id
-            );
-
-
-        if(
-            !confirm(
-                "Delete this activity?"
-            )
-        ){
-            return;
-        }
-
-
-        const updated =
-            getActivities()
-            .filter(
-                a => a.id !== id
-            );
-
-
-        saveActivities(
-            updated
-        );
-
-
-        renderAll();
-
-
-        showToast(
-            "Activity deleted."
-        );
-
-    }
-);
-
-
-/* =========================================================
-   STATS
-   ========================================================= */
-
-function calculateStats(){
+function updateDashboard(){
 
     const activities =
         getActivities();
@@ -1614,22 +1327,20 @@ function calculateStats(){
 
     const todayActivities =
         activities.filter(
-            a => a.date === today
+            item => item.date === today
         );
 
 
     const todayMinutes =
         todayActivities.reduce(
-            (sum,a)=>
-                sum + Number(a.minutes || 0),
+            (sum,item) => sum + Number(item.minutes || 0),
             0
         );
 
 
     const totalMinutes =
         activities.reduce(
-            (sum,a)=>
-                sum + Number(a.minutes || 0),
+            (sum,item) => sum + Number(item.minutes || 0),
             0
         );
 
@@ -1655,29 +1366,117 @@ function calculateStats(){
     document.getElementById(
         "currentStreak"
     ).textContent =
-        calculateStreak();
+        calculateStreak(activities);
 
 
-    return {
-        todayActivities,
-        todayMinutes,
-        totalMinutes
-    };
+    const movement =
+        todayActivities
+        .filter(item =>
+            [
+                "Exercise",
+                "Walking"
+            ].includes(item.category)
+        )
+        .reduce(
+            (sum,item) =>
+                sum + Number(item.minutes || 0),
+            0
+        );
+
+
+    const learning =
+        todayActivities
+        .filter(item =>
+            [
+                "Learning",
+                "Reading"
+            ].includes(item.category)
+        )
+        .reduce(
+            (sum,item) =>
+                sum + Number(item.minutes || 0),
+            0
+        );
+
+
+    const mindfulness =
+        todayActivities
+        .filter(item =>
+            item.category === "Meditation"
+        )
+        .reduce(
+            (sum,item) =>
+                sum + Number(item.minutes || 0),
+            0
+        );
+
+
+    updateGoal(
+        "movementGoal",
+        "movementFill",
+        movement,
+        30
+    );
+
+
+    updateGoal(
+        "learningGoal",
+        "learningFill",
+        learning,
+        30
+    );
+
+
+    updateGoal(
+        "mindfulnessGoal",
+        "mindfulnessFill",
+        mindfulness,
+        10
+    );
+
+
+    renderToday();
+
+    drawChart();
+
+    updateOverview();
 
 }
 
 
-/* ---------- STREAK ---------- */
+function updateGoal(
+    textId,
+    fillId,
+    value,
+    target
+){
 
-function calculateStreak(){
+    document.getElementById(textId)
+        .textContent =
+        `${value} / ${target} min`;
 
-    const activities =
-        getActivities();
+
+    const percent =
+        Math.min(
+            100,
+            (value / target) * 100
+        );
+
+
+    document.getElementById(fillId)
+        .style.width =
+        percent + "%";
+
+}
+
+
+
+function calculateStreak(activities){
 
     const dates =
         new Set(
             activities.map(
-                a => a.date
+                item => item.date
             )
         );
 
@@ -1689,35 +1488,30 @@ function calculateStreak(){
 
     while(true){
 
-        const year =
-            d.getFullYear();
+        const offset =
+            d.getTimezoneOffset() * 60000;
 
-        const month =
-            String(
-                d.getMonth()+1
-            ).padStart(2,"0");
-
-        const day =
-            String(
-                d.getDate()
-            ).padStart(2,"0");
-
-        const key =
-            `${year}-${month}-${day}`;
+        const date =
+            new Date(
+                d.getTime() - offset
+            )
+            .toISOString()
+            .split("T")[0];
 
 
-        if(
-            !dates.has(key)
-        ){
+        if(dates.has(date)){
+
+            streak++;
+
+            d.setDate(
+                d.getDate() - 1
+            );
+
+        }else{
+
             break;
+
         }
-
-
-        streak++;
-
-        d.setDate(
-            d.getDate()-1
-        );
 
     }
 
@@ -1727,168 +1521,8 @@ function calculateStreak(){
 }
 
 
-/* =========================================================
-   DAILY GOALS
-   ========================================================= */
 
-function updateGoals(){
-
-    const activities =
-        getActivities()
-        .filter(
-            a =>
-                a.date === localDate()
-        );
-
-
-    let movement = 0;
-    let learning = 0;
-    let mindfulness = 0;
-
-
-    activities.forEach(
-        a => {
-
-            const category =
-                a.category.toLowerCase();
-
-            const mins =
-                Number(a.minutes || 0);
-
-
-            if(
-                category === "exercise" ||
-                category === "walking"
-            ){
-
-                movement += mins;
-
-            }
-
-
-            if(
-                category === "learning" ||
-                category === "reading"
-            ){
-
-                learning += mins;
-
-            }
-
-
-            if(
-                category === "meditation"
-            ){
-
-                mindfulness += mins;
-
-            }
-
-        }
-    );
-
-
-    updateGoal(
-        "movementGoal",
-        "movementGoalText",
-        movement,
-        30
-    );
-
-
-    updateGoal(
-        "learningGoal",
-        "learningGoalText",
-        learning,
-        30
-    );
-
-
-    updateGoal(
-        "mindfulnessGoal",
-        "mindfulnessGoalText",
-        mindfulness,
-        10
-    );
-
-}
-
-
-function updateGoal(
-    barId,
-    textId,
-    value,
-    target
-){
-
-    const percent =
-        Math.min(
-            100,
-            (value / target) * 100
-        );
-
-
-    document.getElementById(
-        barId
-    ).style.width =
-        percent + "%";
-
-
-    document.getElementById(
-        textId
-    ).textContent =
-        `${value} / ${target} min`;
-
-}
-
-
-/* =========================================================
-   INSIGHT
-   ========================================================= */
-
-function updateInsight(){
-
-    const stats =
-        calculateStats();
-
-
-    const message =
-        document.getElementById(
-            "insight"
-        );
-
-
-    if(stats.todayActivities === 0){
-
-        message.textContent =
-            "Start with one small action today. Even 10 minutes counts.";
-
-    }
-    else if(stats.todayMinutes < 30){
-
-        message.textContent =
-            "Good start. You have already created some momentum — keep going.";
-
-    }
-    else if(stats.todayMinutes < 60){
-
-        message.textContent =
-            "Nice work. You have crossed 30 minutes today. Keep building steadily.";
-
-    }
-    else{
-
-        message.textContent =
-            "Strong day. You have invested meaningful time in yourself today.";
-
-    }
-
-}
-
-
-/* =========================================================
-   7-DAY CHART
-   ========================================================= */
+/* CHART */
 
 function drawChart(){
 
@@ -1902,29 +1536,10 @@ function drawChart(){
 
 
     const width =
-        canvas.clientWidth || 600;
+        canvas.width;
 
-    const height = 240;
-
-
-    const dpr =
-        window.devicePixelRatio || 1;
-
-
-    canvas.width =
-        width * dpr;
-
-    canvas.height =
-        height * dpr;
-
-    ctx.setTransform(
-        dpr,
-        0,
-        0,
-        dpr,
-        0,
-        0
-    );
+    const height =
+        canvas.height;
 
 
     ctx.clearRect(
@@ -1939,51 +1554,43 @@ function drawChart(){
         getActivities();
 
 
-    const days = [];
+    const values = [];
 
 
-    for(let i=6;i>=0;i--){
+    for(let i = 6; i >= 0; i--){
 
         const d =
             new Date();
 
         d.setDate(
-            d.getDate()-i
+            d.getDate() - i
         );
 
 
-        const year =
-            d.getFullYear();
-
-        const month =
-            String(
-                d.getMonth()+1
-            ).padStart(2,"0");
-
-        const day =
-            String(
-                d.getDate()
-            ).padStart(2,"0");
-
+        const offset =
+            d.getTimezoneOffset() * 60000;
 
         const date =
-            `${year}-${month}-${day}`;
+            new Date(
+                d.getTime() - offset
+            )
+            .toISOString()
+            .split("T")[0];
 
 
         const minutes =
             activities
-            .filter(
-                a =>
-                    a.date === date
+            .filter(item =>
+                item.date === date
             )
             .reduce(
-                (sum,a)=>
-                    sum + Number(a.minutes || 0),
+                (sum,item) =>
+                    sum + Number(item.minutes || 0),
                 0
             );
 
 
-        days.push({
+        values.push({
             date,
             minutes
         });
@@ -1994,655 +1601,466 @@ function drawChart(){
     const max =
         Math.max(
             30,
-            ...days.map(
-                d=>d.minutes
-            )
+            ...values.map(v => v.minutes)
         );
 
 
-    const padding = {
-        left:40,
-        right:15,
-        top:20,
-        bottom:40
-    };
+    const barWidth = 70;
+
+    const gap = 35;
 
 
-    const chartWidth =
-        width -
-        padding.left -
-        padding.right;
+    values.forEach((item,index) => {
 
+        const x =
+            35 + index * (barWidth + gap);
 
-    const chartHeight =
-        height -
-        padding.top -
-        padding.bottom;
-
-
-    /* grid */
-
-    ctx.strokeStyle =
-        "#e7eaf1";
-
-    ctx.lineWidth = 1;
-
-
-    for(let i=0;i<=4;i++){
+        const barHeight =
+            (item.minutes / max) * 140;
 
         const y =
-            padding.top +
-            chartHeight -
-            (chartHeight * i / 4);
-
-
-        ctx.beginPath();
-
-        ctx.moveTo(
-            padding.left,
-            y
-        );
-
-        ctx.lineTo(
-            width-padding.right,
-            y
-        );
-
-        ctx.stroke();
+            165 - barHeight;
 
 
         ctx.fillStyle =
-            "#737b8c";
+            "#667eea";
+
+        ctx.fillRect(
+            x,
+            y,
+            barWidth,
+            barHeight
+        );
+
+
+        ctx.fillStyle =
+            "#555";
 
         ctx.font =
-            "11px Arial";
+            "14px Arial";
 
         ctx.textAlign =
-            "right";
+            "center";
 
-        const value =
-            Math.round(
-                max*i/4
+
+        ctx.fillText(
+            item.minutes,
+            x + barWidth / 2,
+            y - 8
+        );
+
+
+        const shortDate =
+            new Date(
+                item.date + "T00:00:00"
+            )
+            .toLocaleDateString(
+                undefined,
+                {
+                    weekday:"short"
+                }
             );
 
 
         ctx.fillText(
-            value,
-            padding.left-7,
-            y+4
+            shortDate,
+            x + barWidth / 2,
+            195
+        );
+
+    });
+
+}
+
+
+
+/* DAILY PROGRESS */
+
+const progressDate =
+    document.getElementById(
+        "progressDate"
+    );
+
+progressDate.value =
+    localDate();
+
+
+progressDate.addEventListener(
+    "change",
+    loadProgressForDate
+);
+
+
+document
+.getElementById("progressForm")
+.addEventListener("submit", function(event){
+
+    event.preventDefault();
+
+
+    const progress =
+        getProgress();
+
+
+    const date =
+        document.getElementById(
+            "progressDate"
+        ).value;
+
+
+    const existingIndex =
+        progress.findIndex(
+            item => item.date === date
+        );
+
+
+    const item = {
+
+        date,
+
+        wentWell:
+            document.getElementById(
+                "progressWentWell"
+            ).value.trim(),
+
+        improve:
+            document.getElementById(
+                "progressImprove"
+            ).value.trim(),
+
+        tomorrow:
+            document.getElementById(
+                "progressTomorrow"
+            ).value.trim(),
+
+        updatedAt:
+            new Date().toISOString()
+
+    };
+
+
+    if(existingIndex >= 0){
+
+        progress[existingIndex] =
+            item;
+
+        showToast(
+            "Progress updated!"
+        );
+
+    }else{
+
+        progress.push(item);
+
+        showToast(
+            "Progress saved!"
         );
 
     }
 
 
-    const barGap = 12;
+    saveProgress(progress);
 
-    const barWidth =
-        (
-            chartWidth -
-            barGap * 6
-        ) / 7;
+    renderProgress();
 
+    updateOverview();
 
-    days.forEach(
-        (day,index)=>{
-
-            const x =
-                padding.left +
-                index *
-                (barWidth+barGap);
+});
 
 
-            const barHeight =
-                (
-                    day.minutes /
-                    max
-                ) *
-                chartHeight;
+function loadProgressForDate(){
+
+    const date =
+        progressDate.value;
 
 
-            const y =
-                padding.top +
-                chartHeight -
-                barHeight;
-
-
-            /* bar */
-
-            const gradient =
-                ctx.createLinearGradient(
-                    0,
-                    y,
-                    0,
-                    y+barHeight
-                );
-
-            gradient.addColorStop(
-                0,
-                "#667eea"
-            );
-
-            gradient.addColorStop(
-                1,
-                "#764ba2"
-            );
-
-
-            ctx.fillStyle =
-                gradient;
-
-
-            ctx.beginPath();
-
-            ctx.roundRect(
-                x,
-                y,
-                barWidth,
-                Math.max(
-                    2,
-                    barHeight
-                ),
-                7
-            );
-
-            ctx.fill();
-
-
-            /* value */
-
-            ctx.fillStyle =
-                "#50576a";
-
-            ctx.font =
-                "11px Arial";
-
-            ctx.textAlign =
-                "center";
-
-
-            if(day.minutes > 0){
-
-                ctx.fillText(
-                    day.minutes,
-                    x+barWidth/2,
-                    y-6
-                );
-
-            }
-
-
-            /* day */
-
-            ctx.fillStyle =
-                "#737b8c";
-
-            ctx.fillText(
-                getDayName(
-                    day.date
-                ),
-                x+barWidth/2,
-                height-17
-            );
-
-        }
-    );
-
-}
-
-
-/* =========================================================
-   DAILY PROGRESS
-   ========================================================= */
-
-function loadTodayProgress(){
-
-    const all =
-        getProgress();
-
-    const today =
-        all[localDate()];
-
-
-    if(!today){
-
-        document.getElementById(
-            "progressText"
-        ).value = "";
-
-        document.getElementById(
-            "progressGood"
-        ).value = "";
-
-        document.getElementById(
-            "progressImprove"
-        ).value = "";
-
-        document.getElementById(
-            "progressTomorrow"
-        ).value = "";
-
-        return;
-
-    }
+    const item =
+        getProgress().find(
+            p => p.date === date
+        );
 
 
     document.getElementById(
-        "progressText"
+        "progressWentWell"
     ).value =
-        today.progress || "";
-
-
-    document.getElementById(
-        "progressGood"
-    ).value =
-        today.good || "";
+        item ? item.wentWell : "";
 
 
     document.getElementById(
         "progressImprove"
     ).value =
-        today.improve || "";
+        item ? item.improve : "";
 
 
     document.getElementById(
         "progressTomorrow"
     ).value =
-        today.tomorrow || "";
+        item ? item.tomorrow : "";
 
 }
 
 
-/* ---------- SAVE PROGRESS ---------- */
+function renderProgress(){
 
-document
-.getElementById("saveProgress")
-.addEventListener(
-    "click",
-    function(){
+    loadProgressForDate();
 
-        const all =
-            getProgress();
 
-
-        all[localDate()] = {
-
-            progress:
-                document
-                .getElementById(
-                    "progressText"
-                )
-                .value
-                .trim(),
-
-            good:
-                document
-                .getElementById(
-                    "progressGood"
-                )
-                .value
-                .trim(),
-
-            improve:
-                document
-                .getElementById(
-                    "progressImprove"
-                )
-                .value
-                .trim(),
-
-            tomorrow:
-                document
-                .getElementById(
-                    "progressTomorrow"
-                )
-                .value
-                .trim(),
-
-            updatedAt:
-                new Date().toISOString()
-
-        };
-
-
-        saveProgressData(
-            all
-        );
-
-
-        renderProgressOverview();
-
-
-        showToast(
-            "Today's progress saved."
-        );
-
-    }
-);
-
-
-/* ---------- CLEAR PROGRESS FORM ---------- */
-
-document
-.getElementById("clearProgressForm")
-.addEventListener(
-    "click",
-    function(){
-
-        document
-        .getElementById(
-            "progressText"
-        ).value = "";
-
-        document
-        .getElementById(
-            "progressGood"
-        ).value = "";
-
-        document
-        .getElementById(
-            "progressImprove"
-        ).value = "";
-
-        document
-        .getElementById(
-            "progressTomorrow"
-        ).value = "";
-
-    }
-);
-
-
-/* =========================================================
-   JOURNAL
-   ========================================================= */
-
-function setupJournalDate(){
-
-    document
-    .getElementById(
-        "journalDate"
-    )
-    .value =
-        localDate();
-
-}
-
-
-/* ---------- SAVE JOURNAL ---------- */
-
-document
-.getElementById("journalForm")
-.addEventListener(
-    "submit",
-    function(e){
-
-        e.preventDefault();
-
-
-        const title =
-            document
-            .getElementById(
-                "journalTitle"
-            )
-            .value
-            .trim();
-
-
-        const date =
-            document
-            .getElementById(
-                "journalDate"
-            )
-            .value;
-
-
-        const text =
-            document
-            .getElementById(
-                "journalText"
-            )
-            .value
-            .trim();
-
-
-        if(!title){
-
-            showToast(
-                "Please enter a title."
-            );
-
-            return;
-
-        }
-
-
-        if(!text){
-
-            showToast(
-                "Please write something first."
-            );
-
-            return;
-
-        }
-
-
-        const editId =
-            document
-            .getElementById(
-                "journalEditId"
-            )
-            .value;
-
-
-        const entries =
-            getJournal();
-
-
-        if(editId){
-
-            const index =
-                entries.findIndex(
-                    e =>
-                        String(e.id) ===
-                        String(editId)
-                );
-
-
-            if(index !== -1){
-
-                entries[index] = {
-
-                    ...entries[index],
-
-                    title,
-                    date,
-                    text,
-
-                    updatedAt:
-                        new Date().toISOString()
-
-                };
-
-            }
-
-            showToast(
-                "Writing updated."
-            );
-
-        }
-        else{
-
-            entries.push({
-
-                id:
-                    Date.now(),
-
-                title,
-                date,
-                text,
-
-                createdAt:
-                    new Date().toISOString(),
-
-                updatedAt:
-                    new Date().toISOString()
-
-            });
-
-            showToast(
-                "Writing saved."
-            );
-
-        }
-
-
-        saveJournal(
-            entries
-        );
-
-
-        resetJournalForm();
-
-
-        renderJournal();
-
-        renderProgressOverview();
-
-    }
-);
-
-
-/* ---------- RESET JOURNAL ---------- */
-
-function resetJournalForm(){
-
-    document
-    .getElementById(
-        "journalForm"
-    )
-    .reset();
-
-
-    document
-    .getElementById(
-        "journalEditId"
-    )
-    .value = "";
-
-
-    document
-    .getElementById(
-        "journalSaveButton"
-    )
-    .textContent =
-        "✍️ Save Writing";
-
-
-    document
-    .getElementById(
-        "journalCancelEdit"
-    )
-    .style.display =
-        "none";
-
-
-    setupJournalDate();
-
-}
-
-
-/* ---------- CANCEL EDIT ---------- */
-
-document
-.getElementById(
-    "journalCancelEdit"
-)
-.addEventListener(
-    "click",
-    function(){
-
-        resetJournalForm();
-
-    }
-);
-
-
-/* ---------- RENDER JOURNAL ---------- */
-
-function renderJournal(){
-
-    const container =
+    const history =
         document.getElementById(
-            "journalList"
+            "progressHistory"
         );
 
 
-    const entries =
-        getJournal()
+    const progress =
+        getProgress()
         .sort(
-            (a,b)=>
-                new Date(
-                    b.date
-                ) -
-                new Date(
-                    a.date
-                ) ||
-                b.id-a.id
+            (a,b) =>
+                b.date.localeCompare(a.date)
         );
 
 
-    if(entries.length === 0){
+    if(!progress.length){
 
-        container.innerHTML =
-            `<div class="empty">
-                No writing entries yet.<br>
-                This is your space to write freely.
-            </div>`;
+        history.innerHTML =
+            '<div class="empty">No progress entries yet.</div>';
+
+        updateOverview();
 
         return;
 
     }
 
 
-    container.innerHTML =
-        entries.map(
-            entry => `
+    history.innerHTML =
+        progress.map(item => `
 
-            <div
-                class="journal-entry"
-            >
+            <div class="history-item">
+
+                <strong>
+                    ${displayDate(item.date)}
+                </strong>
+
+                ${
+                    item.wentWell
+                    ? `<p>
+                        <strong>Went well:</strong><br>
+                        ${escapeHtml(item.wentWell)}
+                       </p>`
+                    : ""
+                }
+
+                ${
+                    item.improve
+                    ? `<p>
+                        <strong>Improve:</strong><br>
+                        ${escapeHtml(item.improve)}
+                       </p>`
+                    : ""
+                }
+
+                ${
+                    item.tomorrow
+                    ? `<p>
+                        <strong>Tomorrow:</strong><br>
+                        ${escapeHtml(item.tomorrow)}
+                       </p>`
+                    : ""
+                }
+
+            </div>
+
+        `).join("");
+
+}
+
+
+
+/* JOURNAL */
+
+document
+.getElementById("journalDate")
+.value =
+localDate();
+
+
+document
+.getElementById("journalForm")
+.addEventListener("submit", function(event){
+
+    event.preventDefault();
+
+
+    const journal =
+        getJournal();
+
+
+    const editId =
+        document.getElementById(
+            "journalEditId"
+        ).value;
+
+
+    const item = {
+
+        id:
+            editId
+            ? Number(editId)
+            : Date.now(),
+
+        title:
+            document.getElementById(
+                "journalTitle"
+            ).value.trim(),
+
+        date:
+            document.getElementById(
+                "journalDate"
+            ).value,
+
+        text:
+            document.getElementById(
+                "journalText"
+            ).value.trim(),
+
+        updatedAt:
+            new Date().toISOString()
+
+    };
+
+
+    if(editId){
+
+        const index =
+            journal.findIndex(
+                j => j.id === Number(editId)
+            );
+
+
+        if(index >= 0){
+
+            journal[index] =
+                item;
+
+        }
+
+
+        showToast(
+            "Writing updated!"
+        );
+
+    }else{
+
+        journal.push(item);
+
+        showToast(
+            "Writing saved!"
+        );
+
+    }
+
+
+    saveJournal(journal);
+
+
+    this.reset();
+
+
+    document.getElementById(
+        "journalEditId"
+    ).value = "";
+
+
+    document.getElementById(
+        "journalDate"
+    ).value =
+    localDate();
+
+
+    document.getElementById(
+        "journalSaveButton"
+    ).textContent =
+    "Save Writing";
+
+
+    renderJournal();
+
+    updateOverview();
+
+});
+
+
+function renderJournal(){
+
+    const list =
+        document.getElementById(
+            "journalList"
+        );
+
+
+    const search =
+        (
+            document.getElementById(
+                "journalSearch"
+            ).value || ""
+        )
+        .toLowerCase();
+
+
+    const entries =
+        getJournal()
+        .filter(item =>
+            item.title.toLowerCase()
+            .includes(search) ||
+
+            item.text.toLowerCase()
+            .includes(search)
+        )
+        .sort(
+            (a,b) =>
+                b.date.localeCompare(a.date)
+        );
+
+
+    if(!entries.length){
+
+        list.innerHTML =
+            '<div class="empty">No writing entries found.</div>';
+
+        return;
+
+    }
+
+
+    list.innerHTML =
+        entries.map(item => `
+
+            <div class="journal-item">
 
                 <div class="journal-title">
-                    ${escapeHtml(
-                        entry.title
-                    )}
+                    ${escapeHtml(item.title)}
                 </div>
 
                 <div class="journal-date">
-                    ${formatDate(
-                        entry.date
-                    )}
+                    ${displayDate(item.date)}
                 </div>
 
                 <div class="journal-text">
-                    ${escapeHtml(
-                        entry.text
-                    )}
+                    ${escapeHtml(item.text)}
                 </div>
 
-                <div class="journal-actions">
+
+                <div class="actions">
 
                     <button
-                        class="btn btn-secondary btn-small edit-journal"
-                        data-id="${entry.id}"
+                        class="success-btn"
+                        onclick="editJournal(${item.id})"
                     >
                         Edit
                     </button>
 
                     <button
-                        class="btn btn-danger btn-small delete-journal"
-                        data-id="${entry.id}"
+                        class="danger-btn"
+                        onclick="deleteJournal(${item.id})"
                     >
                         Delete
                     </button>
@@ -2651,154 +2069,93 @@ function renderJournal(){
 
             </div>
 
-        `
-        ).join("");
+        `).join("");
 
 }
 
 
-/* ---------- JOURNAL BUTTONS ---------- */
-
 document
-.getElementById("journalList")
+.getElementById("journalSearch")
 .addEventListener(
-    "click",
-    function(e){
-
-        const id =
-            Number(
-                e.target.dataset.id
-            );
-
-
-        if(
-            e.target.classList.contains(
-                "edit-journal"
-            )
-        ){
-
-            editJournal(id);
-
-        }
-
-
-        if(
-            e.target.classList.contains(
-                "delete-journal"
-            )
-        ){
-
-            deleteJournal(id);
-
-        }
-
-    }
+    "input",
+    renderJournal
 );
 
 
-/* ---------- EDIT JOURNAL ---------- */
-
 function editJournal(id){
 
-    const entry =
+    const item =
         getJournal()
         .find(
-            e => e.id === id
+            j => j.id === id
         );
 
 
-    if(!entry) return;
+    if(!item) return;
 
 
-    document
-    .getElementById(
-        "journalTitle"
-    )
-    .value =
-        entry.title;
-
-
-    document
-    .getElementById(
-        "journalDate"
-    )
-    .value =
-        entry.date;
-
-
-    document
-    .getElementById(
-        "journalText"
-    )
-    .value =
-        entry.text;
-
-
-    document
-    .getElementById(
+    document.getElementById(
         "journalEditId"
-    )
-    .value =
-        entry.id;
+    ).value =
+    item.id;
 
 
-    document
-    .getElementById(
+    document.getElementById(
+        "journalTitle"
+    ).value =
+    item.title;
+
+
+    document.getElementById(
+        "journalDate"
+    ).value =
+    item.date;
+
+
+    document.getElementById(
+        "journalText"
+    ).value =
+    item.text;
+
+
+    document.getElementById(
         "journalSaveButton"
-    )
-    .textContent =
-        "💾 Update Writing";
+    ).textContent =
+    "Update Writing";
 
 
-    document
-    .getElementById(
-        "journalCancelEdit"
-    )
-    .style.display =
-        "inline-block";
+    document.querySelector(
+        '[data-screen="journal"]'
+    ).click();
 
 
-    document
-    .getElementById(
-        "journalForm"
-    )
-    .scrollIntoView({
-        behavior:"smooth",
-        block:"center"
+    window.scrollTo({
+        top:0,
+        behavior:"smooth"
     });
 
 }
 
 
-/* ---------- DELETE JOURNAL ---------- */
-
 function deleteJournal(id){
 
-    if(
-        !confirm(
-            "Delete this writing entry?"
-        )
-    ){
-        return;
-    }
+    if(!confirm(
+        "Delete this writing entry?"
+    )) return;
 
 
-    const updated =
+    const journal =
         getJournal()
         .filter(
-            e => e.id !== id
+            item => item.id !== id
         );
 
 
-    saveJournal(
-        updated
-    );
-
+    saveJournal(journal);
 
     renderJournal();
 
-    renderProgressOverview();
-
+    updateOverview();
 
     showToast(
         "Writing deleted."
@@ -2807,334 +2164,372 @@ function deleteJournal(id){
 }
 
 
-/* =========================================================
-   PROGRESS OVERVIEW
-   ========================================================= */
 
-function renderProgressOverview(){
+/* OVERVIEW */
+
+function updateOverview(){
 
     const activities =
         getActivities();
 
-
     const journal =
         getJournal();
-
 
     const progress =
         getProgress();
 
 
-    const activityDays =
+    const activeDays =
         new Set(
             activities.map(
-                a => a.date
+                item => item.date
             )
+        ).size;
+
+
+    const totalMinutes =
+        activities.reduce(
+            (sum,item) =>
+                sum + Number(item.minutes || 0),
+            0
         );
 
 
     document.getElementById(
-        "progressDays"
+        "progressCount"
     ).textContent =
-        activityDays.size;
+    progress.length;
 
 
     document.getElementById(
         "journalCount"
     ).textContent =
-        journal.length;
+    journal.length;
 
 
     document.getElementById(
-        "progressSaved"
+        "activeDays"
     ).textContent =
-        Object.keys(progress).length;
+    activeDays;
 
 
-    const insight =
+    document.getElementById(
+        "allMinutes"
+    ).textContent =
+    totalMinutes;
+
+}
+
+
+
+/* CATEGORY SUMMARY */
+
+function renderCategorySummary(){
+
+    const container =
         document.getElementById(
-            "progressInsight"
+            "categorySummary"
         );
 
 
-    if(
-        activities.length === 0 &&
-        journal.length === 0
-    ){
+    const activities =
+        getActivities();
 
-        insight.textContent =
-            "Your progress will appear here as you build your record.";
+
+    if(!activities.length){
+
+        container.innerHTML =
+            '<div class="empty">No activity data yet.</div>';
 
         return;
 
     }
 
 
-    if(
-        activityDays.size >= 7
-    ){
-
-        insight.textContent =
-            "You have activity recorded across at least 7 days. Consistency is becoming part of your routine.";
-
-    }
-    else if(
-        journal.length >= 5
-    ){
-
-        insight.textContent =
-            "You have created several writing entries. Your journal is becoming a record of your personal growth.";
-
-    }
-    else{
-
-        insight.textContent =
-            "Every activity and every sentence you record gives you a clearer picture of your progress.";
-
-    }
-
-}
+    const categories = {};
 
 
-/* =========================================================
-   EXPORT DATA
-   ========================================================= */
+    activities.forEach(item => {
 
-document
-.getElementById("exportData")
-.addEventListener(
-    "click",
-    function(){
+        if(!categories[item.category]){
 
-        const data = {
-
-            app:
-                "UPWARD",
-
-            tagline:
-                "Small actions. Real progress.",
-
-            exportedAt:
-                new Date().toISOString(),
-
-            activities:
-                getActivities(),
-
-            journal:
-                getJournal(),
-
-            dailyProgress:
-                getProgress()
-
-        };
-
-
-        const blob =
-            new Blob(
-                [
-                    JSON.stringify(
-                        data,
-                        null,
-                        2
-                    )
-                ],
-                {
-                    type:
-                        "application/json"
-                }
-            );
-
-
-        const url =
-            URL.createObjectURL(
-                blob
-            );
-
-
-        const a =
-            document.createElement(
-                "a"
-            );
-
-
-        a.href = url;
-
-        a.download =
-            "UPWARD-backup-" +
-            localDate() +
-            ".json";
-
-
-        document
-        .body
-        .appendChild(a);
-
-
-        a.click();
-
-        a.remove();
-
-
-        URL.revokeObjectURL(
-            url
-        );
-
-
-        showToast(
-            "Your UPWARD data was exported."
-        );
-
-    }
-);
-
-
-/* =========================================================
-   CLEAR ALL DATA
-   ========================================================= */
-
-document
-.getElementById("clearAll")
-.addEventListener(
-    "click",
-    function(){
-
-        const answer =
-            prompt(
-                "This will permanently delete all UPWARD activities, writing and progress data.\n\nType DELETE to continue."
-            );
-
-
-        if(answer !== "DELETE"){
-
-            showToast(
-                "Nothing was deleted."
-            );
-
-            return;
+            categories[item.category] = {
+                count:0,
+                minutes:0
+            };
 
         }
 
 
-        localStorage.removeItem(
-            ACTIVITY_KEY
-        );
+        categories[item.category].count++;
 
-        localStorage.removeItem(
-            JOURNAL_KEY
-        );
+        categories[item.category].minutes +=
+            Number(item.minutes || 0);
 
-        localStorage.removeItem(
-            PROGRESS_KEY
-        );
+    });
 
 
-        resetJournalForm();
+    container.innerHTML =
+        Object.entries(categories)
+        .map(([category,data]) => `
 
-        loadTodayProgress();
+            <div class="history-item">
 
-        renderAll();
+                <strong>
+                    ${escapeHtml(category)}
+                </strong>
 
+                <div class="small">
+                    ${data.count} activities
+                    •
+                    ${data.minutes} minutes
+                </div>
 
-        showToast(
-            "All UPWARD data was cleared."
-        );
+            </div>
 
-    }
-);
-
-
-/* =========================================================
-   ESCAPE HTML
-   Prevents entered text from being interpreted as HTML.
-   ========================================================= */
-
-function escapeHtml(value){
-
-    return String(value || "")
-        .replace(
-            /&/g,
-            "&amp;"
-        )
-        .replace(
-            /</g,
-            "&lt;"
-        )
-        .replace(
-            />/g,
-            "&gt;"
-        )
-        .replace(
-            /"/g,
-            "&quot;"
-        )
-        .replace(
-            /'/g,
-            "&#039;"
-        );
+        `).join("");
 
 }
 
 
-/* =========================================================
-   RENDER EVERYTHING
-   ========================================================= */
 
-function renderAll(){
+/* EXPORT */
 
-    calculateStats();
+document
+.getElementById("exportBtn")
+.addEventListener("click", () => {
 
-    renderActivities();
+    const backup = {
 
-    updateGoals();
+        app:"UPWARD",
 
-    updateInsight();
+        version:"2.0",
 
-    drawChart();
+        exportedAt:
+            new Date().toISOString(),
+
+        activities:
+            getActivities(),
+
+        journal:
+            getJournal(),
+
+        progress:
+            getProgress()
+
+    };
+
+
+    const blob =
+        new Blob(
+            [
+                JSON.stringify(
+                    backup,
+                    null,
+                    2
+                )
+            ],
+            {
+                type:"application/json"
+            }
+        );
+
+
+    const url =
+        URL.createObjectURL(blob);
+
+
+    const link =
+        document.createElement("a");
+
+
+    link.href = url;
+
+    link.download =
+        "UPWARD-backup-" +
+        localDate() +
+        ".json";
+
+
+    link.click();
+
+
+    URL.revokeObjectURL(url);
+
+
+    showToast(
+        "Backup exported."
+    );
+
+});
+
+
+
+/* IMPORT */
+
+document
+.getElementById("importBtn")
+.addEventListener("click", () => {
+
+    document
+        .getElementById("importFile")
+        .click();
+
+});
+
+
+document
+.getElementById("importFile")
+.addEventListener("change", function(){
+
+    const file =
+        this.files[0];
+
+
+    if(!file) return;
+
+
+    const reader =
+        new FileReader();
+
+
+    reader.onload = function(){
+
+        try{
+
+            const data =
+                JSON.parse(
+                    reader.result
+                );
+
+
+            if(
+                !data ||
+                data.app !== "UPWARD"
+            ){
+
+                throw new Error(
+                    "Invalid backup"
+                );
+
+            }
+
+
+            if(!confirm(
+                "Import this backup? Current UPWARD data will be replaced."
+            )) return;
+
+
+            saveActivities(
+                Array.isArray(data.activities)
+                ? data.activities
+                : []
+            );
+
+
+            saveJournal(
+                Array.isArray(data.journal)
+                ? data.journal
+                : []
+            );
+
+
+            saveProgress(
+                Array.isArray(data.progress)
+                ? data.progress
+                : []
+            );
+
+
+            updateDashboard();
+
+            renderProgress();
+
+            renderJournal();
+
+            renderCategorySummary();
+
+
+            showToast(
+                "Backup imported successfully."
+            );
+
+
+        }catch(error){
+
+            alert(
+                "This does not appear to be a valid UPWARD backup."
+            );
+
+        }
+
+    };
+
+
+    reader.readAsText(file);
+
+});
+
+
+
+/* CLEAR ALL */
+
+document
+.getElementById("clearAllBtn")
+.addEventListener("click", () => {
+
+    if(!confirm(
+        "This will permanently delete all UPWARD activities, progress and writing. Continue?"
+    )){
+
+        return;
+
+    }
+
+
+    localStorage.removeItem(
+        ACTIVITY_KEY
+    );
+
+    localStorage.removeItem(
+        JOURNAL_KEY
+    );
+
+    localStorage.removeItem(
+        PROGRESS_KEY
+    );
+
+
+    updateDashboard();
+
+    renderProgress();
 
     renderJournal();
 
-    renderProgressOverview();
-
-}
+    renderCategorySummary();
 
 
-/* =========================================================
-   INITIALIZE
-   ========================================================= */
+    showToast(
+        "All UPWARD data cleared."
+    );
 
-function initialize(){
-
-    updateToday();
-
-    setupJournalDate();
-
-    loadTodayProgress();
-
-    renderAll();
-
-}
+});
 
 
-initialize();
+
+/* START APP */
+
+updateDashboard();
+
+renderProgress();
+
+renderJournal();
+
+renderCategorySummary();
 
 
-/* =========================================================
-   REDRAW CHART WHEN WINDOW CHANGES
-   ========================================================= */
 
-window.addEventListener(
-    "resize",
-    function(){
-
-        drawChart();
-
-    }
-);
-
-
-/* =========================================================
-   SERVICE WORKER
-   ========================================================= */
+/* SERVICE WORKER */
 
 if(
     "serviceWorker" in navigator
@@ -3142,32 +2537,17 @@ if(
 
     window.addEventListener(
         "load",
-        function(){
+        () => {
 
-            navigator
-            .serviceWorker
-            .register(
-                "./sw.js"
-            )
-            .then(
-                function(){
-
-                    console.log(
-                        "UPWARD service worker registered."
-                    );
-
-                }
-            )
-            .catch(
-                function(error){
-
+            navigator.serviceWorker
+                .register("./sw.js")
+                .catch(
+                    error =>
                     console.log(
                         "Service worker registration failed:",
                         error
-                    );
-
-                }
-            );
+                    )
+                );
 
         }
     );
