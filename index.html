@@ -1,1 +1,3633 @@
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+<meta name="theme-color" content="#667eea">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+
+<link rel="manifest" href="./manifest.json">
+
+<title>UPWARD — Small actions. Real progress.</title>
+
+<style>
+:root{
+    --bg:#f4f6fb;
+    --card:#ffffff;
+    --text:#20242d;
+    --muted:#6f7785;
+    --border:#e3e7ef;
+    --primary:#667eea;
+    --primary2:#764ba2;
+    --success:#20a464;
+    --warning:#e99a19;
+    --danger:#dc4b4b;
+    --soft:#f0f2ff;
+    --shadow:0 5px 20px rgba(30,40,70,.08);
+    --radius:16px;
+    --chart:#667eea;
+    --chart2:#20a464;
+}
+
+*{
+    box-sizing:border-box;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+    margin:0;
+    font-family:Arial,Helvetica,sans-serif;
+    background:var(--bg);
+    color:var(--text);
+    line-height:1.45;
+    transition:.2s;
+}
+
+body.dark{
+    --bg:#10131a;
+    --card:#191e27;
+    --text:#f1f3f7;
+    --muted:#a8afbd;
+    --border:#303744;
+    --soft:#242a3b;
+    --shadow:0 5px 20px rgba(0,0,0,.25);
+    --chart:#9aa8ff;
+    --chart2:#4dd895;
+}
+
+button,
+input,
+select,
+textarea{
+    font:inherit;
+}
+
+button{
+    cursor:pointer;
+}
+
+.app{
+    max-width:1100px;
+    margin:auto;
+    padding-bottom:80px;
+}
+
+header{
+    background:linear-gradient(135deg,var(--primary),var(--primary2));
+    color:white;
+    padding:22px 18px 18px;
+    position:sticky;
+    top:0;
+    z-index:20;
+    box-shadow:0 4px 18px rgba(0,0,0,.15);
+}
+
+.header-row{
+    max-width:1100px;
+    margin:auto;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:15px;
+}
+
+.logo h1{
+    margin:0;
+    font-size:27px;
+}
+
+.logo p{
+    margin:3px 0 0;
+    opacity:.9;
+    font-size:13px;
+}
+
+.theme-btn{
+    border:1px solid rgba(255,255,255,.35);
+    background:rgba(255,255,255,.15);
+    color:white;
+    border-radius:12px;
+    padding:9px 12px;
+}
+
+nav{
+    max-width:1100px;
+    margin:12px auto 0;
+    display:flex;
+    gap:7px;
+    overflow-x:auto;
+    scrollbar-width:none;
+}
+
+nav::-webkit-scrollbar{
+    display:none;
+}
+
+.nav-btn{
+    flex:0 0 auto;
+    border:0;
+    background:rgba(255,255,255,.13);
+    color:white;
+    border-radius:11px;
+    padding:9px 12px;
+    font-size:13px;
+}
+
+.nav-btn.active{
+    background:white;
+    color:var(--primary);
+    font-weight:bold;
+}
+
+main{
+    padding:18px;
+}
+
+.page{
+    display:none;
+}
+
+.page.active{
+    display:block;
+}
+
+.card{
+    background:var(--card);
+    border:1px solid var(--border);
+    border-radius:var(--radius);
+    box-shadow:var(--shadow);
+    padding:18px;
+    margin-bottom:16px;
+}
+
+.card h2,
+.card h3{
+    margin:0 0 12px;
+}
+
+.muted{
+    color:var(--muted);
+}
+
+.small{
+    font-size:13px;
+}
+
+.grid{
+    display:grid;
+    gap:14px;
+}
+
+.grid-2{
+    grid-template-columns:repeat(2,minmax(0,1fr));
+}
+
+.grid-3{
+    grid-template-columns:repeat(3,minmax(0,1fr));
+}
+
+.grid-4{
+    grid-template-columns:repeat(4,minmax(0,1fr));
+}
+
+.stat{
+    background:var(--soft);
+    border-radius:14px;
+    padding:15px;
+}
+
+.stat-label{
+    color:var(--muted);
+    font-size:12px;
+    margin-bottom:4px;
+}
+
+.stat-value{
+    font-size:25px;
+    font-weight:bold;
+}
+
+input,
+select,
+textarea{
+    width:100%;
+    border:1px solid var(--border);
+    background:var(--card);
+    color:var(--text);
+    border-radius:10px;
+    padding:10px 11px;
+    outline:none;
+}
+
+input:focus,
+select:focus,
+textarea:focus{
+    border-color:var(--primary);
+}
+
+textarea{
+    min-height:80px;
+    resize:vertical;
+}
+
+label{
+    display:block;
+    font-size:12px;
+    color:var(--muted);
+    margin:0 0 5px;
+}
+
+.form-group{
+    margin-bottom:11px;
+}
+
+.btn{
+    border:0;
+    border-radius:10px;
+    padding:10px 14px;
+    font-weight:bold;
+}
+
+.btn-primary{
+    background:var(--primary);
+    color:white;
+}
+
+.btn-success{
+    background:var(--success);
+    color:white;
+}
+
+.btn-danger{
+    background:var(--danger);
+    color:white;
+}
+
+.btn-warning{
+    background:var(--warning);
+    color:white;
+}
+
+.btn-secondary{
+    background:var(--soft);
+    color:var(--text);
+    border:1px solid var(--border);
+}
+
+.btn-row{
+    display:flex;
+    flex-wrap:wrap;
+    gap:8px;
+}
+
+.progress-wrap{
+    background:var(--border);
+    height:10px;
+    border-radius:20px;
+    overflow:hidden;
+}
+
+.progress-bar{
+    height:100%;
+    background:linear-gradient(90deg,var(--primary),var(--primary2));
+    border-radius:20px;
+    transition:.3s;
+}
+
+.badge{
+    display:inline-block;
+    padding:4px 8px;
+    border-radius:20px;
+    font-size:11px;
+    font-weight:bold;
+    background:var(--soft);
+}
+
+.badge-high{
+    background:#ffe0e0;
+    color:#a72c2c;
+}
+
+.badge-medium{
+    background:#fff0d0;
+    color:#936000;
+}
+
+.badge-standard{
+    background:#dff5e8;
+    color:#167244;
+}
+
+body.dark .badge-high{
+    background:#48272b;
+    color:#ffaaa8;
+}
+
+body.dark .badge-medium{
+    background:#4b3b20;
+    color:#ffd48b;
+}
+
+body.dark .badge-standard{
+    background:#193c2a;
+    color:#8ce0ae;
+}
+
+.message{
+    position:fixed;
+    left:50%;
+    bottom:20px;
+    transform:translateX(-50%);
+    z-index:100;
+    background:#222;
+    color:white;
+    padding:11px 16px;
+    border-radius:10px;
+    box-shadow:var(--shadow);
+    display:none;
+    max-width:90%;
+    text-align:center;
+}
+
+.message.show{
+    display:block;
+}
+
+.activity-form{
+    display:grid;
+    grid-template-columns:2fr 1fr 1fr auto;
+    gap:10px;
+    align-items:end;
+}
+
+.activity-item{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:10px;
+    border-bottom:1px solid var(--border);
+    padding:11px 0;
+}
+
+.activity-item:last-child{
+    border-bottom:0;
+}
+
+.activity-main{
+    min-width:0;
+}
+
+.activity-name{
+    font-weight:bold;
+}
+
+.category-card{
+    border:1px solid var(--border);
+    border-radius:14px;
+    padding:14px;
+}
+
+.category-head{
+    display:flex;
+    justify-content:space-between;
+    gap:10px;
+    margin-bottom:8px;
+}
+
+canvas{
+    width:100%;
+    display:block;
+}
+
+.empty{
+    text-align:center;
+    color:var(--muted);
+    padding:25px 10px;
+}
+
+.rating{
+    display:flex;
+    gap:5px;
+}
+
+.rating button{
+    border:0;
+    background:none;
+    font-size:30px;
+    padding:2px;
+    opacity:.35;
+}
+
+.rating button.selected{
+    opacity:1;
+}
+
+.timer-display{
+    text-align:center;
+    font-size:58px;
+    font-weight:bold;
+    letter-spacing:2px;
+    padding:15px 0;
+}
+
+.timer-selects{
+    display:grid;
+    grid-template-columns:1fr 2fr;
+    gap:10px;
+}
+
+.table-wrap{
+    overflow-x:auto;
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+    min-width:700px;
+}
+
+th,
+td{
+    padding:10px 8px;
+    border-bottom:1px solid var(--border);
+    text-align:left;
+    font-size:13px;
+}
+
+th{
+    color:var(--muted);
+    font-size:11px;
+    text-transform:uppercase;
+}
+
+.topic-row{
+    border:1px solid var(--border);
+    border-radius:13px;
+    padding:13px;
+    margin-bottom:10px;
+}
+
+.topic-top{
+    display:flex;
+    justify-content:space-between;
+    gap:10px;
+    align-items:flex-start;
+}
+
+.topic-title{
+    font-weight:bold;
+    font-size:16px;
+}
+
+.topic-meta{
+    color:var(--muted);
+    font-size:12px;
+    margin-top:3px;
+}
+
+.topic-actions{
+    display:flex;
+    flex-wrap:wrap;
+    gap:6px;
+    margin-top:10px;
+}
+
+.topic-stats{
+    display:grid;
+    grid-template-columns:repeat(5,1fr);
+    gap:7px;
+    margin-top:10px;
+}
+
+.mini-stat{
+    background:var(--soft);
+    padding:8px;
+    border-radius:9px;
+    font-size:11px;
+}
+
+.mini-stat strong{
+    display:block;
+    font-size:14px;
+    margin-top:2px;
+}
+
+.due-item{
+    border-left:4px solid var(--warning);
+    padding:11px 12px;
+    background:var(--soft);
+    border-radius:9px;
+    margin-bottom:8px;
+}
+
+.overdue{
+    border-left-color:var(--danger);
+}
+
+.due-today{
+    border-left-color:var(--warning);
+}
+
+.upcoming{
+    border-left-color:var(--success);
+}
+
+.search-row{
+    display:grid;
+    grid-template-columns:2fr 1fr 1fr;
+    gap:9px;
+}
+
+.section-title{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:10px;
+    margin-bottom:12px;
+}
+
+.section-title h2{
+    margin:0;
+}
+
+hr{
+    border:0;
+    border-top:1px solid var(--border);
+    margin:18px 0;
+}
+
+.notice{
+    background:var(--soft);
+    border-radius:12px;
+    padding:12px;
+    font-size:13px;
+}
+
+.checkbox-row{
+    display:flex;
+    align-items:center;
+    gap:8px;
+}
+
+.checkbox-row input{
+    width:auto;
+}
+
+@media(max-width:800px){
+    .grid-4{
+        grid-template-columns:repeat(2,minmax(0,1fr));
+    }
+
+    .grid-3{
+        grid-template-columns:repeat(2,minmax(0,1fr));
+    }
+
+    .activity-form{
+        grid-template-columns:1fr 1fr;
+    }
+
+    .activity-form button{
+        width:100%;
+    }
+
+    .topic-stats{
+        grid-template-columns:repeat(3,1fr);
+    }
+}
+
+@media(max-width:560px){
+    main{
+        padding:12px;
+    }
+
+    header{
+        padding:16px 12px 12px;
+    }
+
+    .logo h1{
+        font-size:23px;
+    }
+
+    .grid-2,
+    .grid-3,
+    .grid-4,
+    .search-row,
+    .timer-selects{
+        grid-template-columns:1fr;
+    }
+
+    .activity-form{
+        grid-template-columns:1fr;
+    }
+
+    .topic-stats{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .timer-display{
+        font-size:46px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <div class="header-row">
+        <div class="logo">
+            <h1>UPWARD</h1>
+            <p>Small actions. Real progress.</p>
+        </div>
+
+        <button class="theme-btn" id="themeToggle" onclick="toggleTheme()">
+            🌙 Dark
+        </button>
+    </div>
+
+    <nav>
+        <button class="nav-btn active" data-page="today" onclick="showPage('today')">🏠 Today</button>
+        <button class="nav-btn" data-page="trackers" onclick="showPage('trackers')">📊 Trackers</button>
+        <button class="nav-btn" data-page="neetpg" onclick="showPage('neetpg')">📚 NEET-PG</button>
+        <button class="nav-btn" data-page="progress" onclick="showPage('progress')">📈 Progress</button>
+        <button class="nav-btn" data-page="checkin" onclick="showPage('checkin')">❤️ Check-in</button>
+        <button class="nav-btn" data-page="week" onclick="showPage('week')">📅 This Week</button>
+        <button class="nav-btn" data-page="stopwatch" onclick="showPage('stopwatch')">⏱️ Stopwatch</button>
+        <button class="nav-btn" data-page="data" onclick="showPage('data')">💾 Data</button>
+    </nav>
+</header>
+
+<div class="app">
+<main>
+
+<!-- =========================================================
+     TODAY
+========================================================= -->
+
+<section id="page-today" class="page active">
+
+    <div class="card">
+        <h2>🏠 Today</h2>
+        <div class="muted small" id="todayDate"></div>
+    </div>
+
+    <div class="grid grid-4">
+        <div class="stat">
+            <div class="stat-label">Today's Activities</div>
+            <div class="stat-value" id="todayActivities">0</div>
+        </div>
+
+        <div class="stat">
+            <div class="stat-label">Study / Activity Minutes</div>
+            <div class="stat-value" id="todayMinutes">0</div>
+        </div>
+
+        <div class="stat">
+            <div class="stat-label">Current Streak</div>
+            <div class="stat-value" id="todayStreak">0 🔥</div>
+        </div>
+
+        <div class="stat">
+            <div class="stat-label">NEET-PG Due</div>
+            <div class="stat-value" id="todayDueCount">0</div>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="section-title">
+            <h2>➕ Add Activity</h2>
+            <span class="badge">General UPWARD</span>
+        </div>
+
+        <div class="activity-form">
+            <div>
+                <label>Activity</label>
+                <input id="activityName" placeholder="e.g. Walking">
+            </div>
+
+            <div>
+                <label>Category</label>
+                <select id="activityCategory">
+                    <option>Exercise</option>
+                    <option>Walking</option>
+                    <option>Learning</option>
+                    <option>Reading</option>
+                    <option>Work/Study</option>
+                    <option>Recreation</option>
+                    <option>Meditation</option>
+                    <option>Social</option>
+                    <option>Mindfulness</option>
+                    <option>Other</option>
+                </select>
+            </div>
+
+            <div>
+                <label>Minutes</label>
+                <input id="activityMinutes" type="number" min="1" placeholder="30">
+            </div>
+
+            <button class="btn btn-primary" onclick="addGeneralActivity()">Add</button>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="section-title">
+            <h2>🔔 NEET-PG Reminder Queue</h2>
+            <button class="btn btn-secondary" onclick="showPage('neetpg')">Open NEET-PG</button>
+        </div>
+
+        <div id="todayDueList"></div>
+    </div>
+
+    <div class="card">
+        <h2>🎯 Daily Goals</h2>
+        <div id="todayGoals"></div>
+    </div>
+
+</section>
+
+
+<!-- =========================================================
+     TRACKERS
+========================================================= -->
+
+<section id="page-trackers" class="page">
+
+    <div class="card">
+        <h2>📊 Activity Trackers</h2>
+        <p class="muted small">
+            Your general UPWARD activity tracking remains separate from the NEET-PG study system.
+        </p>
+        <div id="categoryTrackers" class="grid grid-2"></div>
+    </div>
+
+    <div class="card">
+        <h2>Recent Activities</h2>
+        <div id="recentActivities"></div>
+    </div>
+
+</section>
+
+
+<!-- =========================================================
+     NEET PG
+========================================================= -->
+
+<section id="page-neetpg" class="page">
+
+    <div class="card">
+        <div class="section-title">
+            <div>
+                <h2>📚 NEET-PG Study Engine</h2>
+                <div class="muted small">
+                    You enter your subjects, chapters, topics and weightage. UPWARD manages tracking and revision.
+                </div>
+            </div>
+        </div>
+
+        <div class="grid grid-4">
+            <div class="stat">
+                <div class="stat-label">Topics</div>
+                <div class="stat-value" id="npTopics">0</div>
+            </div>
+
+            <div class="stat">
+                <div class="stat-label">Completed</div>
+                <div class="stat-value" id="npCompleted">0</div>
+            </div>
+
+            <div class="stat">
+                <div class="stat-label">MCQ Accuracy</div>
+                <div class="stat-value" id="npAccuracy">0%</div>
+            </div>
+
+            <div class="stat">
+                <div class="stat-label">Study Time</div>
+                <div class="stat-value" id="npStudyTime">0m</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ADD TOPIC -->
+
+    <div class="card">
+        <h2>➕ Add Topic</h2>
+
+        <div class="grid grid-3">
+
+            <div class="form-group">
+                <label>Subject</label>
+                <select id="npSubject">
+                    <option>Medicine</option>
+                    <option>Surgery</option>
+                    <option>Pathology</option>
+                    <option>PSM</option>
+                    <option>Pharmacology</option>
+                    <option>Microbiology</option>
+                    <option>OBG</option>
+                    <option>Anatomy</option>
+                    <option>Physiology</option>
+                    <option>Biochemistry</option>
+                    <option>Pediatrics</option>
+                    <option>Orthopedics</option>
+                    <option>FMT</option>
+                    <option>Dermatology</option>
+                    <option>Psychiatry</option>
+                    <option>Ophthalmology</option>
+                    <option>Radiology</option>
+                    <option>ENT</option>
+                    <option>Anaesthesia</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>Chapter</label>
+                <input id="npChapter" placeholder="e.g. Cardiology">
+            </div>
+
+            <div class="form-group">
+                <label>Topic</label>
+                <input id="npTopic" placeholder="e.g. Heart Failure">
+            </div>
+
+            <div class="form-group">
+                <label>Weightage / Marks</label>
+                <input id="npWeightage" type="number" min="0" step="0.1" placeholder="e.g. 8">
+            </div>
+
+            <div class="form-group">
+                <label>Priority</label>
+                <select id="npPriority">
+                    <option>High</option>
+                    <option>Medium</option>
+                    <option>Standard</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>Video Duration (minutes)</label>
+                <input id="npVideoDuration" type="number" min="0" placeholder="e.g. 120">
+            </div>
+
+            <div class="form-group">
+                <label>Video Watched (minutes)</label>
+                <input id="npVideoWatched" type="number" min="0" placeholder="e.g. 60">
+            </div>
+
+            <div class="form-group">
+                <label>MCQs Attempted</label>
+                <input id="npMCQAttempted" type="number" min="0" placeholder="e.g. 50">
+            </div>
+
+            <div class="form-group">
+                <label>MCQs Correct</label>
+                <input id="npMCQCorrect" type="number" min="0" placeholder="e.g. 35">
+            </div>
+
+            <div class="form-group">
+                <label>PYQs Attempted</label>
+                <input id="npPYQAttempted" type="number" min="0" placeholder="e.g. 20">
+            </div>
+
+            <div class="form-group">
+                <label>PYQs Correct</label>
+                <input id="npPYQCorrect" type="number" min="0" placeholder="e.g. 15">
+            </div>
+
+            <div class="form-group">
+                <label>Confidence</label>
+                <select id="npConfidence">
+                    <option value="1">1 — Very weak</option>
+                    <option value="2">2 — Weak</option>
+                    <option value="3" selected>3 — Moderate</option>
+                    <option value="4">4 — Good</option>
+                    <option value="5">5 — Strong</option>
+                </select>
+            </div>
+
+        </div>
+
+        <div class="btn-row">
+            <button class="btn btn-primary" onclick="addNEETTopic()">Add Topic</button>
+            <button class="btn btn-secondary" onclick="clearNEETForm()">Clear</button>
+        </div>
+
+        <p class="muted small">
+            You can update the topic later. The revision schedule starts when you mark the topic as studied.
+        </p>
+    </div>
+
+
+    <!-- REVISION QUEUE -->
+
+    <div class="card">
+        <div class="section-title">
+            <h2>🔔 Revision Queue</h2>
+            <span class="badge" id="revisionBadge">0 due</span>
+        </div>
+
+        <div class="grid grid-3">
+            <div>
+                <h3>🔴 Overdue</h3>
+                <div id="overdueList"></div>
+            </div>
+
+            <div>
+                <h3>🟠 Due Today</h3>
+                <div id="dueTodayList"></div>
+            </div>
+
+            <div>
+                <h3>🟢 Upcoming</h3>
+                <div id="upcomingList"></div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- SEARCH -->
+
+    <div class="card">
+        <h2>🔎 Find Topics</h2>
+
+        <div class="search-row">
+            <input id="npSearch" placeholder="Search subject, chapter or topic" oninput="renderNEETTopics()">
+
+            <select id="npFilterSubject" onchange="renderNEETTopics()">
+                <option value="">All Subjects</option>
+                <option>Medicine</option>
+                <option>Surgery</option>
+                <option>Pathology</option>
+                <option>PSM</option>
+                <option>Pharmacology</option>
+                <option>Microbiology</option>
+                <option>OBG</option>
+                <option>Anatomy</option>
+                <option>Physiology</option>
+                <option>Biochemistry</option>
+                <option>Pediatrics</option>
+                <option>Orthopedics</option>
+                <option>FMT</option>
+                <option>Dermatology</option>
+                <option>Psychiatry</option>
+                <option>Ophthalmology</option>
+                <option>Radiology</option>
+                <option>ENT</option>
+                <option>Anaesthesia</option>
+            </select>
+
+            <select id="npFilterStatus" onchange="renderNEETTopics()">
+                <option value="">All Status</option>
+                <option value="completed">Completed</option>
+                <option value="pending">Pending</option>
+                <option value="weak">Weak</option>
+                <option value="due">Revision Due</option>
+            </select>
+        </div>
+    </div>
+
+
+    <!-- TOPICS -->
+
+    <div class="card">
+        <div class="section-title">
+            <h2>📖 My Topics</h2>
+            <span class="muted small" id="topicCountText">0 topics</span>
+        </div>
+
+        <div id="neetTopicList"></div>
+    </div>
+
+</section>
+
+
+<!-- =========================================================
+     PROGRESS
+========================================================= -->
+
+<section id="page-progress" class="page">
+
+    <div class="card">
+        <h2>📈 UPWARD Progress</h2>
+
+        <div class="grid grid-4">
+            <div class="stat">
+                <div class="stat-label">Total Minutes</div>
+                <div class="stat-value" id="totalMinutes">0</div>
+            </div>
+
+            <div class="stat">
+                <div class="stat-label">XP</div>
+                <div class="stat-value" id="totalXP">0</div>
+            </div>
+
+            <div class="stat">
+                <div class="stat-label">Level</div>
+                <div class="stat-value" id="currentLevel">1</div>
+            </div>
+
+            <div class="stat">
+                <div class="stat-label">Longest Streak</div>
+                <div class="stat-value" id="longestStreak">0</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card">
+        <h2>📊 Last 7 Days</h2>
+        <canvas id="weeklyChart"></canvas>
+    </div>
+
+    <div class="card">
+        <h2>📈 Last 30 Days</h2>
+        <canvas id="monthlyChart"></canvas>
+    </div>
+
+    <div class="card">
+        <h2>🧩 Activity Balance</h2>
+        <div id="balanceChart"></div>
+    </div>
+
+</section>
+
+
+<!-- =========================================================
+     CHECK IN
+========================================================= -->
+
+<section id="page-checkin" class="page">
+
+    <div class="card">
+        <h2>❤️ Daily Check-in</h2>
+        <p class="muted small">A simple daily reflection. Stored only on this device.</p>
+
+        <div class="form-group">
+            <label>How are you feeling today?</label>
+
+            <div class="rating" id="ratingButtons">
+                <button onclick="setRating(1)">★</button>
+                <button onclick="setRating(2)">★</button>
+                <button onclick="setRating(3)">★</button>
+                <button onclick="setRating(4)">★</button>
+                <button onclick="setRating(5)">★</button>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label>What went well?</label>
+            <textarea id="checkinGood" placeholder="One small win..."></textarea>
+        </div>
+
+        <div class="form-group">
+            <label>What was difficult?</label>
+            <textarea id="checkinDifficult" placeholder="Anything you want to note..."></textarea>
+        </div>
+
+        <div class="form-group">
+            <label>One thing for tomorrow</label>
+            <textarea id="checkinTomorrow" placeholder="Keep it small and realistic..."></textarea>
+        </div>
+
+        <button class="btn btn-primary" onclick="saveCheckin()">Save Check-in</button>
+    </div>
+
+</section>
+
+
+<!-- =========================================================
+     THIS WEEK
+========================================================= -->
+
+<section id="page-week" class="page">
+
+    <div class="card">
+        <h2>📅 This Week</h2>
+
+        <div class="grid grid-3">
+            <div class="stat">
+                <div class="stat-label">Minutes</div>
+                <div class="stat-value" id="weekMinutes">0</div>
+            </div>
+
+            <div class="stat">
+                <div class="stat-label">Activities</div>
+                <div class="stat-value" id="weekActivities">0</div>
+            </div>
+
+            <div class="stat">
+                <div class="stat-label">Active Days</div>
+                <div class="stat-value" id="weekActiveDays">0</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card">
+        <h2>Category Progress</h2>
+        <div id="weekCategories"></div>
+    </div>
+
+</section>
+
+
+<!-- =========================================================
+     STOPWATCH
+========================================================= -->
+
+<section id="page-stopwatch" class="page">
+
+    <div class="card">
+        <h2>⏱️ Universal Stopwatch</h2>
+
+        <div class="timer-selects">
+
+            <div>
+                <label>Mode</label>
+                <select id="timerMode" onchange="updateTimerFields()">
+                    <option value="general">General UPWARD Activity</option>
+                    <option value="neet">NEET-PG Topic Study</option>
+                </select>
+            </div>
+
+            <div id="timerGeneralFields">
+                <label>Activity</label>
+                <input id="timerActivity" placeholder="e.g. Walking">
+            </div>
+
+        </div>
+
+        <div id="timerNEETFields" style="display:none;margin-top:10px;">
+            <div class="grid grid-3">
+
+                <div>
+                    <label>Subject</label>
+                    <select id="timerSubject" onchange="populateTimerTopics()"></select>
+                </div>
+
+                <div>
+                    <label>Topic</label>
+                    <select id="timerTopic"></select>
+                </div>
+
+                <div>
+                    <label>Study Type</label>
+                    <select id="timerStudyType">
+                        <option>Video</option>
+                        <option>Reading</option>
+                        <option>MCQ</option>
+                        <option>PYQ</option>
+                        <option>Revision</option>
+                        <option>Notes</option>
+                        <option>Other</option>
+                    </select>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="timer-display" id="timerDisplay">00:00:00</div>
+
+        <div class="btn-row" style="justify-content:center;">
+            <button class="btn btn-primary" id="timerStartBtn" onclick="startTimer()">▶ Start</button>
+            <button class="btn btn-warning" id="timerPauseBtn" onclick="pauseTimer()" disabled>⏸ Pause</button>
+            <button class="btn btn-success" id="timerStopBtn" onclick="stopTimer()" disabled>⏹ Stop & Save</button>
+            <button class="btn btn-secondary" onclick="resetTimer()">↻ Reset</button>
+        </div>
+
+        <p class="muted small" style="text-align:center;margin-top:12px;">
+            The stopwatch can continue while you move between UPWARD screens.
+        </p>
+    </div>
+
+    <div class="card">
+        <h2>Recent Study Sessions</h2>
+        <div id="recentSessions"></div>
+    </div>
+
+</section>
+
+
+<!-- =========================================================
+     DATA
+========================================================= -->
+
+<section id="page-data" class="page">
+
+    <div class="card">
+        <h2>💾 Data Management</h2>
+
+        <div class="notice">
+            Your data is stored locally in your browser. Keep a backup of your exported JSON file.
+            GitHub version history protects your code, but it does <strong>not</strong> automatically back up your personal data.
+        </div>
+
+        <hr>
+
+        <div class="btn-row">
+            <button class="btn btn-primary" onclick="exportJSON()">⬇ Export JSON Backup</button>
+            <button class="btn btn-secondary" onclick="document.getElementById('importFile').click()">⬆ Import JSON</button>
+            <button class="btn btn-secondary" onclick="exportCSV()">📄 Export Activities CSV</button>
+        </div>
+
+        <input id="importFile" type="file" accept=".json,application/json" style="display:none" onchange="importJSON(event)">
+
+        <hr>
+
+        <h3>Stored Data</h3>
+
+        <div class="grid grid-3">
+            <div class="stat">
+                <div class="stat-label">General Activities</div>
+                <div class="stat-value" id="dataActivities">0</div>
+            </div>
+
+            <div class="stat">
+                <div class="stat-label">NEET-PG Topics</div>
+                <div class="stat-value" id="dataTopics">0</div>
+            </div>
+
+            <div class="stat">
+                <div class="stat-label">Check-ins</div>
+                <div class="stat-value" id="dataCheckins">0</div>
+            </div>
+        </div>
+
+        <hr>
+
+        <button class="btn btn-danger" onclick="clearAllData()">🗑 Clear All UPWARD Data</button>
+    </div>
+
+</section>
+
+</main>
+</div>
+
+<div class="message" id="message"></div>
+
+
+<script>
+/* =========================================================
+   UPWARD PHASE 3
+   Storage keys
+========================================================= */
+
+const ACTIVITY_KEY = "upwardActivities";
+const CHECKIN_KEY = "upwardCheckins";
+const SPENDING_KEY = "upwardSpending";
+const NEET_KEY = "upwardNEETPG";
+const DARK_KEY = "upwardDarkMode";
+
+const CATEGORIES = [
+    "Exercise",
+    "Walking",
+    "Learning",
+    "Reading",
+    "Work/Study",
+    "Recreation",
+    "Meditation",
+    "Social",
+    "Mindfulness",
+    "Other"
+];
+
+const DAILY_GOALS = {
+    "Exercise":30,
+    "Walking":30,
+    "Learning":30,
+    "Reading":20,
+    "Work/Study":60,
+    "Recreation":20,
+    "Meditation":10,
+    "Social":20,
+    "Mindfulness":10,
+    "Other":10
+};
+
+const NEET_SUBJECTS = [
+    "Medicine",
+    "Surgery",
+    "Pathology",
+    "PSM",
+    "Pharmacology",
+    "Microbiology",
+    "OBG",
+    "Anatomy",
+    "Physiology",
+    "Biochemistry",
+    "Pediatrics",
+    "Orthopedics",
+    "FMT",
+    "Dermatology",
+    "Psychiatry",
+    "Ophthalmology",
+    "Radiology",
+    "ENT",
+    "Anaesthesia"
+];
+
+
+/* =========================================================
+   HELPERS
+========================================================= */
+
+function getJSON(key, fallback){
+    try{
+        const raw = localStorage.getItem(key);
+        if(!raw) return fallback;
+        const parsed = JSON.parse(raw);
+        return parsed ?? fallback;
+    }catch(e){
+        return fallback;
+    }
+}
+
+function saveJSON(key,value){
+    localStorage.setItem(key,JSON.stringify(value));
+}
+
+function todayISO(){
+    const d = new Date();
+    const y = d.getFullYear();
+    const m = String(d.getMonth()+1).padStart(2,"0");
+    const day = String(d.getDate()).padStart(2,"0");
+    return `${y}-${m}-${day}`;
+}
+
+function dateFromISO(iso){
+    const parts = iso.split("-").map(Number);
+    return new Date(parts[0],parts[1]-1,parts[2]);
+}
+
+function addDaysISO(iso,days){
+    const d = dateFromISO(iso);
+    d.setDate(d.getDate()+days);
+    return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}-${String(d.getDate()).padStart(2,"0")}`;
+}
+
+function formatDate(iso){
+    if(!iso) return "";
+    return dateFromISO(iso).toLocaleDateString(undefined,{
+        day:"numeric",
+        month:"short",
+        year:"numeric"
+    });
+}
+
+function formatShortDate(iso){
+    if(!iso) return "";
+    return dateFromISO(iso).toLocaleDateString(undefined,{
+        day:"numeric",
+        month:"short"
+    });
+}
+
+function escapeHTML(value){
+    return String(value ?? "")
+        .replace(/&/g,"&amp;")
+        .replace(/</g,"&lt;")
+        .replace(/>/g,"&gt;")
+        .replace(/"/g,"&quot;")
+        .replace(/'/g,"&#039;");
+}
+
+function uid(prefix="id"){
+    return prefix + "_" + Date.now().toString(36) + Math.random().toString(36).slice(2,8);
+}
+
+function clamp(value,min,max){
+    return Math.max(min,Math.min(max,value));
+}
+
+function minutesText(minutes){
+    minutes = Math.max(0,Math.round(Number(minutes)||0));
+
+    if(minutes < 60){
+        return minutes + "m";
+    }
+
+    const h = Math.floor(minutes/60);
+    const m = minutes % 60;
+
+    return m ? `${h}h ${m}m` : `${h}h`;
+}
+
+function showMessage(text){
+    const el = document.getElementById("message");
+    el.textContent = text;
+    el.classList.add("show");
+
+    clearTimeout(showMessage.timer);
+
+    showMessage.timer = setTimeout(()=>{
+        el.classList.remove("show");
+    },2500);
+}
+
+
+/* =========================================================
+   THEME
+========================================================= */
+
+function applyTheme(){
+    const dark = localStorage.getItem(DARK_KEY) === "true";
+
+    document.body.classList.toggle("dark",dark);
+
+    const button = document.getElementById("themeToggle");
+
+    if(button){
+        button.textContent = dark ? "☀️ Light" : "🌙 Dark";
+    }
+}
+
+function toggleTheme(){
+    const dark = document.body.classList.contains("dark");
+
+    localStorage.setItem(DARK_KEY,String(!dark));
+
+    applyTheme();
+
+    if(currentPage === "progress"){
+        renderProgress();
+    }
+}
+
+
+/* =========================================================
+   NAVIGATION
+========================================================= */
+
+let currentPage = "today";
+
+function showPage(page){
+    currentPage = page;
+
+    document.querySelectorAll(".page").forEach(section=>{
+        section.classList.remove("active");
+    });
+
+    const target = document.getElementById("page-"+page);
+
+    if(target){
+        target.classList.add("active");
+    }
+
+    document.querySelectorAll(".nav-btn").forEach(button=>{
+        button.classList.toggle(
+            "active",
+            button.dataset.page === page
+        );
+    });
+
+    render();
+
+    window.scrollTo({
+        top:0,
+        behavior:"smooth"
+    });
+}
+
+
+/* =========================================================
+   GENERAL ACTIVITIES
+========================================================= */
+
+function getActivities(){
+    let data = getJSON(ACTIVITY_KEY,[]);
+
+    if(!Array.isArray(data)){
+        data = [];
+    }
+
+    return data;
+}
+
+function saveActivities(data){
+    saveJSON(ACTIVITY_KEY,data);
+}
+
+function normalizeCategory(category){
+    if(category === "Work") return "Work/Study";
+    if(category === "Study") return "Work/Study";
+    if(category === "Work Study") return "Work/Study";
+
+    return CATEGORIES.includes(category) ? category : "Other";
+}
+
+function addGeneralActivity(){
+    const name = document.getElementById("activityName").value.trim();
+    const category = normalizeCategory(
+        document.getElementById("activityCategory").value
+    );
+
+    const minutes = Number(
+        document.getElementById("activityMinutes").value
+    );
+
+    if(!name){
+        showMessage("Please enter an activity.");
+        return;
+    }
+
+    if(!minutes || minutes <= 0){
+        showMessage("Please enter valid minutes.");
+        return;
+    }
+
+    const activities = getActivities();
+
+    activities.push({
+        id:uid("act"),
+        activityName:name,
+        category,
+        minutes:Math.round(minutes),
+        date:todayISO(),
+        createdAt:new Date().toISOString()
+    });
+
+    saveActivities(activities);
+
+    document.getElementById("activityName").value = "";
+    document.getElementById("activityMinutes").value = "";
+
+    showMessage("Activity added ✓");
+
+    render();
+}
+
+function getMinutesForDate(date){
+    return getActivities()
+        .filter(a=>a.date === date)
+        .reduce((sum,a)=>sum + Number(a.minutes||0),0);
+}
+
+function getActivitiesForDate(date){
+    return getActivities().filter(a=>a.date === date);
+}
+
+function getActivityDates(){
+    return [...new Set(
+        getActivities()
+            .map(a=>a.date)
+            .filter(Boolean)
+    )].sort();
+}
+
+function calculateStreak(){
+    const dates = new Set(getActivityDates());
+
+    let streak = 0;
+    let d = todayISO();
+
+    while(dates.has(d)){
+        streak++;
+        d = addDaysISO(d,-1);
+    }
+
+    return streak;
+}
+
+function calculateLongestStreak(){
+    const dates = getActivityDates();
+
+    if(!dates.length) return 0;
+
+    let longest = 1;
+    let current = 1;
+
+    for(let i=1;i<dates.length;i++){
+        if(addDaysISO(dates[i-1],1) === dates[i]){
+            current++;
+        }else{
+            current = 1;
+        }
+
+        longest = Math.max(longest,current);
+    }
+
+    return longest;
+}
+
+function calculateXP(){
+    return getActivities()
+        .reduce((sum,a)=>{
+            const minutes = Number(a.minutes||0);
+            return sum + Math.max(1,Math.floor(minutes/5));
+        },0);
+}
+
+
+/* =========================================================
+   TODAY
+========================================================= */
+
+function renderToday(){
+    const today = todayISO();
+
+    document.getElementById("todayDate").textContent =
+        new Date().toLocaleDateString(undefined,{
+            weekday:"long",
+            day:"numeric",
+            month:"long",
+            year:"numeric"
+        });
+
+    const activities = getActivitiesForDate(today);
+
+    document.getElementById("todayActivities").textContent =
+        activities.length;
+
+    document.getElementById("todayMinutes").textContent =
+        getMinutesForDate(today);
+
+    document.getElementById("todayStreak").textContent =
+        calculateStreak() + " 🔥";
+
+    const due = getRevisionBuckets().overdue.length +
+                getRevisionBuckets().today.length;
+
+    document.getElementById("todayDueCount").textContent = due;
+
+    renderTodayGoals();
+    renderTodayDue();
+}
+
+function renderTodayGoals(){
+    const container = document.getElementById("todayGoals");
+    const today = todayISO();
+
+    let html = "";
+
+    CATEGORIES.forEach(category=>{
+        const target = DAILY_GOALS[category];
+        const actual = getActivitiesForDate(today)
+            .filter(a=>normalizeCategory(a.category)===category)
+            .reduce((sum,a)=>sum+Number(a.minutes||0),0);
+
+        const percent = target
+            ? clamp(actual/target*100,0,100)
+            : 0;
+
+        html += `
+            <div class="category-card" style="margin-bottom:10px;">
+                <div class="category-head">
+                    <strong>${escapeHTML(category)}</strong>
+                    <span class="small">${actual}/${target} min</span>
+                </div>
+                <div class="progress-wrap">
+                    <div class="progress-bar" style="width:${percent}%"></div>
+                </div>
+            </div>
+        `;
+    });
+
+    container.innerHTML = html;
+}
+
+function renderTodayDue(){
+    const container = document.getElementById("todayDueList");
+    const buckets = getRevisionBuckets();
+
+    const items = [
+        ...buckets.overdue.map(t=>({...t,_type:"Overdue"})),
+        ...buckets.today.map(t=>({...t,_type:"Due today"}))
+    ].slice(0,8);
+
+    if(!items.length){
+        container.innerHTML = `
+            <div class="empty">
+                🎉 No NEET-PG revisions due today.
+            </div>
+        `;
+        return;
+    }
+
+    container.innerHTML = items.map(topic=>`
+        <div class="due-item ${topic._type==="Overdue" ? "overdue":"due-today"}">
+            <strong>${escapeHTML(topic.topic)}</strong>
+            <div class="small muted">
+                ${escapeHTML(topic.subject)} → ${escapeHTML(topic.chapter)}
+            </div>
+            <div class="small">
+                ${topic._type} • Revision ${topic.revisionNumber}
+            </div>
+            <div class="btn-row" style="margin-top:7px;">
+                <button class="btn btn-primary" onclick="startRevision('${topic.id}')">
+                    🔁 Start Revision
+                </button>
+            </div>
+        </div>
+    `).join("");
+}
+
+
+/* =========================================================
+   TRACKERS
+========================================================= */
+
+function renderTrackers(){
+    const container = document.getElementById("categoryTrackers");
+
+    let html = "";
+
+    CATEGORIES.forEach(category=>{
+        const minutes = getActivities()
+            .filter(a=>normalizeCategory(a.category)===category)
+            .reduce((sum,a)=>sum+Number(a.minutes||0),0);
+
+        const target = DAILY_GOALS[category] * 7;
+
+        const percent = target
+            ? clamp(minutes/target*100,0,100)
+            : 0;
+
+        html += `
+            <div class="category-card">
+                <div class="category-head">
+                    <strong>${escapeHTML(category)}</strong>
+                    <span>${minutesText(minutes)}</span>
+                </div>
+
+                <div class="progress-wrap">
+                    <div class="progress-bar" style="width:${percent}%"></div>
+                </div>
+
+                <div class="small muted" style="margin-top:6px;">
+                    Weekly reference target: ${target} min
+                </div>
+            </div>
+        `;
+    });
+
+    container.innerHTML = html;
+
+    const recent = getActivities()
+        .slice()
+        .sort((a,b)=>
+            String(b.createdAt||"").localeCompare(String(a.createdAt||""))
+        )
+        .slice(0,15);
+
+    const recentContainer = document.getElementById("recentActivities");
+
+    if(!recent.length){
+        recentContainer.innerHTML = `<div class="empty">No activities yet.</div>`;
+        return;
+    }
+
+    recentContainer.innerHTML = recent.map(a=>`
+        <div class="activity-item">
+            <div class="activity-main">
+                <div class="activity-name">${escapeHTML(a.activityName || "Activity")}</div>
+                <div class="small muted">
+                    ${escapeHTML(normalizeCategory(a.category))} • ${formatDate(a.date)}
+                </div>
+            </div>
+
+            <strong>${Number(a.minutes||0)} min</strong>
+        </div>
+    `).join("");
+}
+
+
+/* =========================================================
+   NEET PG DATA
+========================================================= */
+
+function getNEETTopics(){
+    let data = getJSON(NEET_KEY,[]);
+
+    if(!Array.isArray(data)){
+        data = [];
+    }
+
+    return data;
+}
+
+function saveNEETTopics(data){
+    saveJSON(NEET_KEY,data);
+}
+
+function createRevisionSchedule(topic){
+    const start = topic.studyDate || todayISO();
+
+    const intervals = [1,3,7,14,30,60,90];
+
+    return intervals.map((days,index)=>({
+        number:index+1,
+        dueDate:addDaysISO(start,days),
+        completed:false,
+        completedDate:null
+    }));
+}
+
+function ensureRevisionData(topic){
+    if(!Array.isArray(topic.revisions)){
+        topic.revisions = createRevisionSchedule(topic);
+    }
+
+    return topic;
+}
+
+function getAccuracy(topic){
+    const attempted = Number(topic.mcqAttempted||0);
+    const correct = Number(topic.mcqCorrect||0);
+
+    if(attempted <= 0) return 0;
+
+    return clamp(correct/attempted*100,0,100);
+}
+
+function getPYQAccuracy(topic){
+    const attempted = Number(topic.pyqAttempted||0);
+    const correct = Number(topic.pyqCorrect||0);
+
+    if(attempted <= 0) return 0;
+
+    return clamp(correct/attempted*100,0,100);
+}
+
+function isTopicComplete(topic){
+    const videoComplete =
+        Number(topic.videoDuration||0) > 0 &&
+        Number(topic.videoWatched||0) >= Number(topic.videoDuration||0);
+
+    const hasStudyDate = !!topic.studyDate;
+
+    return videoComplete || (
+        hasStudyDate &&
+        Number(topic.mcqAttempted||0) > 0
+    );
+}
+
+function isWeakTopic(topic){
+    const accuracy = getAccuracy(topic);
+    const confidence = Number(topic.confidence||3);
+
+    return (
+        (Number(topic.mcqAttempted||0) >= 10 && accuracy < 60) ||
+        confidence <= 2
+    );
+}
+
+
+/* =========================================================
+   ADD NEET TOPIC
+========================================================= */
+
+function addNEETTopic(){
+    const subject = document.getElementById("npSubject").value;
+    const chapter = document.getElementById("npChapter").value.trim();
+    const topicName = document.getElementById("npTopic").value.trim();
+
+    if(!chapter || !topicName){
+        showMessage("Enter chapter and topic.");
+        return;
+    }
+
+    const topics = getNEETTopics();
+
+    const topic = {
+        id:uid("topic"),
+        subject,
+        chapter,
+        topic:topicName,
+
+        weightage:Number(
+            document.getElementById("npWeightage").value
+        ) || 0,
+
+        priority:document.getElementById("npPriority").value,
+
+        videoDuration:Number(
+            document.getElementById("npVideoDuration").value
+        ) || 0,
+
+        videoWatched:Number(
+            document.getElementById("npVideoWatched").value
+        ) || 0,
+
+        mcqAttempted:Number(
+            document.getElementById("npMCQAttempted").value
+        ) || 0,
+
+        mcqCorrect:Number(
+            document.getElementById("npMCQCorrect").value
+        ) || 0,
+
+        pyqAttempted:Number(
+            document.getElementById("npPYQAttempted").value
+        ) || 0,
+
+        pyqCorrect:Number(
+            document.getElementById("npPYQCorrect").value
+        ) || 0,
+
+        confidence:Number(
+            document.getElementById("npConfidence").value
+        ) || 3,
+
+        studyMinutes:0,
+
+        studyDate:null,
+
+        revisions:[],
+
+        createdAt:new Date().toISOString(),
+
+        updatedAt:new Date().toISOString()
+    };
+
+    topics.push(topic);
+
+    saveNEETTopics(topics);
+
+    clearNEETForm();
+
+    showMessage("NEET-PG topic added ✓");
+
+    render();
+}
+
+function clearNEETForm(){
+    document.getElementById("npChapter").value = "";
+    document.getElementById("npTopic").value = "";
+    document.getElementById("npWeightage").value = "";
+    document.getElementById("npVideoDuration").value = "";
+    document.getElementById("npVideoWatched").value = "";
+    document.getElementById("npMCQAttempted").value = "";
+    document.getElementById("npMCQCorrect").value = "";
+    document.getElementById("npPYQAttempted").value = "";
+    document.getElementById("npPYQCorrect").value = "";
+    document.getElementById("npConfidence").value = "3";
+}
+
+
+/* =========================================================
+   NEET PG RENDERING
+========================================================= */
+
+function renderNEET(){
+    const topics = getNEETTopics();
+
+    const completed = topics.filter(isTopicComplete).length;
+
+    const totalMCQ = topics.reduce(
+        (sum,t)=>sum+Number(t.mcqAttempted||0),0
+    );
+
+    const totalCorrect = topics.reduce(
+        (sum,t)=>sum+Number(t.mcqCorrect||0),0
+    );
+
+    const accuracy = totalMCQ
+        ? Math.round(totalCorrect/totalMCQ*100)
+        : 0;
+
+    const studyMinutes = topics.reduce(
+        (sum,t)=>sum+Number(t.studyMinutes||0),0
+    );
+
+    document.getElementById("npTopics").textContent = topics.length;
+    document.getElementById("npCompleted").textContent = completed;
+    document.getElementById("npAccuracy").textContent = accuracy + "%";
+    document.getElementById("npStudyTime").textContent = minutesText(studyMinutes);
+
+    renderRevisionQueues();
+    renderNEETTopics();
+    populateTimerSubjects();
+}
+
+function renderNEETTopics(){
+    const allTopics = getNEETTopics();
+
+    const search = (
+        document.getElementById("npSearch").value || ""
+    ).trim().toLowerCase();
+
+    const subjectFilter =
+        document.getElementById("npFilterSubject").value;
+
+    const statusFilter =
+        document.getElementById("npFilterStatus").value;
+
+    const filtered = allTopics.filter(topic=>{
+        const searchable = [
+            topic.subject,
+            topic.chapter,
+            topic.topic
+        ].join(" ").toLowerCase();
+
+        if(search && !searchable.includes(search)){
+            return false;
+        }
+
+        if(subjectFilter && topic.subject !== subjectFilter){
+            return false;
+        }
+
+        if(statusFilter === "completed" && !isTopicComplete(topic)){
+            return false;
+        }
+
+        if(statusFilter === "pending" && isTopicComplete(topic)){
+            return false;
+        }
+
+        if(statusFilter === "weak" && !isWeakTopic(topic)){
+            return false;
+        }
+
+        if(statusFilter === "due"){
+            const due = topic.revisions?.some(r=>
+                !r.completed && r.dueDate <= todayISO()
+            );
+
+            if(!due) return false;
+        }
+
+        return true;
+    });
+
+    document.getElementById("topicCountText").textContent =
+        filtered.length + " topics";
+
+    const container = document.getElementById("neetTopicList");
+
+    if(!filtered.length){
+        container.innerHTML = `
+            <div class="empty">
+                No topics found.
+            </div>
+        `;
+        return;
+    }
+
+    container.innerHTML = filtered
+        .slice()
+        .reverse()
+        .map(renderTopicCard)
+        .join("");
+}
+
+function renderTopicCard(topic){
+    ensureRevisionData(topic);
+
+    const videoDuration = Number(topic.videoDuration||0);
+    const videoWatched = Number(topic.videoWatched||0);
+
+    const videoPercent = videoDuration
+        ? clamp(videoWatched/videoDuration*100,0,100)
+        : 0;
+
+    const accuracy = getAccuracy(topic);
+
+    const nextRevision = getNextRevision(topic);
+
+    const weak = isWeakTopic(topic);
+
+    const completed = isTopicComplete(topic);
+
+    const priorityClass =
+        topic.priority === "High"
+            ? "badge-high"
+            : topic.priority === "Medium"
+                ? "badge-medium"
+                : "badge-standard";
+
+    return `
+        <div class="topic-row">
+
+            <div class="topic-top">
+
+                <div>
+                    <div class="topic-title">
+                        ${escapeHTML(topic.topic)}
+                    </div>
+
+                    <div class="topic-meta">
+                        ${escapeHTML(topic.subject)}
+                        → ${escapeHTML(topic.chapter)}
+                    </div>
+
+                    <div style="margin-top:7px;">
+                        <span class="badge ${priorityClass}">
+                            ${escapeHTML(topic.priority)}
+                        </span>
+
+                        ${topic.weightage
+                            ? `<span class="badge">⚖️ ${topic.weightage}</span>`
+                            : ""
+                        }
+
+                        ${weak
+                            ? `<span class="badge badge-high">🔴 Weak</span>`
+                            : ""
+                        }
+
+                        ${completed
+                            ? `<span class="badge badge-standard">✓ Studied</span>`
+                            : ""
+                        }
+                    </div>
+                </div>
+
+                <button
+                    class="btn btn-secondary"
+                    onclick="deleteNEETTopic('${topic.id}')">
+                    🗑
+                </button>
+
+            </div>
+
+            <div class="topic-stats">
+
+                <div class="mini-stat">
+                    Video
+                    <strong>${Math.round(videoPercent)}%</strong>
+                </div>
+
+                <div class="mini-stat">
+                    MCQs
+                    <strong>${Number(topic.mcqAttempted||0)}</strong>
+                </div>
+
+                <div class="mini-stat">
+                    Accuracy
+                    <strong>${Math.round(accuracy)}%</strong>
+                </div>
+
+                <div class="mini-stat">
+                    Study
+                    <strong>${minutesText(topic.studyMinutes)}</strong>
+                </div>
+
+                <div class="mini-stat">
+                    Confidence
+                    <strong>${Number(topic.confidence||3)}/5</strong>
+                </div>
+
+            </div>
+
+            <div style="margin-top:10px;">
+                <div class="small muted">
+                    Video: ${videoWatched}/${videoDuration || 0} min
+                </div>
+
+                <div class="progress-wrap" style="margin-top:4px;">
+                    <div class="progress-bar" style="width:${videoPercent}%"></div>
+                </div>
+            </div>
+
+            <div class="small" style="margin-top:10px;">
+                🔁 ${
+                    nextRevision
+                        ? `Next revision: <strong>${formatDate(nextRevision.dueDate)}</strong> — R${nextRevision.number}`
+                        : `<strong>Revision cycle complete</strong>`
+                }
+            </div>
+
+            <div class="topic-actions">
+
+                <button
+                    class="btn btn-primary"
+                    onclick="startTopicTimer('${topic.id}')">
+                    ⏱️ Study
+                </button>
+
+                <button
+                    class="btn btn-success"
+                    onclick="markTopicStudied('${topic.id}')">
+                    ✓ Mark Studied
+                </button>
+
+                <button
+                    class="btn btn-secondary"
+                    onclick="completeRevision('${topic.id}')">
+                    🔁 Complete Revision
+                </button>
+
+                <button
+                    class="btn btn-secondary"
+                    onclick="editTopic('${topic.id}')">
+                    ✏️ Edit
+                </button>
+
+            </div>
+
+        </div>
+    `;
+}
+
+
+/* =========================================================
+   TOPIC ACTIONS
+========================================================= */
+
+function findNEETTopic(id){
+    return getNEETTopics().find(t=>t.id===id);
+}
+
+function markTopicStudied(id){
+    const topics = getNEETTopics();
+
+    const topic = topics.find(t=>t.id===id);
+
+    if(!topic) return;
+
+    if(!topic.studyDate){
+        topic.studyDate = todayISO();
+        topic.revisions = createRevisionSchedule(topic);
+    }
+
+    topic.updatedAt = new Date().toISOString();
+
+    saveNEETTopics(topics);
+
+    showMessage("Topic marked studied. Revision schedule created 🔁");
+
+    render();
+}
+
+function deleteNEETTopic(id){
+    if(!confirm("Delete this NEET-PG topic?")) return;
+
+    const topics = getNEETTopics()
+        .filter(t=>t.id!==id);
+
+    saveNEETTopics(topics);
+
+    showMessage("Topic deleted.");
+
+    render();
+}
+
+function editTopic(id){
+    const topics = getNEETTopics();
+    const topic = topics.find(t=>t.id===id);
+
+    if(!topic) return;
+
+    const weightage = prompt(
+        "Weightage / marks:",
+        topic.weightage ?? ""
+    );
+
+    if(weightage !== null){
+        topic.weightage = Number(weightage)||0;
+    }
+
+    const confidence = prompt(
+        "Confidence 1–5:",
+        topic.confidence ?? 3
+    );
+
+    if(confidence !== null){
+        topic.confidence = clamp(
+            Number(confidence)||3,
+            1,
+            5
+        );
+    }
+
+    const mcqs = prompt(
+        "MCQs attempted:",
+        topic.mcqAttempted ?? 0
+    );
+
+    if(mcqs !== null){
+        topic.mcqAttempted = Math.max(0,Number(mcqs)||0);
+    }
+
+    const correct = prompt(
+        "MCQs correct:",
+        topic.mcqCorrect ?? 0
+    );
+
+    if(correct !== null){
+        topic.mcqCorrect = Math.max(0,Number(correct)||0);
+    }
+
+    topic.updatedAt = new Date().toISOString();
+
+    saveNEETTopics(topics);
+
+    showMessage("Topic updated ✓");
+
+    render();
+}
+
+
+/* =========================================================
+   REVISION SYSTEM
+========================================================= */
+
+function getNextRevision(topic){
+    ensureRevisionData(topic);
+
+    return topic.revisions.find(r=>!r.completed);
+}
+
+function getRevisionBuckets(){
+    const topics = getNEETTopics();
+
+    const today = todayISO();
+
+    const overdue = [];
+    const dueToday = [];
+    const upcoming = [];
+
+    topics.forEach(topic=>{
+        ensureRevisionData(topic);
+
+        topic.revisions.forEach(revision=>{
+            if(revision.completed) return;
+
+            const item = {
+                ...topic,
+                revisionNumber:revision.number,
+                dueDate:revision.dueDate,
+                revision
+            };
+
+            if(revision.dueDate < today){
+                overdue.push(item);
+            }else if(revision.dueDate === today){
+                dueToday.push(item);
+            }else{
+                upcoming.push(item);
+            }
+        });
+    });
+
+    overdue.sort((a,b)=>a.dueDate.localeCompare(b.dueDate));
+    dueToday.sort((a,b)=>a.subject.localeCompare(b.subject));
+    upcoming.sort((a,b)=>a.dueDate.localeCompare(b.dueDate));
+
+    return {
+        overdue,
+        today:dueToday,
+        upcoming
+    };
+}
+
+function renderRevisionQueues(){
+    const buckets = getRevisionBuckets();
+
+    document.getElementById("revisionBadge").textContent =
+        (buckets.overdue.length + buckets.today.length) + " due";
+
+    document.getElementById("overdueList").innerHTML =
+        renderDueItems(buckets.overdue.slice(0,10),"overdue");
+
+    document.getElementById("dueTodayList").innerHTML =
+        renderDueItems(buckets.today.slice(0,10),"due-today");
+
+    document.getElementById("upcomingList").innerHTML =
+        renderDueItems(buckets.upcoming.slice(0,10),"upcoming");
+}
+
+function renderDueItems(items,type){
+    if(!items.length){
+        return `<div class="empty">None</div>`;
+    }
+
+    return items.map(item=>`
+        <div class="due-item ${type}">
+            <strong>${escapeHTML(item.topic)}</strong>
+
+            <div class="small muted">
+                ${escapeHTML(item.subject)}
+                → ${escapeHTML(item.chapter)}
+            </div>
+
+            <div class="small">
+                Revision ${item.revisionNumber}
+                • ${formatDate(item.dueDate)}
+            </div>
+
+            <div style="margin-top:7px;">
+                <button
+                    class="btn btn-primary"
+                    onclick="startRevision('${item.id}')">
+                    🔁 Start
+                </button>
+            </div>
+        </div>
+    `).join("");
+}
+
+function startRevision(id){
+    const topics = getNEETTopics();
+    const topic = topics.find(t=>t.id===id);
+
+    if(!topic) return;
+
+    ensureRevisionData(topic);
+
+    const revision = topic.revisions.find(r=>!r.completed);
+
+    if(!revision){
+        showMessage("All scheduled revisions completed.");
+        return;
+    }
+
+    showPage("stopwatch");
+
+    document.getElementById("timerMode").value = "neet";
+    updateTimerFields();
+
+    document.getElementById("timerSubject").value = topic.subject;
+
+    populateTimerTopics();
+
+    document.getElementById("timerTopic").value = topic.id;
+
+    document.getElementById("timerStudyType").value = "Revision";
+
+    showMessage(`Revision ${revision.number} ready for ${topic.topic}.`);
+}
+
+function completeRevision(id){
+    const topics = getNEETTopics();
+    const topic = topics.find(t=>t.id===id);
+
+    if(!topic) return;
+
+    ensureRevisionData(topic);
+
+    const revision = topic.revisions.find(r=>!r.completed);
+
+    if(!revision){
+        showMessage("No pending revision.");
+        return;
+    }
+
+    if(revision.dueDate > todayISO()){
+        if(!confirm(
+            "This revision is not due yet. Mark it completed anyway?"
+        )){
+            return;
+        }
+    }
+
+    revision.completed = true;
+    revision.completedDate = todayISO();
+
+    /*
+       Adaptive principle:
+       - Strong confidence and good MCQ accuracy:
+         retain the planned longer interval.
+       - Weak performance:
+         bring the next revision closer.
+
+       The schedule itself remains based on
+       increasing spaced-retrieval intervals.
+    */
+
+    const next = topic.revisions.find(r=>!r.completed);
+
+    if(next){
+        const accuracy = getAccuracy(topic);
+        const confidence = Number(topic.confidence||3);
+
+        if(
+            confidence <= 2 ||
+            (topic.mcqAttempted >= 10 && accuracy < 60)
+        ){
+            const base = dateFromISO(revision.completedDate);
+
+            base.setDate(base.getDate()+3);
+
+            next.dueDate =
+                `${base.getFullYear()}-${String(base.getMonth()+1).padStart(2,"0")}-${String(base.getDate()).padStart(2,"0")}`;
+        }
+    }
+
+    saveNEETTopics(topics);
+
+    showMessage(`Revision ${revision.number} completed ✓`);
+
+    render();
+}
+
+
+/* =========================================================
+   NEET-PG STOPWATCH
+========================================================= */
+
+let timerSeconds = 0;
+let timerInterval = null;
+let timerRunning = false;
+
+let timerContext = {
+    mode:"general",
+    topicId:null,
+    startedAt:null
+};
+
+function formatTimer(seconds){
+    seconds = Math.max(0,Math.floor(seconds));
+
+    const h = Math.floor(seconds/3600);
+    const m = Math.floor((seconds%3600)/60);
+    const s = seconds%60;
+
+    return [
+        String(h).padStart(2,"0"),
+        String(m).padStart(2,"0"),
+        String(s).padStart(2,"0")
+    ].join(":");
+}
+
+function updateTimerDisplay(){
+    document.getElementById("timerDisplay").textContent =
+        formatTimer(timerSeconds);
+}
+
+function updateTimerButtons(){
+    document.getElementById("timerStartBtn").disabled =
+        timerRunning;
+
+    document.getElementById("timerPauseBtn").disabled =
+        !timerRunning;
+
+    document.getElementById("timerStopBtn").disabled =
+        timerSeconds <= 0;
+}
+
+function updateTimerFields(){
+    const mode = document.getElementById("timerMode").value;
+
+    document.getElementById("timerGeneralFields").style.display =
+        mode === "general" ? "block" : "none";
+
+    document.getElementById("timerNEETFields").style.display =
+        mode === "neet" ? "block" : "none";
+
+    if(mode === "neet"){
+        populateTimerSubjects();
+    }
+}
+
+function startTimer(){
+    if(timerRunning) return;
+
+    const mode = document.getElementById("timerMode").value;
+
+    timerContext.mode = mode;
+    timerContext.startedAt = timerContext.startedAt || new Date().toISOString();
+
+    if(mode === "neet"){
+        timerContext.topicId =
+            document.getElementById("timerTopic").value || null;
+
+        if(!timerContext.topicId){
+            showMessage("Select a NEET-PG topic first.");
+            return;
+        }
+    }
+
+    timerRunning = true;
+
+    timerInterval = setInterval(()=>{
+        timerSeconds++;
+        updateTimerDisplay();
+        updateTimerButtons();
+    },1000);
+
+    updateTimerButtons();
+}
+
+function pauseTimer(){
+    if(!timerRunning) return;
+
+    clearInterval(timerInterval);
+
+    timerInterval = null;
+    timerRunning = false;
+
+    updateTimerButtons();
+
+    showMessage("Stopwatch paused.");
+}
+
+function stopTimer(){
+    if(timerSeconds <= 0) return;
+
+    clearInterval(timerInterval);
+
+    timerInterval = null;
+    timerRunning = false;
+
+    const seconds = timerSeconds;
+    const minutes = Math.max(1,Math.round(seconds/60));
+
+    saveTimerSession(minutes);
+
+    timerSeconds = 0;
+    timerContext = {
+        mode:"general",
+        topicId:null,
+        startedAt:null
+    };
+
+    updateTimerDisplay();
+    updateTimerButtons();
+
+    showMessage(`${minutes} minute study session saved ✓`);
+
+    render();
+}
+
+function resetTimer(){
+    clearInterval(timerInterval);
+
+    timerInterval = null;
+    timerRunning = false;
+    timerSeconds = 0;
+
+    timerContext = {
+        mode:"general",
+        topicId:null,
+        startedAt:null
+    };
+
+    updateTimerDisplay();
+    updateTimerButtons();
+}
+
+function startTopicTimer(id){
+    const topic = findNEETTopic(id);
+
+    if(!topic) return;
+
+    showPage("stopwatch");
+
+    document.getElementById("timerMode").value = "neet";
+
+    updateTimerFields();
+
+    document.getElementById("timerSubject").value =
+        topic.subject;
+
+    populateTimerTopics();
+
+    document.getElementById("timerTopic").value =
+        topic.id;
+
+    document.getElementById("timerStudyType").value =
+        "Reading";
+
+    showMessage(`Ready to study ${topic.topic}.`);
+}
+
+function saveTimerSession(minutes){
+    if(timerContext.mode === "neet" && timerContext.topicId){
+
+        const topics = getNEETTopics();
+
+        const topic = topics.find(
+            t=>t.id===timerContext.topicId
+        );
+
+        if(topic){
+
+            topic.studyMinutes =
+                Number(topic.studyMinutes||0) + minutes;
+
+            /*
+               If study begins for a topic and it has no study date,
+               create its revision schedule.
+            */
+
+            if(!topic.studyDate){
+                topic.studyDate = todayISO();
+                topic.revisions = createRevisionSchedule(topic);
+            }
+
+            topic.updatedAt = new Date().toISOString();
+
+            saveNEETTopics(topics);
+
+            addGeneralActivityRecord(
+                `${topic.subject}: ${topic.topic}`,
+                "Learning",
+                minutes
+            );
+
+            return;
+        }
+    }
+
+    const activity =
+        document.getElementById("timerActivity").value.trim()
+        || "Study / Activity";
+
+    addGeneralActivityRecord(
+        activity,
+        "Work/Study",
+        minutes
+    );
+}
+
+function addGeneralActivityRecord(name,category,minutes){
+    const activities = getActivities();
+
+    activities.push({
+        id:uid("act"),
+        activityName:name,
+        category:normalizeCategory(category),
+        minutes:Math.round(minutes),
+        date:todayISO(),
+        createdAt:new Date().toISOString()
+    });
+
+    saveActivities(activities);
+}
+
+
+/* =========================================================
+   TIMER TOPIC SELECTORS
+========================================================= */
+
+function populateTimerSubjects(){
+    const select = document.getElementById("timerSubject");
+
+    if(!select) return;
+
+    const current = select.value;
+
+    select.innerHTML =
+        NEET_SUBJECTS.map(subject=>
+            `<option>${escapeHTML(subject)}</option>`
+        ).join("");
+
+    if(current && NEET_SUBJECTS.includes(current)){
+        select.value = current;
+    }
+
+    populateTimerTopics();
+}
+
+function populateTimerTopics(){
+    const subject =
+        document.getElementById("timerSubject").value;
+
+    const topicSelect =
+        document.getElementById("timerTopic");
+
+    const topics = getNEETTopics()
+        .filter(t=>t.subject===subject);
+
+    const current = topicSelect.value;
+
+    if(!topics.length){
+        topicSelect.innerHTML =
+            `<option value="">No topics entered yet</option>`;
+        return;
+    }
+
+    topicSelect.innerHTML =
+        topics.map(topic=>
+            `<option value="${escapeHTML(topic.id)}">
+                ${escapeHTML(topic.chapter)} → ${escapeHTML(topic.topic)}
+            </option>`
+        ).join("");
+
+    if(topics.some(t=>t.id===current)){
+        topicSelect.value = current;
+    }
+}
+
+
+/* =========================================================
+   RECENT SESSIONS
+========================================================= */
+
+function renderRecentSessions(){
+    const container = document.getElementById("recentSessions");
+
+    const sessions = getActivities()
+        .filter(a=>
+            String(a.activityName||"")
+                .toLowerCase()
+                .includes(":")
+        )
+        .slice()
+        .reverse()
+        .slice(0,10);
+
+    if(!sessions.length){
+        container.innerHTML =
+            `<div class="empty">No NEET-PG stopwatch sessions yet.</div>`;
+        return;
+    }
+
+    container.innerHTML = sessions.map(a=>`
+        <div class="activity-item">
+            <div>
+                <div class="activity-name">
+                    ${escapeHTML(a.activityName)}
+                </div>
+                <div class="small muted">
+                    ${formatDate(a.date)}
+                </div>
+            </div>
+
+            <strong>${a.minutes} min</strong>
+        </div>
+    `).join("");
+}
+
+
+/* =========================================================
+   PROGRESS CHARTS
+========================================================= */
+
+function getLastNDates(n){
+    const dates = [];
+
+    for(let i=n-1;i>=0;i--){
+        dates.push(addDaysISO(todayISO(),-i));
+    }
+
+    return dates;
+}
+
+function setupCanvas(canvas,height=260){
+    const rect = canvas.getBoundingClientRect();
+
+    const width = Math.max(
+        300,
+        Math.floor(
+            rect.width ||
+            canvas.parentElement?.clientWidth ||
+            600
+        )
+    );
+
+    const dpr = Math.min(window.devicePixelRatio || 1,2);
+
+    canvas.width = width*dpr;
+    canvas.height = height*dpr;
+    canvas.style.height = height+"px";
+
+    const ctx = canvas.getContext("2d");
+
+    ctx.setTransform(dpr,0,0,dpr,0,0);
+
+    return {
+        ctx,
+        width,
+        height
+    };
+}
+
+function cssVar(name){
+    return getComputedStyle(document.body)
+        .getPropertyValue(name)
+        .trim();
+}
+
+function drawWeeklyChart(){
+    const canvas = document.getElementById("weeklyChart");
+
+    if(!canvas) return;
+
+    const {ctx,width,height} =
+        setupCanvas(canvas,260);
+
+    const dates = getLastNDates(7);
+
+    const values =
+        dates.map(getMinutesForDate);
+
+    const max =
+        Math.max(60,...values);
+
+    const pad = {
+        left:45,
+        right:15,
+        top:20,
+        bottom:40
+    };
+
+    const chartW =
+        width-pad.left-pad.right;
+
+    const chartH =
+        height-pad.top-pad.bottom;
+
+    ctx.clearRect(0,0,width,height);
+
+    const textColor = cssVar("--muted");
+    const gridColor = cssVar("--border");
+    const barColor = cssVar("--chart");
+
+    ctx.font = "12px Arial";
+
+    for(let i=0;i<=4;i++){
+        const y =
+            pad.top + chartH - (chartH*i/4);
+
+        ctx.strokeStyle = gridColor;
+        ctx.lineWidth = 1;
+
+        ctx.beginPath();
+        ctx.moveTo(pad.left,y);
+        ctx.lineTo(width-pad.right,y);
+        ctx.stroke();
+
+        const label =
+            Math.round(max*i/4);
+
+        ctx.fillStyle = textColor;
+        ctx.fillText(
+            label+"m",
+            5,
+            y+4
+        );
+    }
+
+    const gap = 8;
+    const barW =
+        (chartW-gap*(values.length-1))/values.length;
+
+    values.forEach((value,i)=>{
+        const barH =
+            value/max*chartH;
+
+        const x =
+            pad.left+i*(barW+gap);
+
+        const y =
+            pad.top+chartH-barH;
+
+        ctx.fillStyle = barColor;
+
+        ctx.fillRect(
+            x,
+            y,
+            barW,
+            barH
+        );
+
+        ctx.fillStyle = textColor;
+
+        const label =
+            formatShortDate(dates[i]);
+
+        ctx.fillText(
+            label,
+            x,
+            height-12
+        );
+    });
+}
+
+function drawMonthlyChart(){
+    const canvas = document.getElementById("monthlyChart");
+
+    if(!canvas) return;
+
+    const {ctx,width,height} =
+        setupCanvas(canvas,260);
+
+    const dates = getLastNDates(30);
+
+    const values =
+        dates.map(getMinutesForDate);
+
+    const max =
+        Math.max(60,...values);
+
+    const pad = {
+        left:42,
+        right:15,
+        top:20,
+        bottom:35
+    };
+
+    const chartW =
+        width-pad.left-pad.right;
+
+    const chartH =
+        height-pad.top-pad.bottom;
+
+    ctx.clearRect(0,0,width,height);
+
+    const textColor = cssVar("--muted");
+    const gridColor = cssVar("--border");
+    const lineColor = cssVar("--chart2");
+
+    for(let i=0;i<=4;i++){
+        const y =
+            pad.top+chartH-(chartH*i/4);
+
+        ctx.strokeStyle = gridColor;
+
+        ctx.beginPath();
+        ctx.moveTo(pad.left,y);
+        ctx.lineTo(width-pad.right,y);
+        ctx.stroke();
+
+        ctx.fillStyle = textColor;
+
+        ctx.font = "11px Arial";
+
+        ctx.fillText(
+            Math.round(max*i/4)+"m",
+            4,
+            y+4
+        );
+    }
+
+    ctx.strokeStyle = lineColor;
+    ctx.lineWidth = 3;
+    ctx.beginPath();
+
+    values.forEach((value,i)=>{
+        const x =
+            pad.left+
+            chartW*(i/(values.length-1));
+
+        const y =
+            pad.top+
+            chartH-
+            value/max*chartH;
+
+        if(i===0){
+            ctx.moveTo(x,y);
+        }else{
+            ctx.lineTo(x,y);
+        }
+    });
+
+    ctx.stroke();
+
+    values.forEach((value,i)=>{
+        if(i%5!==0 && i!==values.length-1) return;
+
+        const x =
+            pad.left+
+            chartW*(i/(values.length-1));
+
+        const y =
+            pad.top+
+            chartH-
+            value/max*chartH;
+
+        ctx.fillStyle = lineColor;
+
+        ctx.beginPath();
+        ctx.arc(x,y,4,0,Math.PI*2);
+        ctx.fill();
+
+        ctx.fillStyle = textColor;
+
+        ctx.font = "11px Arial";
+
+        ctx.fillText(
+            formatShortDate(dates[i]),
+            x-15,
+            height-10
+        );
+    });
+}
+
+function renderBalance(){
+    const container =
+        document.getElementById("balanceChart");
+
+    const totalByCategory = {};
+
+    CATEGORIES.forEach(category=>{
+        totalByCategory[category] =
+            getActivities()
+                .filter(a=>
+                    normalizeCategory(a.category)===category
+                )
+                .reduce(
+                    (sum,a)=>sum+Number(a.minutes||0),
+                    0
+                );
+    });
+
+    const max =
+        Math.max(
+            1,
+            ...Object.values(totalByCategory)
+        );
+
+    container.innerHTML =
+        CATEGORIES.map(category=>{
+            const value =
+                totalByCategory[category];
+
+            const percent =
+                value/max*100;
+
+            return `
+                <div class="category-card" style="margin-bottom:10px;">
+                    <div class="category-head">
+                        <strong>${escapeHTML(category)}</strong>
+                        <span>${minutesText(value)}</span>
+                    </div>
+
+                    <div class="progress-wrap">
+                        <div class="progress-bar"
+                             style="width:${percent}%"></div>
+                    </div>
+                </div>
+            `;
+        }).join("");
+}
+
+function renderProgress(){
+    const activities = getActivities();
+
+    const totalMinutes =
+        activities.reduce(
+            (sum,a)=>sum+Number(a.minutes||0),
+            0
+        );
+
+    const xp = calculateXP();
+
+    const level =
+        Math.floor(xp/100)+1;
+
+    document.getElementById("totalMinutes").textContent =
+        totalMinutes;
+
+    document.getElementById("totalXP").textContent =
+        xp;
+
+    document.getElementById("currentLevel").textContent =
+        level;
+
+    document.getElementById("longestStreak").textContent =
+        calculateLongestStreak();
+
+    drawWeeklyChart();
+    drawMonthlyChart();
+    renderBalance();
+}
+
+
+/* =========================================================
+   CHECK-IN
+========================================================= */
+
+let selectedRating = 0;
+
+function getCheckins(){
+    const data = getJSON(CHECKIN_KEY,{});
+
+    return (
+        data &&
+        typeof data === "object" &&
+        !Array.isArray(data)
+    )
+        ? data
+        : {};
+}
+
+function saveCheckin(){
+    const checkins = getCheckins();
+
+    checkins[todayISO()] = {
+        rating:selectedRating,
+        good:document.getElementById("checkinGood").value,
+        difficult:document.getElementById("checkinDifficult").value,
+        tomorrow:document.getElementById("checkinTomorrow").value,
+        savedAt:new Date().toISOString()
+    };
+
+    saveJSON(CHECKIN_KEY,checkins);
+
+    showMessage("Check-in saved ❤️");
+}
+
+function setRating(rating){
+    selectedRating = rating;
+
+    document
+        .querySelectorAll("#ratingButtons button")
+        .forEach((button,index)=>{
+            button.classList.toggle(
+                "selected",
+                index < rating
+            );
+        });
+}
+
+function renderCheckin(){
+    const checkins = getCheckins();
+    const data = checkins[todayISO()];
+
+    if(!data){
+        selectedRating = 0;
+        setRating(0);
+
+        document.getElementById("checkinGood").value = "";
+        document.getElementById("checkinDifficult").value = "";
+        document.getElementById("checkinTomorrow").value = "";
+
+        return;
+    }
+
+    selectedRating = Number(data.rating||0);
+
+    setRating(selectedRating);
+
+    document.getElementById("checkinGood").value =
+        data.good || "";
+
+    document.getElementById("checkinDifficult").value =
+        data.difficult || "";
+
+    document.getElementById("checkinTomorrow").value =
+        data.tomorrow || "";
+}
+
+
+/* =========================================================
+   WEEK
+========================================================= */
+
+function renderWeek(){
+    const dates = getLastNDates(7);
+
+    const activities =
+        getActivities().filter(a=>
+            dates.includes(a.date)
+        );
+
+    const minutes =
+        activities.reduce(
+            (sum,a)=>sum+Number(a.minutes||0),
+            0
+        );
+
+    const activeDays =
+        new Set(
+            activities.map(a=>a.date)
+        ).size;
+
+    document.getElementById("weekMinutes").textContent =
+        minutes;
+
+    document.getElementById("weekActivities").textContent =
+        activities.length;
+
+    document.getElementById("weekActiveDays").textContent =
+        activeDays;
+
+    const container =
+        document.getElementById("weekCategories");
+
+    container.innerHTML =
+        CATEGORIES.map(category=>{
+            const value =
+                activities
+                    .filter(a=>
+                        normalizeCategory(a.category)===category
+                    )
+                    .reduce(
+                        (sum,a)=>sum+Number(a.minutes||0),
+                        0
+                    );
+
+            return `
+                <div class="category-card" style="margin-bottom:10px;">
+                    <div class="category-head">
+                        <strong>${escapeHTML(category)}</strong>
+                        <span>${minutesText(value)}</span>
+                    </div>
+
+                    <div class="progress-wrap">
+                        <div class="progress-bar"
+                             style="width:${clamp(value/210*100,0,100)}%">
+                        </div>
+                    </div>
+                </div>
+            `;
+        }).join("");
+}
+
+
+/* =========================================================
+   DATA EXPORT
+========================================================= */
+
+function exportJSON(){
+    const backup = {
+        app:"UPWARD",
+        version:3,
+        exportedAt:new Date().toISOString(),
+
+        activities:getActivities(),
+
+        checkins:getCheckins(),
+
+        spending:getJSON(SPENDING_KEY,[]),
+
+        neetpg:getNEETTopics(),
+
+        darkMode:
+            localStorage.getItem(DARK_KEY)==="true"
+    };
+
+    downloadFile(
+        JSON.stringify(backup,null,2),
+        `UPWARD-backup-${todayISO()}.json`,
+        "application/json"
+    );
+
+    showMessage("JSON backup exported ✓");
+}
+
+function downloadFile(content,filename,type){
+    const blob =
+        new Blob([content],{type});
+
+    const url =
+        URL.createObjectURL(blob);
+
+    const a =
+        document.createElement("a");
+
+    a.href = url;
+    a.download = filename;
+
+    document.body.appendChild(a);
+
+    a.click();
+
+    a.remove();
+
+    setTimeout(()=>{
+        URL.revokeObjectURL(url);
+    },1000);
+}
+
+function importJSON(event){
+    const file = event.target.files?.[0];
+
+    if(!file) return;
+
+    const reader = new FileReader();
+
+    reader.onload = ()=>{
+        try{
+            const data =
+                JSON.parse(reader.result);
+
+            let activities = null;
+
+            if(Array.isArray(data)){
+                activities = data;
+            }else if(Array.isArray(data.activities)){
+                activities = data.activities;
+            }else if(Array.isArray(data.upwardActivities)){
+                activities = data.upwardActivities;
+            }
+
+            if(!activities){
+                throw new Error("No activity data found.");
+            }
+
+            const normalizedActivities =
+                activities.map((a,index)=>({
+                    id:a.id || uid("act"),
+                    activityName:
+                        a.activityName ||
+                        a.name ||
+                        "Activity",
+
+                    category:
+                        normalizeCategory(a.category),
+
+                    minutes:
+                        Math.max(
+                            0,
+                            Number(a.minutes||0)
+                        ),
+
+                    date:
+                        a.date ||
+                        todayISO(),
+
+                    createdAt:
+                        a.createdAt ||
+                        new Date().toISOString()
+                }));
+
+            saveActivities(normalizedActivities);
+
+            if(data.checkins){
+                saveJSON(
+                    CHECKIN_KEY,
+                    data.checkins
+                );
+            }
+
+            if(data.spending){
+                saveJSON(
+                    SPENDING_KEY,
+                    data.spending
+                );
+            }
+
+            if(Array.isArray(data.neetpg)){
+                saveNEETTopics(data.neetpg);
+            }
+
+            if(typeof data.darkMode === "boolean"){
+                localStorage.setItem(
+                    DARK_KEY,
+                    String(data.darkMode)
+                );
+            }
+
+            applyTheme();
+
+            showMessage("Backup imported successfully ✓");
+
+            render();
+
+        }catch(error){
+            alert(
+                "Import failed. Please select a valid UPWARD JSON backup."
+            );
+        }
+
+        event.target.value = "";
+    };
+
+    reader.readAsText(file);
+}
+
+function csvEscape(value){
+    const text = String(value ?? "");
+
+    if(
+        text.includes(",") ||
+        text.includes('"') ||
+        text.includes("\n")
+    ){
+        return '"' +
+            text.replace(/"/g,'""') +
+            '"';
+    }
+
+    return text;
+}
+
+function exportCSV(){
+    const rows = [
+        [
+            "Date",
+            "Activity",
+            "Category",
+            "Minutes"
+        ]
+    ];
+
+    getActivities().forEach(a=>{
+        rows.push([
+            a.date,
+            a.activityName,
+            normalizeCategory(a.category),
+            a.minutes
+        ]);
+    });
+
+    const csv =
+        rows.map(row=>
+            row.map(csvEscape).join(",")
+        ).join("\n");
+
+    downloadFile(
+        csv,
+        `UPWARD-activities-${todayISO()}.csv`,
+        "text/csv;charset=utf-8"
+    );
+
+    showMessage("CSV exported ✓");
+}
+
+
+/* =========================================================
+   DATA PAGE
+========================================================= */
+
+function renderData(){
+    document.getElementById("dataActivities").textContent =
+        getActivities().length;
+
+    document.getElementById("dataTopics").textContent =
+        getNEETTopics().length;
+
+    document.getElementById("dataCheckins").textContent =
+        Object.keys(getCheckins()).length;
+}
+
+function clearAllData(){
+    if(!confirm(
+        "This will delete UPWARD activities, check-ins, spending and NEET-PG data from this browser. Continue?"
+    )){
+        return;
+    }
+
+    localStorage.removeItem(ACTIVITY_KEY);
+    localStorage.removeItem(CHECKIN_KEY);
+    localStorage.removeItem(SPENDING_KEY);
+    localStorage.removeItem(NEET_KEY);
+
+    resetTimer();
+
+    showMessage("UPWARD data cleared.");
+
+    render();
+}
+
+
+/* =========================================================
+   MAIN RENDER
+========================================================= */
+
+function render(){
+    renderToday();
+    renderTrackers();
+    renderNEET();
+    renderProgress();
+    renderCheckin();
+    renderWeek();
+    renderRecentSessions();
+    renderData();
+
+    updateTimerDisplay();
+    updateTimerButtons();
+    updateTimerFields();
+}
+
+
+/* =========================================================
+   RESIZE
+========================================================= */
+
+window.addEventListener("resize",()=>{
+    if(currentPage === "progress"){
+        drawWeeklyChart();
+        drawMonthlyChart();
+    }
+});
+
+
+/* =========================================================
+   STARTUP
+========================================================= */
+
+document.addEventListener("DOMContentLoaded",()=>{
+
+    applyTheme();
+
+    populateTimerSubjects();
+
+    updateTimerDisplay();
+    updateTimerButtons();
+
+    render();
+
+});
+
+
+/* =========================================================
+   SERVICE WORKER
+========================================================= */
+
+if("serviceWorker" in navigator){
+
+    window.addEventListener("load",()=>{
+        navigator.serviceWorker
+            .register("./sw.js")
+            .catch(()=>{
+                /* PWA still works normally if SW registration fails */
+            });
+    });
+
+}
+
+</script>
+
+</body>
+</html>
