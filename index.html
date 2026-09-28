@@ -1,1949 +1,1000 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-
-<meta name="theme-color" content="#667eea">
-<meta name="description" content="UPWARD — Small actions. Real progress. Personal activity, progress and journal tracker.">
-
-<title>UPWARD — Small actions. Real progress.</title>
-
-<link rel="manifest" href="./manifest.json">
-
-<style>
-*{
-    box-sizing:border-box;
-    -webkit-tap-highlight-color:transparent;
-}
-
-:root{
-    --bg:#f5f7fb;
-    --card:#ffffff;
-    --text:#202124;
-    --muted:#6b7280;
-    --primary:#667eea;
-    --primary-dark:#4f46c5;
-    --border:#e5e7eb;
-    --danger:#ef4444;
-    --success:#16a34a;
-    --shadow:0 8px 25px rgba(0,0,0,.07);
-}
-
-body{
-    margin:0;
-    font-family:Arial,Helvetica,sans-serif;
-    background:var(--bg);
-    color:var(--text);
-    padding-bottom:80px;
-}
-
-button,input,textarea,select{
-    font:inherit;
-}
-
-button{
-    cursor:pointer;
-}
-
-.app{
-    max-width:900px;
-    margin:auto;
-    padding:18px;
-}
-
-header{
-    text-align:center;
-    padding:15px 0 20px;
-}
-
-.logo{
-    font-size:34px;
-    font-weight:800;
-    letter-spacing:2px;
-}
-
-.tagline{
-    color:var(--muted);
-    margin-top:5px;
-}
-
-.screen{
-    display:none;
-}
-
-.screen.active{
-    display:block;
-}
-
-.card{
-    background:var(--card);
-    border-radius:18px;
-    padding:18px;
-    margin-bottom:16px;
-    box-shadow:var(--shadow);
-}
-
-.card h2{
-    margin-top:0;
-}
-
-.stats{
-    display:grid;
-    grid-template-columns:repeat(2,1fr);
-    gap:12px;
-}
-
-.stat{
-    background:var(--card);
-    padding:18px;
-    border-radius:18px;
-    box-shadow:var(--shadow);
-    text-align:center;
-}
-
-.stat-number{
-    font-size:30px;
-    font-weight:800;
-    color:var(--primary);
-}
-
-.stat-label{
-    color:var(--muted);
-    font-size:13px;
-    margin-top:5px;
-}
-
-.goal{
-    margin:16px 0;
-}
-
-.goal-header{
-    display:flex;
-    justify-content:space-between;
-    gap:10px;
-    margin-bottom:7px;
-    font-size:14px;
-}
-
-.goal-percent{
-    color:var(--primary);
-    font-weight:700;
-    margin-left:5px;
-}
-
-.progress-bar{
-    width:100%;
-    height:10px;
-    background:#e5e7eb;
-    border-radius:20px;
-    overflow:hidden;
-}
-
-.progress-fill{
-    height:100%;
-    background:var(--primary);
-    border-radius:20px;
-    transition:.3s;
-}
-
-.activity{
-    border:1px solid var(--border);
-    border-radius:14px;
-    padding:14px;
-    margin:10px 0;
-}
-
-.activity-top{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    gap:10px;
-}
-
-.activity-name{
-    font-weight:700;
-}
-
-.activity-meta{
-    color:var(--muted);
-    font-size:13px;
-    margin-top:6px;
-}
-
-.form-group{
-    margin-bottom:15px;
-}
-
-label{
-    display:block;
-    font-weight:600;
-    margin-bottom:7px;
-}
-
-input,textarea,select{
-    width:100%;
-    padding:12px;
-    border:1px solid var(--border);
-    border-radius:12px;
-    background:white;
-    outline:none;
-}
-
-input:focus,textarea:focus,select:focus{
-    border-color:var(--primary);
-}
-
-textarea{
-    min-height:130px;
-    resize:vertical;
-}
-
-.primary-btn{
-    width:100%;
-    border:0;
-    background:var(--primary);
-    color:white;
-    padding:13px;
-    border-radius:12px;
-    font-weight:700;
-}
-
-.primary-btn:hover{
-    background:var(--primary-dark);
-}
-
-.secondary-btn{
-    border:1px solid var(--border);
-    background:white;
-    padding:9px 13px;
-    border-radius:10px;
-}
-
-.danger-btn{
-    border:0;
-    background:#fee2e2;
-    color:#b91c1c;
-    padding:8px 11px;
-    border-radius:9px;
-}
-
-.success-btn{
-    border:0;
-    background:#dcfce7;
-    color:#166534;
-    padding:8px 11px;
-    border-radius:9px;
-}
-
-.empty{
-    text-align:center;
-    color:var(--muted);
-    padding:25px 10px;
-}
-
-canvas{
-    width:100%;
-    height:220px;
-    display:block;
-}
-
-.history-item{
-    border-left:4px solid var(--primary);
-    padding:12px;
-    margin:10px 0;
-    background:#f8f9ff;
-    border-radius:8px;
-}
-
-.journal-item{
-    border:1px solid var(--border);
-    border-radius:14px;
-    padding:15px;
-    margin:12px 0;
-}
-
-.journal-title{
-    font-weight:800;
-    font-size:18px;
-}
-
-.journal-date{
-    color:var(--muted);
-    font-size:12px;
-    margin:5px 0 10px;
-}
-
-.journal-text{
-    white-space:pre-wrap;
-    line-height:1.5;
-}
-
-.actions{
-    display:flex;
-    gap:8px;
-    flex-wrap:wrap;
-    margin-top:12px;
-}
-
-.actions button{
-    flex:1;
-}
-
-.bottom-nav{
-    position:fixed;
-    bottom:0;
-    left:0;
-    right:0;
-    background:white;
-    border-top:1px solid var(--border);
-    display:grid;
-    grid-template-columns:repeat(5,1fr);
-    padding:8px 5px;
-    z-index:1000;
-}
-
-.nav-btn{
-    border:0;
-    background:white;
-    color:var(--muted);
-    padding:7px 2px;
-    font-size:11px;
-}
-
-.nav-icon{
-    display:block;
-    font-size:20px;
-    margin-bottom:3px;
-}
-
-.nav-btn.active{
-    color:var(--primary);
-    font-weight:700;
-}
-
-.toast{
-    position:fixed;
-    left:50%;
-    bottom:90px;
-    transform:translateX(-50%);
-    background:#222;
-    color:white;
-    padding:12px 18px;
-    border-radius:25px;
-    display:none;
-    z-index:2000;
-    max-width:90%;
-    text-align:center;
-}
-
-.toast.show{
-    display:block;
-}
-
-.badge{
-    display:inline-block;
-    padding:5px 9px;
-    border-radius:20px;
-    background:#eef2ff;
-    color:#4f46c5;
-    font-size:12px;
-}
-
-.small{
-    color:var(--muted);
-    font-size:13px;
-}
-
-.summary-grid{
-    display:grid;
-    grid-template-columns:repeat(2,1fr);
-    gap:10px;
-}
-
-.summary-box{
-    padding:15px;
-    background:#f8f9ff;
-    border-radius:12px;
-    text-align:center;
-}
-
-.summary-box strong{
-    display:block;
-    font-size:24px;
-    color:var(--primary);
-}
-
-.category-box{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    padding:12px;
-    border:1px solid var(--border);
-    border-radius:12px;
-    margin:8px 0;
-}
-
-.category-minutes{
-    color:var(--primary);
-    font-weight:700;
-}
-
-.notification-status{
-    padding:12px;
-    border-radius:12px;
-    background:#f8f9ff;
-    margin-bottom:15px;
-}
-
-.switch-row{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    gap:15px;
-    margin:15px 0;
-}
-
-.switch{
-    width:52px;
-    height:28px;
-    position:relative;
-}
-
-.switch input{
-    opacity:0;
-    width:0;
-    height:0;
-}
-
-.slider{
-    position:absolute;
-    inset:0;
-    background:#d1d5db;
-    border-radius:30px;
-    transition:.2s;
-}
-
-.slider:before{
-    content:"";
-    position:absolute;
-    width:22px;
-    height:22px;
-    left:3px;
-    top:3px;
-    background:white;
-    border-radius:50%;
-    transition:.2s;
-}
-
-.switch input:checked + .slider{
-    background:var(--primary);
-}
-
-.switch input:checked + .slider:before{
-    transform:translateX(24px);
-}
-
-@media(min-width:700px){
-
-    .stats{
-        grid-template-columns:repeat(4,1fr);
-    }
-
-    .summary-grid{
-        grid-template-columns:repeat(4,1fr);
-    }
-}
-</style>
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <meta name="theme-color" content="#667eea">
+
+    <meta name="description"
+          content="UPWARD — Small actions. Real progress. A personal activity and self-improvement tracker.">
+
+    <title>UPWARD — Small actions. Real progress.</title>
+
+    <link rel="manifest" href="manifest.json">
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+        /* -------------------------------------------------
+           UPWARD BASIC FALLBACK STYLES
+           These ensure the app remains usable even if
+           style.css has not yet been updated.
+        ------------------------------------------------- */
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, Helvetica, sans-serif;
+            background: #f5f7fb;
+            color: #202124;
+        }
+
+        button,
+        input,
+        select {
+            font: inherit;
+        }
+
+        button {
+            cursor: pointer;
+        }
+
+        .app {
+            max-width: 900px;
+            margin: auto;
+            padding-bottom: 40px;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 28px 20px;
+            border-radius: 0 0 24px 24px;
+        }
+
+        .header h1 {
+            margin: 0;
+            font-size: 30px;
+        }
+
+        .header p {
+            margin: 7px 0 0;
+            opacity: 0.9;
+        }
+
+        .content {
+            padding: 18px;
+        }
+
+        .card {
+            background: white;
+            border-radius: 18px;
+            padding: 20px;
+            margin-bottom: 16px;
+            box-shadow: 0 4px 18px rgba(0,0,0,0.06);
+        }
+
+        .card h2 {
+            margin-top: 0;
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+        }
+
+        .stat {
+            background: #f7f8fc;
+            padding: 16px;
+            border-radius: 14px;
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .stat-label {
+            font-size: 13px;
+            color: #666;
+            margin-top: 5px;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+
+        .full {
+            grid-column: 1 / -1;
+        }
+
+        label {
+            display: block;
+            font-size: 13px;
+            font-weight: bold;
+            margin-bottom: 6px;
+        }
+
+        input,
+        select {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            background: white;
+        }
+
+        .primary-btn {
+            width: 100%;
+            border: 0;
+            border-radius: 12px;
+            padding: 13px;
+            background: #667eea;
+            color: white;
+            font-weight: bold;
+            margin-top: 12px;
+        }
+
+        .secondary-btn {
+            border: 0;
+            border-radius: 10px;
+            padding: 11px 14px;
+            background: #eef0f7;
+            color: #333;
+            font-weight: 600;
+        }
+
+        .danger-btn {
+            border: 0;
+            border-radius: 10px;
+            padding: 11px 14px;
+            background: #ffe9e9;
+            color: #b42318;
+            font-weight: 600;
+        }
+
+        .download-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+        }
+
+        .activity-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 12px;
+            padding: 13px;
+            border-radius: 12px;
+            background: #f7f8fc;
+            margin-bottom: 8px;
+        }
+
+        .activity-name {
+            font-weight: bold;
+        }
+
+        .activity-meta {
+            font-size: 12px;
+            color: #666;
+            margin-top: 4px;
+        }
+
+        .delete-btn {
+            border: 0;
+            background: transparent;
+            color: #c62828;
+            font-size: 18px;
+        }
+
+        .empty {
+            text-align: center;
+            color: #777;
+            padding: 20px;
+        }
+
+        .message {
+            display: none;
+            padding: 12px;
+            border-radius: 10px;
+            margin-top: 12px;
+            background: #eaf7ed;
+            color: #176b2c;
+            font-size: 14px;
+        }
+
+        .footer {
+            text-align: center;
+            color: #777;
+            font-size: 12px;
+            padding: 20px;
+        }
+
+        @media (max-width: 600px) {
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .full {
+                grid-column: auto;
+            }
+
+            .download-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .stats {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+    </style>
 </head>
 
 <body>
 
 <div class="app">
 
-<header>
-    <div class="logo">UPWARD</div>
-    <div class="tagline">Small actions. Real progress.</div>
-</header>
+    <!-- HEADER -->
+    <header class="header">
+        <h1>UPWARD</h1>
+        <p>Small actions. Real progress.</p>
+    </header>
 
+    <main class="content">
 
-<!-- HOME -->
-<section id="home" class="screen active">
+        <!-- TODAY'S STATS -->
+        <section class="card">
+            <h2>Today's Progress</h2>
 
-    <div class="stats">
+            <div class="stats">
 
-        <div class="stat">
-            <div class="stat-number" id="todayActivities">0</div>
-            <div class="stat-label">Today's Activities</div>
-        </div>
+                <div class="stat">
+                    <div class="stat-number" id="todayActivities">0</div>
+                    <div class="stat-label">Activities</div>
+                </div>
 
-        <div class="stat">
-            <div class="stat-number" id="todayMinutes">0</div>
-            <div class="stat-label">Minutes Today</div>
-        </div>
+                <div class="stat">
+                    <div class="stat-number" id="todayMinutes">0</div>
+                    <div class="stat-label">Minutes</div>
+                </div>
 
-        <div class="stat">
-            <div class="stat-number" id="currentStreak">0</div>
-            <div class="stat-label">Current Streak</div>
-        </div>
+                <div class="stat">
+                    <div class="stat-number" id="currentStreak">0</div>
+                    <div class="stat-label">Day Streak</div>
+                </div>
 
-        <div class="stat">
-            <div class="stat-number" id="totalMinutes">0</div>
-            <div class="stat-label">Total Minutes</div>
-        </div>
-
-    </div>
-
-
-    <div class="card">
-
-        <h2>🎯 Daily Goals</h2>
-
-        <div class="goal">
-
-            <div class="goal-header">
-                <span>🏃 Movement</span>
-
-                <strong>
-                    <span id="movementGoal">0 / 30 min</span>
-                    <span class="goal-percent" id="movementPercent">0%</span>
-                </strong>
+                <div class="stat">
+                    <div class="stat-number" id="totalMinutes">0</div>
+                    <div class="stat-label">Total Minutes</div>
+                </div>
 
             </div>
+        </section>
 
-            <div class="progress-bar">
-                <div class="progress-fill" id="movementFill"></div>
-            </div>
 
-        </div>
+        <!-- ADD ACTIVITY -->
+        <section class="card">
 
+            <h2>Add Activity</h2>
 
-        <div class="goal">
+            <div class="form-grid">
 
-            <div class="goal-header">
-                <span>📚 Learning</span>
+                <div class="full">
+                    <label for="activityName">Activity</label>
 
-                <strong>
-                    <span id="learningGoal">0 / 30 min</span>
-                    <span class="goal-percent" id="learningPercent">0%</span>
-                </strong>
+                    <input
+                        type="text"
+                        id="activityName"
+                        placeholder="e.g. Walked, studied, read..."
+                        autocomplete="off">
+                </div>
 
-            </div>
+                <div>
+                    <label for="activityCategory">Category</label>
 
-            <div class="progress-bar">
-                <div class="progress-fill" id="learningFill"></div>
-            </div>
+                    <select id="activityCategory">
 
-        </div>
+                        <option value="Exercise">Exercise</option>
+                        <option value="Learning">Learning</option>
+                        <option value="Reading">Reading</option>
+                        <option value="Work">Work</option>
+                        <option value="Recreation">Recreation</option>
+                        <option value="Meditation">Meditation</option>
+                        <option value="Walking">Walking</option>
+                        <option value="Mindfulness">Mindfulness</option>
+                        <option value="Social">Social</option>
+                        <option value="Other">Other</option>
 
+                    </select>
+                </div>
 
-        <div class="goal">
+                <div>
+                    <label for="activityMinutes">Minutes</label>
 
-            <div class="goal-header">
-                <span>🧘 Mindfulness</span>
-
-                <strong>
-                    <span id="mindfulnessGoal">0 / 10 min</span>
-                    <span class="goal-percent" id="mindfulnessPercent">0%</span>
-                </strong>
-
-            </div>
-
-            <div class="progress-bar">
-                <div class="progress-fill" id="mindfulnessFill"></div>
-            </div>
-
-        </div>
-
-    </div>
-
-
-    <div class="card">
-
-        <h2>📊 Today's Category Totals</h2>
-
-        <div id="todayCategorySummary"></div>
-
-    </div>
-
-
-    <div class="card">
-
-        <h2>📅 Today's Activities</h2>
-
-        <div id="todayList"></div>
-
-    </div>
-
-
-    <div class="card">
-
-        <h2>📊 Last 7 Days</h2>
-
-        <canvas id="activityChart" width="800" height="220"></canvas>
-
-    </div>
-
-</section>
-
-
-<!-- ADD ACTIVITY -->
-<section id="add" class="screen">
-
-    <div class="card">
-
-        <h2 id="activityFormTitle">➕ Add Activity</h2>
-
-        <form id="activityForm">
-
-            <input type="hidden" id="activityEditId">
-
-            <div class="form-group">
-
-                <label>Activity Name</label>
-
-                <input
-                    type="text"
-                    id="activityName"
-                    placeholder="e.g. Walking"
-                    required
-                >
-
-            </div>
-
-
-            <div class="form-group">
-
-                <label>Category</label>
-
-                <select id="activityCategory">
-
-                    <option>Exercise</option>
-                    <option>Learning</option>
-                    <option>Reading</option>
-                    <option>Work</option>
-                    <option>Recreation</option>
-                    <option>Meditation</option>
-                    <option>Walking</option>
-                    <option>Other</option>
-
-                </select>
-
-            </div>
-
-
-            <div class="form-group">
-
-                <label>Minutes</label>
-
-                <input
-                    type="number"
-                    id="activityMinutes"
-                    min="1"
-                    placeholder="30"
-                    required
-                >
-
-            </div>
-
-
-            <div class="form-group">
-
-                <label>How did you feel?</label>
-
-                <select id="activityFeeling">
-
-                    <option>😀 Great</option>
-                    <option>🙂 Good</option>
-                    <option>😐 Okay</option>
-                    <option>😕 Not great</option>
-                    <option>😴 Tired</option>
-
-                </select>
-
-            </div>
-
-
-            <div class="form-group">
-
-                <label>What did you do?</label>
-
-                <textarea
-                    id="activityDid"
-                    placeholder="Describe what you did..."
-                ></textarea>
-
-            </div>
-
-
-            <div class="form-group">
-
-                <label>What did you learn?</label>
-
-                <textarea
-                    id="activityLearned"
-                    placeholder="What did you learn or improve?"
-                ></textarea>
-
-            </div>
-
-
-            <div class="form-group">
-
-                <label>Progress / Achievement</label>
-
-                <textarea
-                    id="activityProgress"
-                    placeholder="Any progress, achievement or small win?"
-                ></textarea>
-
-            </div>
-
-
-            <button
-                class="primary-btn"
-                type="submit"
-                id="activitySaveButton"
-            >
-                Save Activity
-            </button>
-
-
-            <button
-                class="secondary-btn"
-                type="button"
-                id="activityCancelButton"
-                style="display:none;width:100%;margin-top:10px;"
-            >
-                Cancel Edit
-            </button>
-
-        </form>
-
-    </div>
-
-</section>
-
-
-<!-- PROGRESS -->
-<section id="progress" class="screen">
-
-    <div class="card">
-
-        <h2>📈 My Daily Progress</h2>
-
-        <form id="progressForm">
-
-            <div class="form-group">
-
-                <label>Date</label>
-
-                <input
-                    type="date"
-                    id="progressDate"
-                    required
-                >
-
-            </div>
-
-
-            <div class="form-group">
-
-                <label>What went well?</label>
-
-                <textarea
-                    id="progressWentWell"
-                    placeholder="Write about today's positive progress..."
-                ></textarea>
-
-            </div>
-
-
-            <div class="form-group">
-
-                <label>What could be improved?</label>
-
-                <textarea
-                    id="progressImprove"
-                    placeholder="What would you like to improve?"
-                ></textarea>
-
-            </div>
-
-
-            <div class="form-group">
-
-                <label>Main goal for tomorrow</label>
-
-                <textarea
-                    id="progressTomorrow"
-                    placeholder="Your next small step..."
-                ></textarea>
-
-            </div>
-
-
-            <button class="primary-btn" type="submit">
-                Save / Update Progress
-            </button>
-
-        </form>
-
-    </div>
-
-
-    <div class="card">
-
-        <h2>📊 Progress Overview</h2>
-
-        <div class="summary-grid">
-
-            <div class="summary-box">
-                <strong id="progressCount">0</strong>
-                <span class="small">Progress Entries</span>
-            </div>
-
-            <div class="summary-box">
-                <strong id="journalCount">0</strong>
-                <span class="small">Writing Entries</span>
-            </div>
-
-            <div class="summary-box">
-                <strong id="activeDays">0</strong>
-                <span class="small">Active Days</span>
-            </div>
-
-            <div class="summary-box">
-                <strong id="allMinutes">0</strong>
-                <span class="small">Total Minutes</span>
-            </div>
-
-        </div>
-
-    </div>
-
-
-    <div class="card">
-
-        <h2>🗓 Progress History</h2>
-
-        <div id="progressHistory"></div>
-
-    </div>
-
-</section>
-
-
-<!-- JOURNAL -->
-<section id="journal" class="screen">
-
-    <div class="card">
-
-        <h2>✍️ My Writing</h2>
-
-        <form id="journalForm">
-
-            <input type="hidden" id="journalEditId">
-
-            <div class="form-group">
-
-                <label>Title</label>
-
-                <input
-                    type="text"
-                    id="journalTitle"
-                    placeholder="Today's thoughts..."
-                    required
-                >
-
-            </div>
-
-
-            <div class="form-group">
-
-                <label>Date</label>
-
-                <input
-                    type="date"
-                    id="journalDate"
-                    required
-                >
-
-            </div>
-
-
-            <div class="form-group">
-
-                <label>Your Writing</label>
-
-                <textarea
-                    id="journalText"
-                    placeholder="Write your thoughts, ideas, experiences or reflections..."
-                    required
-                ></textarea>
-
-            </div>
-
-
-            <button
-                class="primary-btn"
-                type="submit"
-                id="journalSaveButton"
-            >
-                Save Writing
-            </button>
-
-        </form>
-
-    </div>
-
-
-    <div class="card">
-
-        <h2>📖 My Entries</h2>
-
-        <input
-            type="search"
-            id="journalSearch"
-            placeholder="Search your writing..."
-        >
-
-        <div id="journalList"></div>
-
-    </div>
-
-</section>
-
-
-<!-- MORE -->
-<section id="more" class="screen">
-
-    <div class="card">
-
-        <h2>⚙️ UPWARD</h2>
-
-        <p>
-            UPWARD keeps your personal activity, progress and writing
-            data stored locally on this device.
-        </p>
-
-        <span class="badge">
-            Private • Local Storage
-        </span>
-
-    </div>
-
-
-    <div class="card">
-
-        <h2>🔔 Notifications</h2>
-
-        <div
-            class="notification-status"
-            id="notificationStatus"
-        >
-            Checking notification status...
-        </div>
-
-
-        <div class="switch-row">
-
-            <div>
-
-                <strong>Daily reminder</strong>
-
-                <div class="small">
-                    Remind yourself to record today's progress.
+                    <input
+                        type="number"
+                        id="activityMinutes"
+                        min="1"
+                        max="1440"
+                        placeholder="Minutes">
                 </div>
 
             </div>
 
+            <button class="primary-btn" onclick="addActivity()">
+                + Add Activity
+            </button>
 
-            <label class="switch">
+            <div id="message" class="message"></div>
 
-                <input
-                    type="checkbox"
-                    id="notificationEnabled"
-                >
-
-                <span class="slider"></span>
-
-            </label>
-
-        </div>
+        </section>
 
 
-        <div class="form-group">
+        <!-- TODAY'S ACTIVITIES -->
+        <section class="card">
 
-            <label>Reminder time</label>
+            <h2>Today's Activities</h2>
+
+            <div id="activityList"></div>
+
+        </section>
+
+
+        <!-- DAILY GOALS -->
+        <section class="card">
+
+            <h2>Daily Goals</h2>
+
+            <div id="goalsContainer">
+
+                <p>Movement: <strong id="movementGoal">0 / 30 min</strong></p>
+
+                <p>Learning: <strong id="learningGoal">0 / 30 min</strong></p>
+
+                <p>Mindfulness: <strong id="mindfulnessGoal">0 / 10 min</strong></p>
+
+            </div>
+
+        </section>
+
+
+        <!-- DATA & DOWNLOAD -->
+        <section class="card">
+
+            <h2>Data & Downloads</h2>
+
+            <p style="color:#666;font-size:14px;">
+                Keep a backup of your UPWARD data or download it for use in Excel.
+            </p>
+
+            <div class="download-grid">
+
+                <button
+                    class="secondary-btn"
+                    onclick="exportJSON()">
+                    ⬇️ Export Backup
+                </button>
+
+                <button
+                    class="secondary-btn"
+                    onclick="document.getElementById('importFile').click()">
+                    📥 Import Backup
+                </button>
+
+                <button
+                    class="secondary-btn"
+                    onclick="exportCSV()">
+                    📊 Download CSV
+                </button>
+
+                <button
+                    class="secondary-btn"
+                    onclick="downloadReport()">
+                    📄 Download Report
+                </button>
+
+            </div>
 
             <input
-                type="time"
-                id="notificationTime"
-                value="19:00"
-            >
+                type="file"
+                id="importFile"
+                accept=".json,application/json"
+                style="display:none"
+                onchange="importJSON(event)">
 
-        </div>
-
-
-        <button
-            class="primary-btn"
-            type="button"
-            id="notificationPermissionBtn"
-        >
-            Enable Notifications
-        </button>
-
-
-        <button
-            class="secondary-btn"
-            type="button"
-            id="testNotificationBtn"
-            style="width:100%;margin-top:10px;"
-        >
-            🧪 Send Test Notification
-        </button>
-
-
-        <p
-            class="small"
-            style="margin-bottom:0;"
-        >
-            Notification behavior depends on your browser and device.
-            UPWARD does not send your activity data anywhere.
-        </p>
-
-    </div>
-
-
-    <div class="card">
-
-        <h2>💾 Backup</h2>
-
-        <p class="small">
-            Export your data regularly so you can keep a backup.
-        </p>
-
-
-        <div class="actions">
+            <hr style="border:0;border-top:1px solid #eee;margin:20px 0;">
 
             <button
-                class="primary-btn"
-                id="exportBtn"
-                type="button"
-            >
-                Export My Data
+                class="danger-btn"
+                onclick="clearAllData()">
+                🗑️ Clear All Data
             </button>
 
-
-            <button
-                class="secondary-btn"
-                id="importBtn"
-                type="button"
-            >
-                Import Backup
-            </button>
-
-        </div>
+        </section>
 
 
-        <input
-            type="file"
-            id="importFile"
-            accept=".json"
-            hidden
-        >
+        <!-- ABOUT -->
+        <section class="card">
 
-    </div>
+            <h2>UPWARD</h2>
 
+            <p>
+                Small actions. Real progress.
+            </p>
 
-    <div class="card">
+            <p style="color:#666;font-size:14px;">
+                Your activities are stored locally on this device.
+                Use Export Backup regularly to keep a personal copy.
+            </p>
 
-        <h2>📊 Category Summary</h2>
+        </section>
 
-        <div id="categorySummary"></div>
+    </main>
 
-    </div>
-
-
-    <div class="card">
-
-        <h2>📱 Install UPWARD</h2>
-
-        <p class="small">
-            If your browser supports PWA installation,
-            use the browser's Install App or Add to Home Screen option.
-        </p>
-
-    </div>
-
-
-    <div class="card">
-
-        <h2>⚠️ Data Management</h2>
-
-        <p class="small">
-            Clearing browser/site data may remove your UPWARD records.
-            Export a backup before clearing your browser data.
-        </p>
-
-
-        <button
-            class="danger-btn"
-            id="clearAllBtn"
-            type="button"
-        >
-            Clear All Data
-        </button>
-
-    </div>
-
-</section>
+    <footer class="footer">
+        UPWARD — Small actions. Real progress.
+    </footer>
 
 </div>
 
 
-<!-- BOTTOM NAVIGATION -->
-<nav class="bottom-nav">
-
-    <button
-        class="nav-btn active"
-        data-screen="home"
-    >
-        <span class="nav-icon">🏠</span>
-        Home
-    </button>
-
-
-    <button
-        class="nav-btn"
-        data-screen="add"
-    >
-        <span class="nav-icon">➕</span>
-        Add
-    </button>
-
-
-    <button
-        class="nav-btn"
-        data-screen="progress"
-    >
-        <span class="nav-icon">📈</span>
-        Progress
-    </button>
-
-
-    <button
-        class="nav-btn"
-        data-screen="journal"
-    >
-        <span class="nav-icon">✍️</span>
-        Journal
-    </button>
-
-
-    <button
-        class="nav-btn"
-        data-screen="more"
-    >
-        <span class="nav-icon">⚙️</span>
-        More
-    </button>
-
-</nav>
-
-
-<div
-    class="toast"
-    id="toast"
-></div>
-
-
 <script>
 
-const ACTIVITY_KEY = "upwardActivities";
-const JOURNAL_KEY = "upwardJournal";
-const PROGRESS_KEY = "upwardDailyProgress";
-const NOTIFICATION_KEY = "upwardNotificationSettings";
+/* =========================================================
+   UPWARD DATA SYSTEM
+========================================================= */
+
+const STORAGE_KEY = "upwardActivities";
 
 
-function getActivities(){
+/* ---------------------------------------------------------
+   GET ALL ACTIVITIES
+--------------------------------------------------------- */
 
-    try{
-        return JSON.parse(
-            localStorage.getItem(ACTIVITY_KEY) || "[]"
-        );
-    }catch{
+function getActivities() {
+
+    try {
+
+        const data = localStorage.getItem(STORAGE_KEY);
+
+        if (!data) {
+            return [];
+        }
+
+        const parsed = JSON.parse(data);
+
+        return Array.isArray(parsed) ? parsed : [];
+
+    } catch (error) {
+
+        console.error("Could not read activities:", error);
+
         return [];
+
     }
 
 }
 
 
-function getJournal(){
+/* ---------------------------------------------------------
+   SAVE ACTIVITIES
+--------------------------------------------------------- */
 
-    try{
-        return JSON.parse(
-            localStorage.getItem(JOURNAL_KEY) || "[]"
-        );
-    }catch{
-        return [];
-    }
-
-}
-
-
-function getProgress(){
-
-    try{
-        return JSON.parse(
-            localStorage.getItem(PROGRESS_KEY) || "[]"
-        );
-    }catch{
-        return [];
-    }
-
-}
-
-
-function getNotificationSettings(){
-
-    try{
-
-        const saved = JSON.parse(
-            localStorage.getItem(NOTIFICATION_KEY) || "null"
-        );
-
-        if(saved){
-
-            return {
-                enabled: saved.enabled === true,
-                time: /^\d{2}:\d{2}$/.test(saved.time)
-                    ? saved.time
-                    : "19:00"
-            };
-
-        }
-
-    }catch{}
-
-    return {
-        enabled:false,
-        time:"19:00"
-    };
-
-}
-
-
-function saveActivities(data){
+function saveActivities(activities) {
 
     localStorage.setItem(
-        ACTIVITY_KEY,
-        JSON.stringify(data)
+        STORAGE_KEY,
+        JSON.stringify(activities)
     );
 
 }
 
 
-function saveJournal(data){
+/* ---------------------------------------------------------
+   TODAY
+--------------------------------------------------------- */
 
-    localStorage.setItem(
-        JOURNAL_KEY,
-        JSON.stringify(data)
-    );
+function getTodayString() {
 
-}
+    const today = new Date();
 
+    const year = today.getFullYear();
 
-function saveProgress(data){
+    const month = String(
+        today.getMonth() + 1
+    ).padStart(2, "0");
 
-    localStorage.setItem(
-        PROGRESS_KEY,
-        JSON.stringify(data)
-    );
+    const day = String(
+        today.getDate()
+    ).padStart(2, "0");
 
-}
-
-
-function saveNotificationSettings(data){
-
-    localStorage.setItem(
-        NOTIFICATION_KEY,
-        JSON.stringify(data)
-    );
+    return `${year}-${month}-${day}`;
 
 }
 
 
-function localDate(){
+/* ---------------------------------------------------------
+   ADD ACTIVITY
+--------------------------------------------------------- */
 
-    const d = new Date();
+function addActivity() {
 
-    const offset =
-        d.getTimezoneOffset() * 60000;
+    const nameInput =
+        document.getElementById("activityName");
 
-    return new Date(
-        d.getTime() - offset
-    )
-    .toISOString()
-    .split("T")[0];
+    const categoryInput =
+        document.getElementById("activityCategory");
 
-}
-
-
-function displayDate(date){
-
-    if(!date) return "";
-
-    return new Date(date + "T00:00:00")
-        .toLocaleDateString(
-            undefined,
-            {
-                day:"numeric",
-                month:"short",
-                year:"numeric"
-            }
-        );
-
-}
-
-
-function escapeHtml(value){
-
-    return String(value || "")
-        .replace(/&/g,"&amp;")
-        .replace(/</g,"&lt;")
-        .replace(/>/g,"&gt;")
-        .replace(/"/g,"&quot;")
-        .replace(/'/g,"&#039;");
-
-}
-
-
-function showToast(message){
-
-    const toast =
-        document.getElementById("toast");
-
-    toast.textContent = message;
-
-    toast.classList.add("show");
-
-    setTimeout(
-        () => toast.classList.remove("show"),
-        2200
-    );
-
-}
-
-
-/* NAVIGATION */
-
-document.querySelectorAll(".nav-btn")
-.forEach(button => {
-
-    button.addEventListener("click",() => {
-
-        const target =
-            button.dataset.screen;
-
-        document.querySelectorAll(".screen")
-        .forEach(screen =>
-            screen.classList.remove("active")
-        );
-
-        document.getElementById(target)
-            .classList.add("active");
-
-        document.querySelectorAll(".nav-btn")
-        .forEach(btn =>
-            btn.classList.remove("active")
-        );
-
-        button.classList.add("active");
-
-
-        if(target === "home"){
-            updateDashboard();
-        }
-
-        if(target === "progress"){
-            renderProgress();
-        }
-
-        if(target === "journal"){
-            renderJournal();
-        }
-
-        if(target === "more"){
-            renderCategorySummary();
-            updateNotificationUI();
-        }
-
-    });
-
-});
-
-
-/* ACTIVITY FORM */
-
-document
-.getElementById("activityForm")
-.addEventListener("submit",function(event){
-
-    event.preventDefault();
-
-    const activities = getActivities();
-
-    const editId =
-        document.getElementById("activityEditId").value;
+    const minutesInput =
+        document.getElementById("activityMinutes");
 
 
     const name =
-        document.getElementById("activityName")
-        .value.trim();
+        nameInput.value.trim();
 
     const category =
-        document.getElementById("activityCategory")
-        .value;
+        categoryInput.value;
 
     const minutes =
-        Number(
-            document.getElementById("activityMinutes")
-            .value
+        Number(minutesInput.value);
+
+
+    if (!name) {
+
+        showMessage(
+            "Please enter an activity name.",
+            true
         );
 
-    const feeling =
-        document.getElementById("activityFeeling")
-        .value;
-
-    const did =
-        document.getElementById("activityDid")
-        .value.trim();
-
-    const learned =
-        document.getElementById("activityLearned")
-        .value.trim();
-
-    const progress =
-        document.getElementById("activityProgress")
-        .value.trim();
-
-
-    /* FIX:
-       When editing an activity, preserve its original date.
-    */
-
-    if(editId){
-
-        const index =
-            activities.findIndex(
-                activity =>
-                    activity.id === Number(editId)
-            );
-
-
-        if(index < 0){
-
-            showToast("Activity could not be found.");
-
-            resetActivityForm();
-
-            return;
-
-        }
-
-
-        activities[index] = {
-
-            ...activities[index],
-
-            name,
-            category,
-            minutes,
-            feeling,
-            did,
-            learned,
-            progress
-
-        };
-
-
-        saveActivities(activities);
-
-        resetActivityForm();
-
-        updateDashboard();
-
-        showToast("Activity updated!");
+        nameInput.focus();
 
         return;
-
     }
 
 
-    const item = {
+    if (!minutes || minutes < 1) {
 
-        id:Date.now(),
+        showMessage(
+            "Please enter the number of minutes.",
+            true
+        );
 
-        date:localDate(),
+        minutesInput.focus();
 
-        name,
+        return;
+    }
 
-        category,
 
-        minutes,
+    const activities =
+        getActivities();
 
-        feeling,
 
-        did,
+    const activity = {
 
-        learned,
+        id:
+            Date.now().toString(),
 
-        progress
+        name:
+            name,
+
+        category:
+            category,
+
+        minutes:
+            minutes,
+
+        date:
+            getTodayString(),
+
+        createdAt:
+            new Date().toISOString()
 
     };
 
 
-    activities.push(item);
+    activities.push(activity);
 
     saveActivities(activities);
 
-    resetActivityForm();
 
-    updateDashboard();
+    nameInput.value = "";
 
-    showToast("Activity saved!");
-
-});
+    minutesInput.value = "";
 
 
-function resetActivityForm(){
-
-    const form =
-        document.getElementById("activityForm");
-
-    form.reset();
+    showMessage(
+        "Activity added successfully."
+    );
 
 
-    document.getElementById("activityEditId")
-        .value = "";
-
-
-    document.getElementById("activitySaveButton")
-        .textContent = "Save Activity";
-
-
-    document.getElementById("activityFormTitle")
-        .textContent = "➕ Add Activity";
-
-
-    document.getElementById("activityCancelButton")
-        .style.display = "none";
+    render();
 
 }
 
 
-function editActivity(id){
+/* ---------------------------------------------------------
+   DELETE ACTIVITY
+--------------------------------------------------------- */
 
-    const item =
-        getActivities().find(
-            activity => activity.id === id
+function deleteActivity(id) {
+
+    const confirmed =
+        confirm(
+            "Delete this activity?"
         );
 
 
-    if(!item) return;
-
-
-    document.getElementById("activityEditId")
-        .value = item.id;
-
-
-    document.getElementById("activityName")
-        .value = item.name || "";
-
-
-    document.getElementById("activityCategory")
-        .value = item.category || "Other";
-
-
-    document.getElementById("activityMinutes")
-        .value = item.minutes || "";
-
-
-    document.getElementById("activityFeeling")
-        .value = item.feeling || "😐 Okay";
-
-
-    document.getElementById("activityDid")
-        .value = item.did || "";
-
-
-    document.getElementById("activityLearned")
-        .value = item.learned || "";
-
-
-    document.getElementById("activityProgress")
-        .value = item.progress || "";
-
-
-    document.getElementById("activitySaveButton")
-        .textContent = "Update Activity";
-
-
-    document.getElementById("activityFormTitle")
-        .textContent = "✏️ Edit Activity";
-
-
-    document.getElementById("activityCancelButton")
-        .style.display = "block";
-
-
-    document.querySelector(
-        '[data-screen="add"]'
-    ).click();
-
-
-    window.scrollTo({
-        top:0,
-        behavior:"smooth"
-    });
-
-}
-
-
-document
-.getElementById("activityCancelButton")
-.addEventListener("click",() => {
-
-    resetActivityForm();
-
-});
-
-
-function deleteActivity(id){
-
-    if(!confirm("Delete this activity?")){
+    if (!confirmed) {
         return;
     }
 
 
-    const activities =
-        getActivities()
-        .filter(item => item.id !== id);
+    let activities =
+        getActivities();
+
+
+    activities =
+        activities.filter(
+            activity => activity.id !== id
+        );
 
 
     saveActivities(activities);
 
-    updateDashboard();
-
-    showToast("Activity deleted.");
+    render();
 
 }
 
 
-/* TODAY */
+/* ---------------------------------------------------------
+   SHOW MESSAGE
+--------------------------------------------------------- */
 
-function renderToday(){
+function showMessage(
+    message,
+    isError = false
+) {
 
-    const list =
-        document.getElementById("todayList");
-
-    const today = localDate();
-
-
-    const activities =
-        getActivities()
-        .filter(item => item.date === today)
-        .sort((a,b) => b.id - a.id);
+    const box =
+        document.getElementById("message");
 
 
-    if(!activities.length){
+    box.textContent =
+        message;
 
-        list.innerHTML =
-            '<div class="empty">No activities yet today.<br>Start with one small action.</div>';
 
-        return;
+    box.style.display =
+        "block";
+
+
+    if (isError) {
+
+        box.style.background =
+            "#ffe9e9";
+
+        box.style.color =
+            "#b42318";
+
+    } else {
+
+        box.style.background =
+            "#eaf7ed";
+
+        box.style.color =
+            "#176b2c";
 
     }
 
 
-    list.innerHTML =
-        activities.map(item => `
-
-            <div class="activity">
-
-                <div class="activity-top">
-
-                    <div>
-
-                        <div class="activity-name">
-                            ${escapeHtml(item.name)}
-                        </div>
-
-                        <div class="activity-meta">
-                            ${escapeHtml(item.category)}
-                            •
-                            ${Number(item.minutes || 0)} min
-                            •
-                            ${escapeHtml(item.feeling)}
-                        </div>
-
-                    </div>
-
-
-                    <div
-                        class="actions"
-                        style="margin-top:0;"
-                    >
-
-                        <button
-                            class="success-btn"
-                            onclick="editActivity(${item.id})"
-                        >
-                            Edit
-                        </button>
-
-
-                        <button
-                            class="danger-btn"
-                            onclick="deleteActivity(${item.id})"
-                        >
-                            Delete
-                        </button>
-
-                    </div>
-
-                </div>
-
-
-                ${
-                    item.did
-                    ? `<div class="activity-meta">
-                        <strong>Did:</strong>
-                        ${escapeHtml(item.did)}
-                       </div>`
-                    : ""
-                }
-
-
-                ${
-                    item.learned
-                    ? `<div class="activity-meta">
-                        <strong>Learned:</strong>
-                        ${escapeHtml(item.learned)}
-                       </div>`
-                    : ""
-                }
-
-
-                ${
-                    item.progress
-                    ? `<div class="activity-meta">
-                        <strong>Progress:</strong>
-                        ${escapeHtml(item.progress)}
-                       </div>`
-                    : ""
-                }
-
-            </div>
-
-        `).join("");
+    setTimeout(
+        () => {
+            box.style.display = "none";
+        },
+        2500
+    );
 
 }
 
 
-/* DASHBOARD */
+/* ---------------------------------------------------------
+   RENDER ACTIVITIES
+--------------------------------------------------------- */
 
-function updateDashboard(){
+function renderActivities() {
 
-    const activities = getActivities();
+    const activities =
+        getActivities();
 
-    const today = localDate();
+
+    const today =
+        getTodayString();
 
 
     const todayActivities =
         activities.filter(
-            item => item.date === today
+            activity =>
+                activity.date === today
+        );
+
+
+    const container =
+        document.getElementById(
+            "activityList"
+        );
+
+
+    if (todayActivities.length === 0) {
+
+        container.innerHTML = `
+            <div class="empty">
+                No activities recorded today yet.
+                <br><br>
+                Start with one small action.
+            </div>
+        `;
+
+        return;
+
+    }
+
+
+    todayActivities.sort(
+        (a, b) =>
+            new Date(b.createdAt) -
+            new Date(a.createdAt)
+    );
+
+
+    container.innerHTML =
+        todayActivities.map(
+            activity => `
+
+            <div class="activity-item">
+
+                <div>
+
+                    <div class="activity-name">
+                        ${escapeHTML(activity.name)}
+                    </div>
+
+                    <div class="activity-meta">
+                        ${escapeHTML(activity.category)}
+                        •
+                        ${activity.minutes} min
+                    </div>
+
+                </div>
+
+                <button
+                    class="delete-btn"
+                    onclick="deleteActivity('${activity.id}')"
+                    aria-label="Delete activity">
+                    ✕
+                </button>
+
+            </div>
+
+        `
+        ).join("");
+
+}
+
+
+/* ---------------------------------------------------------
+   UPDATE STATS
+--------------------------------------------------------- */
+
+function updateStats() {
+
+    const activities =
+        getActivities();
+
+
+    const today =
+        getTodayString();
+
+
+    const todayActivities =
+        activities.filter(
+            activity =>
+                activity.date === today
         );
 
 
     const todayMinutes =
         todayActivities.reduce(
-            (sum,item) =>
-                sum + Number(item.minutes || 0),
+            (sum, activity) =>
+                sum + Number(activity.minutes),
             0
         );
 
 
     const totalMinutes =
         activities.reduce(
-            (sum,item) =>
-                sum + Number(item.minutes || 0),
+            (sum, activity) =>
+                sum + Number(activity.minutes),
             0
         );
 
 
-    document.getElementById("todayActivities")
-        .textContent = todayActivities.length;
+    document.getElementById(
+        "todayActivities"
+    ).textContent =
+        todayActivities.length;
 
 
-    document.getElementById("todayMinutes")
-        .textContent = todayMinutes;
+    document.getElementById(
+        "todayMinutes"
+    ).textContent =
+        todayMinutes;
 
 
-    document.getElementById("totalMinutes")
-        .textContent = totalMinutes;
+    document.getElementById(
+        "totalMinutes"
+    ).textContent =
+        totalMinutes;
 
 
-    document.getElementById("currentStreak")
-        .textContent = calculateStreak(activities);
+    document.getElementById(
+        "currentStreak"
+    ).textContent =
+        calculateStreak();
+
+}
+
+
+/* ---------------------------------------------------------
+   DAILY GOALS
+--------------------------------------------------------- */
+
+function updateGoals() {
+
+    const activities =
+        getActivities();
+
+
+    const today =
+        getTodayString();
+
+
+    const todayActivities =
+        activities.filter(
+            activity =>
+                activity.date === today
+        );
 
 
     const movement =
         todayActivities
-        .filter(item =>
-            ["Exercise","Walking"]
-            .includes(item.category)
-        )
-        .reduce(
-            (sum,item) =>
-                sum + Number(item.minutes || 0),
-            0
-        );
+            .filter(
+                activity =>
+                    activity.category === "Exercise" ||
+                    activity.category === "Walking"
+            )
+            .reduce(
+                (sum, activity) =>
+                    sum + Number(activity.minutes),
+                0
+            );
 
 
     const learning =
         todayActivities
-        .filter(item =>
-            ["Learning","Reading"]
-            .includes(item.category)
-        )
-        .reduce(
-            (sum,item) =>
-                sum + Number(item.minutes || 0),
-            0
-        );
+            .filter(
+                activity =>
+                    activity.category === "Learning" ||
+                    activity.category === "Reading"
+            )
+            .reduce(
+                (sum, activity) =>
+                    sum + Number(activity.minutes),
+                0
+            );
 
 
     const mindfulness =
         todayActivities
-        .filter(item =>
-            item.category === "Meditation"
-        )
-        .reduce(
-            (sum,item) =>
-                sum + Number(item.minutes || 0),
-            0
-        );
+            .filter(
+                activity =>
+                    activity.category === "Meditation" ||
+                    activity.category === "Mindfulness"
+            )
+            .reduce(
+                (sum, activity) =>
+                    sum + Number(activity.minutes),
+                0
+            );
 
 
-    updateGoal(
-        "movementGoal",
-        "movementFill",
-        "movementPercent",
-        movement,
-        30
-    );
+    document.getElementById(
+        "movementGoal"
+    ).textContent =
+        `${movement} / 30 min`;
 
 
-    updateGoal(
-        "learningGoal",
-        "learningFill",
-        "learningPercent",
-        learning,
-        30
-    );
+    document.getElementById(
+        "learningGoal"
+    ).textContent =
+        `${learning} / 30 min`;
 
 
-    updateGoal(
-        "mindfulnessGoal",
-        "mindfulnessFill",
-        "mindfulnessPercent",
-        mindfulness,
-        10
-    );
-
-
-    renderToday();
-
-    renderTodayCategorySummary();
-
-    drawChart();
-
-    updateOverview();
+    document.getElementById(
+        "mindfulnessGoal"
+    ).textContent =
+        `${mindfulness} / 10 min`;
 
 }
 
 
-function updateGoal(
-    textId,
-    fillId,
-    percentId,
-    value,
-    target
-){
+/* ---------------------------------------------------------
+   STREAK
+--------------------------------------------------------- */
 
-    document.getElementById(textId)
-        .textContent =
-        `${value} / ${target} min`;
+function calculateStreak() {
+
+    const activities =
+        getActivities();
 
 
-    const percent =
-        Math.min(
-            100,
-            Math.round((value / target) * 100)
-        );
+    if (activities.length === 0) {
+        return 0;
+    }
 
-
-    document.getElementById(fillId)
-        .style.width = percent + "%";
-
-
-    document.getElementById(percentId)
-        .textContent = `${percent}%`;
-
-}
-
-
-function calculateStreak(activities){
 
     const dates =
         new Set(
             activities.map(
-                item => item.date
+                activity =>
+                    activity.date
             )
         );
 
 
     let streak = 0;
 
-    const d = new Date();
+    const current =
+        new Date();
 
 
-    while(true){
+    while (true) {
 
-        const offset =
-            d.getTimezoneOffset() * 60000;
+        const year =
+            current.getFullYear();
+
+        const month =
+            String(
+                current.getMonth() + 1
+            ).padStart(2, "0");
+
+        const day =
+            String(
+                current.getDate()
+            ).padStart(2, "0");
 
 
-        const date =
-            new Date(
-                d.getTime() - offset
-            )
-            .toISOString()
-            .split("T")[0];
+        const dateString =
+            `${year}-${month}-${day}`;
 
 
-        if(dates.has(date)){
+        if (dates.has(dateString)) {
 
             streak++;
 
-            d.setDate(
-                d.getDate() - 1
+            current.setDate(
+                current.getDate() - 1
             );
 
-        }else{
+        } else {
 
             break;
 
@@ -1957,1274 +1008,504 @@ function calculateStreak(activities){
 }
 
 
-/* TODAY CATEGORY SUMMARY */
+/* =========================================================
+   EXPORT BACKUP
+========================================================= */
 
-function renderTodayCategorySummary(){
-
-    const container =
-        document.getElementById(
-            "todayCategorySummary"
-        );
-
-
-    const today = localDate();
-
+function exportJSON() {
 
     const activities =
-        getActivities()
-        .filter(
-            item => item.date === today
-        );
+        getActivities();
 
-
-    if(!activities.length){
-
-        container.innerHTML =
-            '<div class="empty">No category activity yet today.</div>';
-
-        return;
-
-    }
-
-
-    const categories = {};
-
-
-    activities.forEach(item => {
-
-        const category =
-            item.category || "Other";
-
-
-        if(!categories[category]){
-            categories[category] = 0;
-        }
-
-
-        categories[category] +=
-            Number(item.minutes || 0);
-
-    });
-
-
-    container.innerHTML =
-        Object.entries(categories)
-        .sort((a,b) => b[1] - a[1])
-        .map(([category,minutes]) => `
-
-            <div class="category-box">
-
-                <span>
-                    ${escapeHtml(category)}
-                </span>
-
-                <span class="category-minutes">
-                    ${minutes} min
-                </span>
-
-            </div>
-
-        `).join("");
-
-}
-
-
-/* CHART */
-
-function drawChart(){
-
-    const canvas =
-        document.getElementById("activityChart");
-
-    const ctx =
-        canvas.getContext("2d");
-
-
-    const width = canvas.width;
-    const height = canvas.height;
-
-
-    ctx.clearRect(
-        0,
-        0,
-        width,
-        height
-    );
-
-
-    const activities = getActivities();
-
-    const values = [];
-
-
-    for(let i = 6; i >= 0; i--){
-
-        const d = new Date();
-
-
-        d.setDate(
-            d.getDate() - i
-        );
-
-
-        const offset =
-            d.getTimezoneOffset() * 60000;
-
-
-        const date =
-            new Date(
-                d.getTime() - offset
-            )
-            .toISOString()
-            .split("T")[0];
-
-
-        const minutes =
-            activities
-            .filter(item => item.date === date)
-            .reduce(
-                (sum,item) =>
-                    sum + Number(item.minutes || 0),
-                0
-            );
-
-
-        values.push({
-            date,
-            minutes
-        });
-
-    }
-
-
-    const max =
-        Math.max(
-            30,
-            ...values.map(v => v.minutes)
-        );
-
-
-    const barWidth = 70;
-    const gap = 35;
-
-
-    values.forEach((item,index) => {
-
-        const x =
-            35 + index * (barWidth + gap);
-
-
-        const barHeight =
-            (item.minutes / max) * 140;
-
-
-        const y =
-            165 - barHeight;
-
-
-        ctx.fillStyle = "#667eea";
-
-
-        ctx.fillRect(
-            x,
-            y,
-            barWidth,
-            barHeight
-        );
-
-
-        ctx.fillStyle = "#555";
-
-        ctx.font = "14px Arial";
-
-        ctx.textAlign = "center";
-
-
-        ctx.fillText(
-            item.minutes,
-            x + barWidth / 2,
-            y - 8
-        );
-
-
-        const shortDate =
-            new Date(
-                item.date + "T00:00:00"
-            )
-            .toLocaleDateString(
-                undefined,
-                {
-                    weekday:"short"
-                }
-            );
-
-
-        ctx.fillText(
-            shortDate,
-            x + barWidth / 2,
-            195
-        );
-
-    });
-
-}
-
-
-/* DAILY PROGRESS */
-
-const progressDate =
-    document.getElementById("progressDate");
-
-
-progressDate.value = localDate();
-
-
-progressDate.addEventListener(
-    "change",
-    loadProgressForDate
-);
-
-
-document
-.getElementById("progressForm")
-.addEventListener("submit",function(event){
-
-    event.preventDefault();
-
-
-    const progress = getProgress();
-
-
-    const date =
-        document.getElementById("progressDate")
-        .value;
-
-
-    const existingIndex =
-        progress.findIndex(
-            item => item.date === date
-        );
-
-
-    const item = {
-
-        date,
-
-        wentWell:
-            document.getElementById("progressWentWell")
-            .value.trim(),
-
-        improve:
-            document.getElementById("progressImprove")
-            .value.trim(),
-
-        tomorrow:
-            document.getElementById("progressTomorrow")
-            .value.trim(),
-
-        updatedAt:
-            new Date().toISOString()
-
-    };
-
-
-    if(existingIndex >= 0){
-
-        progress[existingIndex] = item;
-
-        showToast("Progress updated!");
-
-    }else{
-
-        progress.push(item);
-
-        showToast("Progress saved!");
-
-    }
-
-
-    saveProgress(progress);
-
-    renderProgress();
-
-    updateOverview();
-
-});
-
-
-function loadProgressForDate(){
-
-    const date =
-        progressDate.value;
-
-
-    const item =
-        getProgress().find(
-            p => p.date === date
-        );
-
-
-    document.getElementById("progressWentWell")
-        .value = item ? item.wentWell : "";
-
-
-    document.getElementById("progressImprove")
-        .value = item ? item.improve : "";
-
-
-    document.getElementById("progressTomorrow")
-        .value = item ? item.tomorrow : "";
-
-}
-
-
-function renderProgress(){
-
-    loadProgressForDate();
-
-
-    const history =
-        document.getElementById(
-            "progressHistory"
-        );
-
-
-    const progress =
-        getProgress()
-        .sort(
-            (a,b) =>
-                b.date.localeCompare(a.date)
-        );
-
-
-    if(!progress.length){
-
-        history.innerHTML =
-            '<div class="empty">No progress entries yet.</div>';
-
-        updateOverview();
-
-        return;
-
-    }
-
-
-    history.innerHTML =
-        progress.map(item => `
-
-            <div class="history-item">
-
-                <strong>
-                    ${displayDate(item.date)}
-                </strong>
-
-
-                ${
-                    item.wentWell
-                    ? `<p>
-                        <strong>Went well:</strong><br>
-                        ${escapeHtml(item.wentWell)}
-                       </p>`
-                    : ""
-                }
-
-
-                ${
-                    item.improve
-                    ? `<p>
-                        <strong>Improve:</strong><br>
-                        ${escapeHtml(item.improve)}
-                       </p>`
-                    : ""
-                }
-
-
-                ${
-                    item.tomorrow
-                    ? `<p>
-                        <strong>Tomorrow:</strong><br>
-                        ${escapeHtml(item.tomorrow)}
-                       </p>`
-                    : ""
-                }
-
-            </div>
-
-        `).join("");
-
-}
-
-
-/* JOURNAL */
-
-document.getElementById("journalDate")
-    .value = localDate();
-
-
-document
-.getElementById("journalForm")
-.addEventListener("submit",function(event){
-
-    event.preventDefault();
-
-
-    const journal = getJournal();
-
-
-    const editId =
-        document.getElementById("journalEditId")
-        .value;
-
-
-    const item = {
-
-        id:
-            editId
-            ? Number(editId)
-            : Date.now(),
-
-        title:
-            document.getElementById("journalTitle")
-            .value.trim(),
-
-        date:
-            document.getElementById("journalDate")
-            .value,
-
-        text:
-            document.getElementById("journalText")
-            .value.trim(),
-
-        updatedAt:
-            new Date().toISOString()
-
-    };
-
-
-    if(editId){
-
-        const index =
-            journal.findIndex(
-                j => j.id === Number(editId)
-            );
-
-
-        if(index >= 0){
-            journal[index] = item;
-        }
-
-
-        showToast("Writing updated!");
-
-    }else{
-
-        journal.push(item);
-
-        showToast("Writing saved!");
-
-    }
-
-
-    saveJournal(journal);
-
-
-    this.reset();
-
-
-    document.getElementById("journalEditId")
-        .value = "";
-
-
-    document.getElementById("journalDate")
-        .value = localDate();
-
-
-    document.getElementById("journalSaveButton")
-        .textContent = "Save Writing";
-
-
-    renderJournal();
-
-    updateOverview();
-
-});
-
-
-function renderJournal(){
-
-    const list =
-        document.getElementById("journalList");
-
-
-    const search =
-        (
-            document.getElementById("journalSearch")
-            .value || ""
-        ).toLowerCase();
-
-
-    const entries =
-        getJournal()
-        .filter(item =>
-            String(item.title || "")
-                .toLowerCase()
-                .includes(search) ||
-
-            String(item.text || "")
-                .toLowerCase()
-                .includes(search)
-        )
-        .sort(
-            (a,b) =>
-                b.date.localeCompare(a.date)
-        );
-
-
-    if(!entries.length){
-
-        list.innerHTML =
-            '<div class="empty">No writing entries found.</div>';
-
-        return;
-
-    }
-
-
-    list.innerHTML =
-        entries.map(item => `
-
-            <div class="journal-item">
-
-                <div class="journal-title">
-                    ${escapeHtml(item.title)}
-                </div>
-
-
-                <div class="journal-date">
-                    ${displayDate(item.date)}
-                </div>
-
-
-                <div class="journal-text">
-                    ${escapeHtml(item.text)}
-                </div>
-
-
-                <div class="actions">
-
-                    <button
-                        class="success-btn"
-                        onclick="editJournal(${item.id})"
-                    >
-                        Edit
-                    </button>
-
-
-                    <button
-                        class="danger-btn"
-                        onclick="deleteJournal(${item.id})"
-                    >
-                        Delete
-                    </button>
-
-                </div>
-
-            </div>
-
-        `).join("");
-
-}
-
-
-document
-.getElementById("journalSearch")
-.addEventListener(
-    "input",
-    renderJournal
-);
-
-
-function editJournal(id){
-
-    const item =
-        getJournal()
-        .find(j => j.id === id);
-
-
-    if(!item) return;
-
-
-    document.getElementById("journalEditId")
-        .value = item.id;
-
-
-    document.getElementById("journalTitle")
-        .value = item.title;
-
-
-    document.getElementById("journalDate")
-        .value = item.date;
-
-
-    document.getElementById("journalText")
-        .value = item.text;
-
-
-    document.getElementById("journalSaveButton")
-        .textContent = "Update Writing";
-
-
-    document.querySelector(
-        '[data-screen="journal"]'
-    ).click();
-
-
-    window.scrollTo({
-        top:0,
-        behavior:"smooth"
-    });
-
-}
-
-
-function deleteJournal(id){
-
-    if(!confirm(
-        "Delete this writing entry?"
-    )) return;
-
-
-    const journal =
-        getJournal()
-        .filter(
-            item => item.id !== id
-        );
-
-
-    saveJournal(journal);
-
-    renderJournal();
-
-    updateOverview();
-
-    showToast("Writing deleted.");
-
-}
-
-
-/* OVERVIEW */
-
-function updateOverview(){
-
-    const activities = getActivities();
-    const journal = getJournal();
-    const progress = getProgress();
-
-
-    const activeDays =
-        new Set(
-            activities.map(
-                item => item.date
-            )
-        ).size;
-
-
-    const totalMinutes =
-        activities.reduce(
-            (sum,item) =>
-                sum + Number(item.minutes || 0),
-            0
-        );
-
-
-    document.getElementById("progressCount")
-        .textContent = progress.length;
-
-
-    document.getElementById("journalCount")
-        .textContent = journal.length;
-
-
-    document.getElementById("activeDays")
-        .textContent = activeDays;
-
-
-    document.getElementById("allMinutes")
-        .textContent = totalMinutes;
-
-}
-
-
-/* CATEGORY SUMMARY */
-
-function renderCategorySummary(){
-
-    const container =
-        document.getElementById(
-            "categorySummary"
-        );
-
-
-    const activities = getActivities();
-
-
-    if(!activities.length){
-
-        container.innerHTML =
-            '<div class="empty">No activity data yet.</div>';
-
-        return;
-
-    }
-
-
-    const categories = {};
-
-
-    activities.forEach(item => {
-
-        const category =
-            item.category || "Other";
-
-
-        if(!categories[category]){
-
-            categories[category] = {
-                count:0,
-                minutes:0
-            };
-
-        }
-
-
-        categories[category].count++;
-
-
-        categories[category].minutes +=
-            Number(item.minutes || 0);
-
-    });
-
-
-    container.innerHTML =
-        Object.entries(categories)
-        .sort(
-            (a,b) =>
-                b[1].minutes - a[1].minutes
-        )
-        .map(([category,data]) => `
-
-            <div class="category-box">
-
-                <div>
-
-                    <strong>
-                        ${escapeHtml(category)}
-                    </strong>
-
-                    <div class="small">
-                        ${data.count} activities
-                    </div>
-
-                </div>
-
-
-                <span class="category-minutes">
-                    ${data.minutes} min
-                </span>
-
-            </div>
-
-        `).join("");
-
-}
-
-
-/* NOTIFICATIONS */
-
-function updateNotificationUI(){
-
-    const settings =
-        getNotificationSettings();
-
-
-    const enabled =
-        document.getElementById(
-            "notificationEnabled"
-        );
-
-
-    const time =
-        document.getElementById(
-            "notificationTime"
-        );
-
-
-    const status =
-        document.getElementById(
-            "notificationStatus"
-        );
-
-
-    enabled.checked =
-        settings.enabled;
-
-
-    time.value =
-        settings.time || "19:00";
-
-
-    if(!("Notification" in window)){
-
-        status.textContent =
-            "This browser does not support notifications.";
-
-        return;
-
-    }
-
-
-    if(Notification.permission === "granted"){
-
-        status.textContent =
-            settings.enabled
-            ? "🔔 Notifications are enabled."
-            : "🔕 Browser permission is allowed. Daily reminder is currently off.";
-
-    }else if(Notification.permission === "denied"){
-
-        status.textContent =
-            "🚫 Notifications are blocked by your browser. You may need to allow them in browser settings.";
-
-    }else{
-
-        status.textContent =
-            "🔔 Notification permission has not been granted yet.";
-
-    }
-
-}
-
-
-/* REQUEST NOTIFICATION PERMISSION */
-
-document
-.getElementById("notificationPermissionBtn")
-.addEventListener("click",async () => {
-
-    if(!("Notification" in window)){
-
-        showToast(
-            "Notifications are not supported."
-        );
-
-        return;
-
-    }
-
-
-    try{
-
-        const permission =
-            await Notification.requestPermission();
-
-
-        updateNotificationUI();
-
-
-        if(permission === "granted"){
-
-            showToast(
-                "Notifications enabled!"
-            );
-
-        }else{
-
-            showToast(
-                "Notification permission was not granted."
-            );
-
-        }
-
-    }catch(error){
-
-        showToast(
-            "Could not request notification permission."
-        );
-
-    }
-
-});
-
-
-/* TEST NOTIFICATION */
-
-document
-.getElementById("testNotificationBtn")
-.addEventListener("click",async () => {
-
-    if(!("Notification" in window)){
-
-        showToast(
-            "Notifications are not supported."
-        );
-
-        return;
-
-    }
-
-
-    if(Notification.permission !== "granted"){
-
-        try{
-
-            const permission =
-                await Notification.requestPermission();
-
-
-            if(permission !== "granted"){
-
-                showToast(
-                    "Please allow notifications first."
-                );
-
-                updateNotificationUI();
-
-                return;
-
-            }
-
-        }catch{
-
-            showToast(
-                "Notification permission failed."
-            );
-
-            return;
-
-        }
-
-    }
-
-
-    try{
-
-        new Notification(
-            "UPWARD 🌱",
-            {
-                body:
-                    "Small actions. Real progress. Keep moving upward!"
-            }
-        );
-
-
-        showToast(
-            "Test notification sent."
-        );
-
-    }catch{
-
-        showToast(
-            "Your browser could not display the notification."
-        );
-
-    }
-
-});
-
-
-/* DAILY REMINDER TOGGLE */
-
-document
-.getElementById("notificationEnabled")
-.addEventListener("change",async function(){
-
-    const settings =
-        getNotificationSettings();
-
-
-    if(this.checked){
-
-        if(
-            !("Notification" in window) ||
-            Notification.permission !== "granted"
-        ){
-
-            try{
-
-                const permission =
-                    await Notification.requestPermission();
-
-
-                if(permission !== "granted"){
-
-                    this.checked = false;
-
-                    showToast(
-                        "Please allow notifications first."
-                    );
-
-                    updateNotificationUI();
-
-                    return;
-
-                }
-
-            }catch{
-
-                this.checked = false;
-
-                return;
-
-            }
-
-        }
-
-    }
-
-
-    settings.enabled =
-        this.checked;
-
-
-    saveNotificationSettings(settings);
-
-    updateNotificationUI();
-
-    scheduleReminder();
-
-});
-
-
-/* REMINDER TIME */
-
-document
-.getElementById("notificationTime")
-.addEventListener("change",function(){
-
-    const settings =
-        getNotificationSettings();
-
-
-    settings.time =
-        this.value || "19:00";
-
-
-    saveNotificationSettings(settings);
-
-    scheduleReminder();
-
-
-    showToast(
-        "Reminder time saved."
-    );
-
-});
-
-
-let reminderTimer = null;
-
-
-/* SCHEDULE REMINDER */
-
-function scheduleReminder(){
-
-    if(reminderTimer){
-
-        clearTimeout(reminderTimer);
-
-        reminderTimer = null;
-
-    }
-
-
-    const settings =
-        getNotificationSettings();
-
-
-    if(
-        !settings.enabled ||
-        !("Notification" in window) ||
-        Notification.permission !== "granted"
-    ){
-
-        return;
-
-    }
-
-
-    const parts =
-        String(settings.time || "19:00")
-        .split(":");
-
-
-    const hour =
-        Number(parts[0]);
-
-
-    const minute =
-        Number(parts[1]);
-
-
-    if(
-        !Number.isInteger(hour) ||
-        !Number.isInteger(minute) ||
-        hour < 0 ||
-        hour > 23 ||
-        minute < 0 ||
-        minute > 59
-    ){
-
-        return;
-
-    }
-
-
-    const now =
-        new Date();
-
-
-    let target =
-        new Date(now);
-
-
-    target.setHours(
-        hour,
-        minute,
-        0,
-        0
-    );
-
-
-    if(target <= now){
-
-        target.setDate(
-            target.getDate() + 1
-        );
-
-    }
-
-
-    const delay =
-        target.getTime() -
-        now.getTime();
-
-
-    reminderTimer =
-        setTimeout(() => {
-
-            sendDailyReminder();
-
-            scheduleReminder();
-
-        },delay);
-
-}
-
-
-/* SEND DAILY REMINDER */
-
-function sendDailyReminder(){
-
-    if(
-        !("Notification" in window) ||
-        Notification.permission !== "granted"
-    ){
-
-        return;
-
-    }
-
-
-    const today =
-        localDate();
-
-
-    const activities =
-        getActivities()
-        .filter(
-            item => item.date === today
-        );
-
-
-    try{
-
-        if(activities.length > 0){
-
-            new Notification(
-                "UPWARD 🌱",
-                {
-                    body:
-                        "You've already made progress today. Keep going upward!"
-                }
-            );
-
-        }else{
-
-            new Notification(
-                "UPWARD 🌱",
-                {
-                    body:
-                        "Take one small action today and record it in UPWARD."
-                }
-            );
-
-        }
-
-    }catch(error){
-
-        console.log(
-            "Notification could not be displayed:",
-            error
-        );
-
-    }
-
-}
-
-
-/* EXPORT */
-
-document
-.getElementById("exportBtn")
-.addEventListener("click",() => {
 
     const backup = {
 
-        app:"UPWARD",
+        app:
+            "UPWARD",
 
-        version:"2.1",
+        version:
+            "2.0",
 
         exportedAt:
             new Date().toISOString(),
 
         activities:
-            getActivities(),
-
-        journal:
-            getJournal(),
-
-        progress:
-            getProgress(),
-
-        notificationSettings:
-            getNotificationSettings()
+            activities
 
     };
 
 
+    const json =
+        JSON.stringify(
+            backup,
+            null,
+            2
+        );
+
+
+    downloadFile(
+        json,
+        `UPWARD-backup-${getTodayString()}.json`,
+        "application/json"
+    );
+
+
+    showMessage(
+        "Backup downloaded successfully."
+    );
+
+}
+
+
+/* =========================================================
+   IMPORT BACKUP
+========================================================= */
+
+function importJSON(event) {
+
+    const file =
+        event.target.files[0];
+
+
+    if (!file) {
+        return;
+    }
+
+
+    const reader =
+        new FileReader();
+
+
+    reader.onload =
+        function(e) {
+
+            try {
+
+                const backup =
+                    JSON.parse(
+                        e.target.result
+                    );
+
+
+                let importedActivities;
+
+
+                if (
+                    Array.isArray(backup)
+                ) {
+
+                    importedActivities =
+                        backup;
+
+                } else if (
+                    Array.isArray(
+                        backup.activities
+                    )
+                ) {
+
+                    importedActivities =
+                        backup.activities;
+
+                } else {
+
+                    throw new Error(
+                        "Invalid backup"
+                    );
+
+                }
+
+
+                const existing =
+                    getActivities();
+
+
+                const combined =
+                    [
+                        ...existing,
+                        ...importedActivities
+                    ];
+
+
+                const unique =
+                    [];
+
+
+                const ids =
+                    new Set();
+
+
+                combined.forEach(
+                    activity => {
+
+                        const id =
+                            activity.id ||
+                            (
+                                Date.now() +
+                                Math.random()
+                            ).toString();
+
+
+                        if (!ids.has(id)) {
+
+                            ids.add(id);
+
+                            unique.push({
+
+                                ...activity,
+
+                                id: id
+
+                            });
+
+                        }
+
+                    }
+                );
+
+
+                saveActivities(unique);
+
+                render();
+
+
+                showMessage(
+                    `${importedActivities.length} activities imported.`
+                );
+
+
+            } catch (error) {
+
+                console.error(error);
+
+                showMessage(
+                    "This file is not a valid UPWARD backup.",
+                    true
+                );
+
+            }
+
+
+            event.target.value = "";
+
+        };
+
+
+    reader.readAsText(file);
+
+}
+
+
+/* =========================================================
+   CSV EXPORT
+========================================================= */
+
+function exportCSV() {
+
+    const activities =
+        getActivities();
+
+
+    if (activities.length === 0) {
+
+        showMessage(
+            "There are no activities to export.",
+            true
+        );
+
+        return;
+
+    }
+
+
+    const headers = [
+        "Date",
+        "Activity",
+        "Category",
+        "Minutes",
+        "Created At"
+    ];
+
+
+    const rows =
+        activities.map(
+            activity => [
+
+                activity.date,
+
+                activity.name,
+
+                activity.category,
+
+                activity.minutes,
+
+                activity.createdAt
+
+            ]
+        );
+
+
+    const csv = [
+
+        headers,
+
+        ...rows
+
+    ]
+        .map(
+            row =>
+                row.map(
+                    value =>
+                        `"${String(value)
+                            .replace(/"/g, '""')}"`
+                ).join(",")
+        )
+        .join("\n");
+
+
+    downloadFile(
+        csv,
+        `UPWARD-activities-${getTodayString()}.csv`,
+        "text/csv"
+    );
+
+
+    showMessage(
+        "CSV downloaded successfully."
+    );
+
+}
+
+
+/* =========================================================
+   DOWNLOAD SIMPLE REPORT
+========================================================= */
+
+function downloadReport() {
+
+    const activities =
+        getActivities();
+
+
+    if (activities.length === 0) {
+
+        showMessage(
+            "There is no activity data for the report.",
+            true
+        );
+
+        return;
+
+    }
+
+
+    const totalMinutes =
+        activities.reduce(
+            (sum, activity) =>
+                sum + Number(activity.minutes),
+            0
+        );
+
+
+    const totalActivities =
+        activities.length;
+
+
+    const categories = {};
+
+
+    activities.forEach(
+        activity => {
+
+            if (
+                !categories[
+                    activity.category
+                ]
+            ) {
+
+                categories[
+                    activity.category
+                ] = {
+
+                    activities: 0,
+
+                    minutes: 0
+
+                };
+
+            }
+
+
+            categories[
+                activity.category
+            ].activities++;
+
+
+            categories[
+                activity.category
+            ].minutes +=
+                Number(activity.minutes);
+
+        }
+    );
+
+
+    let report =
+`UPWARD — PROGRESS REPORT
+Small actions. Real progress.
+
+Generated: ${new Date().toLocaleString()}
+
+----------------------------------------
+SUMMARY
+----------------------------------------
+
+Total Activities: ${totalActivities}
+Total Minutes: ${totalMinutes}
+Current Streak: ${calculateStreak()} days
+
+----------------------------------------
+CATEGORY BREAKDOWN
+----------------------------------------
+
+`;
+
+
+    Object.keys(categories)
+        .sort()
+        .forEach(
+            category => {
+
+                report +=
+`${category}: ${categories[category].activities} activities, ${categories[category].minutes} minutes
+`;
+
+            }
+        );
+
+
+    report +=
+`
+----------------------------------------
+ACTIVITY LOG
+----------------------------------------
+
+`;
+
+
+    activities
+        .slice()
+        .sort(
+            (a, b) =>
+                new Date(b.createdAt) -
+                new Date(a.createdAt)
+        )
+        .forEach(
+            activity => {
+
+                report +=
+`${activity.date} | ${activity.name} | ${activity.category} | ${activity.minutes} min
+`;
+
+            }
+        );
+
+
+    report +=
+`
+----------------------------------------
+
+UPWARD
+Small actions. Real progress.
+`;
+
+
+    downloadFile(
+        report,
+        `UPWARD-report-${getTodayString()}.txt`,
+        "text/plain"
+    );
+
+
+    showMessage(
+        "Progress report downloaded."
+    );
+
+}
+
+
+/* =========================================================
+   CLEAR ALL DATA
+========================================================= */
+
+function clearAllData() {
+
+    const activities =
+        getActivities();
+
+
+    if (activities.length === 0) {
+
+        showMessage(
+            "There is no data to clear.",
+            true
+        );
+
+        return;
+
+    }
+
+
+    const confirmed =
+        confirm(
+            "This will permanently delete all UPWARD activities from this device.\n\nAre you sure?"
+        );
+
+
+    if (!confirmed) {
+        return;
+    }
+
+
+    const secondConfirm =
+        confirm(
+            "Please confirm again: delete ALL UPWARD data?"
+        );
+
+
+    if (!secondConfirm) {
+        return;
+    }
+
+
+    localStorage.removeItem(
+        STORAGE_KEY
+    );
+
+
+    render();
+
+
+    showMessage(
+        "All UPWARD activity data has been cleared."
+    );
+
+}
+
+
+/* =========================================================
+   DOWNLOAD HELPER
+========================================================= */
+
+function downloadFile(
+    content,
+    filename,
+    type
+) {
+
     const blob =
         new Blob(
-            [
-                JSON.stringify(
-                    backup,
-                    null,
-                    2
-                )
-            ],
-            {
-                type:"application/json"
-            }
+            [content],
+            { type: type }
         );
 
 
@@ -3236,216 +1517,130 @@ document
         document.createElement("a");
 
 
-    link.href = url;
+    link.href =
+        url;
 
 
     link.download =
-        "UPWARD-backup-" +
-        localDate() +
-        ".json";
+        filename;
+
+
+    document.body.appendChild(
+        link
+    );
 
 
     link.click();
 
 
-    URL.revokeObjectURL(url);
-
-
-    showToast(
-        "Backup exported."
+    document.body.removeChild(
+        link
     );
 
-});
+
+    setTimeout(
+        () => {
+            URL.revokeObjectURL(url);
+        },
+        1000
+    );
+
+}
 
 
-/* IMPORT */
+/* =========================================================
+   HTML SAFETY
+========================================================= */
 
-document
-.getElementById("importBtn")
-.addEventListener("click",() => {
+function escapeHTML(value) {
 
-    document
-        .getElementById("importFile")
-        .click();
+    return String(value)
+        .replace(
+            /&/g,
+            "&amp;"
+        )
+        .replace(
+            /</g,
+            "&lt;"
+        )
+        .replace(
+            />/g,
+            "&gt;"
+        )
+        .replace(
+            /"/g,
+            "&quot;"
+        )
+        .replace(
+            /'/g,
+            "&#039;"
+        );
 
-});
-
-
-document
-.getElementById("importFile")
-.addEventListener("change",function(){
-
-    const file =
-        this.files[0];
-
-
-    if(!file) return;
-
-
-    const reader =
-        new FileReader();
-
-
-    reader.onload = function(){
-
-        try{
-
-            const data =
-                JSON.parse(
-                    reader.result
-                );
+}
 
 
-            if(
-                !data ||
-                data.app !== "UPWARD"
-            ){
+/* =========================================================
+   RENDER EVERYTHING
+========================================================= */
 
-                throw new Error(
-                    "Invalid backup"
-                );
+function render() {
 
-            }
+    renderActivities();
 
+    updateStats();
 
-            if(!confirm(
-                "Import this backup? Current UPWARD data will be replaced."
-            )) return;
+    updateGoals();
+
+}
 
 
-            saveActivities(
-                Array.isArray(data.activities)
-                ? data.activities
-                : []
-            );
+/* =========================================================
+   START APP
+========================================================= */
 
+document.addEventListener(
+    "DOMContentLoaded",
+    function() {
 
-            saveJournal(
-                Array.isArray(data.journal)
-                ? data.journal
-                : []
-            );
-
-
-            saveProgress(
-                Array.isArray(data.progress)
-                ? data.progress
-                : []
-            );
-
-
-            if(data.notificationSettings){
-
-                saveNotificationSettings(
-                    data.notificationSettings
-                );
-
-            }
-
-
-            updateDashboard();
-
-            renderProgress();
-
-            renderJournal();
-
-            renderCategorySummary();
-
-            updateNotificationUI();
-
-            scheduleReminder();
-
-
-            showToast(
-                "Backup imported successfully."
-            );
-
-
-        }catch(error){
-
-            alert(
-                "This does not appear to be a valid UPWARD backup."
-            );
-
-        }
-
-    };
-
-
-    reader.readAsText(file);
-
-});
-
-
-/* CLEAR ALL */
-
-document
-.getElementById("clearAllBtn")
-.addEventListener("click",() => {
-
-    if(!confirm(
-        "This will permanently delete all UPWARD activities, progress and writing. Continue?"
-    )){
-
-        return;
+        render();
 
     }
+);
 
 
-    localStorage.removeItem(ACTIVITY_KEY);
+/* =========================================================
+   SERVICE WORKER
+========================================================= */
 
-    localStorage.removeItem(JOURNAL_KEY);
-
-    localStorage.removeItem(PROGRESS_KEY);
-
-
-    updateDashboard();
-
-    renderProgress();
-
-    renderJournal();
-
-    renderCategorySummary();
-
-
-    showToast(
-        "All UPWARD data cleared."
-    );
-
-});
-
-
-/* START APP */
-
-updateDashboard();
-
-renderProgress();
-
-renderJournal();
-
-renderCategorySummary();
-
-updateNotificationUI();
-
-scheduleReminder();
-
-
-/* SERVICE WORKER */
-
-if("serviceWorker" in navigator){
+if (
+    "serviceWorker" in navigator
+) {
 
     window.addEventListener(
         "load",
-        () => {
+        function() {
 
             navigator.serviceWorker
                 .register("./sw.js")
+                .then(
+                    registration => {
+
+                        console.log(
+                            "UPWARD service worker registered:",
+                            registration.scope
+                        );
+
+                    }
+                )
                 .catch(
-                    error =>
-                    console.log(
-                        "Service worker registration failed:",
-                        error
-                    )
+                    error => {
+
+                        console.log(
+                            "Service worker registration failed:",
+                            error
+                        );
+
+                    }
                 );
 
         }
@@ -3457,3 +1652,4 @@ if("serviceWorker" in navigator){
 
 </body>
 </html>
+```
