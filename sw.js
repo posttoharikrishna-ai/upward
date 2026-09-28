@@ -1,8 +1,9 @@
-const CACHE_NAME = "upward-v2-20260926b";
+const CACHE_NAME = "upward-v3-20260928a";
 
 const APP_FILES = [
     "./",
     "./index.html",
+    "./style.css",
     "./manifest.json",
     "./sw.js",
     "./icon-192.png",
@@ -37,7 +38,9 @@ self.addEventListener("fetch", event => {
     event.respondWith(
         caches.match(event.request)
             .then(cached => {
-                if (cached) return cached;
+                if (cached) {
+                    return cached;
+                }
 
                 return fetch(event.request)
                     .then(response => {
