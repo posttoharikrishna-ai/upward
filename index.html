@@ -1,13 +1,13 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 
 <meta name="viewport"
-   content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
 <meta name="theme-color" content="#667eea">
+<meta name="description" content="UPWARD — Small actions. Real progress.">
 
 <link rel="manifest" href="./manifest.json">
 
@@ -24,39 +24,58 @@
     --success:#22a06b;
     --danger:#dc4c64;
     --border:#e5e7eb;
+    --soft:#f8f9ff;
     --shadow:0 4px 18px rgba(0,0,0,.07);
     --radius:18px;
 }
 
-*{box-sizing:border-box}
+*{
+    box-sizing:border-box;
+}
+
+html{
+    scroll-behavior:smooth;
+}
 
 body{
     margin:0;
     font-family:Arial,Helvetica,sans-serif;
     background:var(--bg);
     color:var(--text);
+    transition:.2s;
+}
+
+body.dark{
+    --bg:#111827;
+    --card:#1f2937;
+    --text:#f3f4f6;
+    --muted:#9ca3af;
+    --border:#374151;
+    --soft:#263247;
+    --shadow:0 4px 18px rgba(0,0,0,.25);
 }
 
 header{
     background:linear-gradient(135deg,#667eea,#764ba2);
     color:white;
-    padding:24px 18px 28px;
+    padding:25px 18px 28px;
     text-align:center;
 }
 
 header h1{
     margin:0;
-    font-size:28px;
+    font-size:30px;
+    letter-spacing:.5px;
 }
 
 header p{
     margin:7px 0 0;
-    opacity:.9;
+    opacity:.92;
     font-size:14px;
 }
 
 .container{
-    max-width:900px;
+    max-width:950px;
     margin:auto;
     padding:16px;
 }
@@ -66,12 +85,13 @@ header p{
     gap:8px;
     overflow-x:auto;
     margin-bottom:16px;
-    padding-bottom:4px;
+    padding-bottom:5px;
+    scrollbar-width:thin;
 }
 
 .nav button{
     border:0;
-    background:white;
+    background:var(--card);
     color:var(--text);
     padding:11px 15px;
     border-radius:12px;
@@ -86,8 +106,13 @@ header p{
     color:white;
 }
 
-.page{display:none}
-.page.active{display:block}
+.page{
+    display:none;
+}
+
+.page.active{
+    display:block;
+}
 
 .card{
     background:var(--card);
@@ -97,7 +122,14 @@ header p{
     box-shadow:var(--shadow);
 }
 
-.card h2,.card h3{margin-top:0}
+.card h2,
+.card h3{
+    margin-top:0;
+}
+
+.card p{
+    line-height:1.5;
+}
 
 .stats{
     display:grid;
@@ -106,7 +138,7 @@ header p{
 }
 
 .stat{
-    background:#f8f9ff;
+    background:var(--soft);
     border:1px solid var(--border);
     border-radius:14px;
     padding:14px 8px;
@@ -136,7 +168,7 @@ header p{
     border:1px solid var(--border);
     border-radius:15px;
     padding:14px;
-    background:white;
+    background:var(--card);
 }
 
 .activity-card h3{
@@ -150,7 +182,9 @@ header p{
     color:var(--primary);
 }
 
-.activity-card small{color:var(--muted)}
+.activity-card small{
+    color:var(--muted);
+}
 
 .progress{
     height:9px;
@@ -158,6 +192,10 @@ header p{
     border-radius:10px;
     overflow:hidden;
     margin:10px 0;
+}
+
+body.dark .progress{
+    background:#374151;
 }
 
 .progress-bar{
@@ -173,21 +211,6 @@ header p{
     flex-wrap:wrap;
 }
 
-input,select,textarea{
-    width:100%;
-    padding:12px;
-    border:1px solid var(--border);
-    border-radius:12px;
-    background:white;
-    font-size:15px;
-    font-family:inherit;
-}
-
-textarea{
-    resize:vertical;
-    min-height:80px;
-}
-
 .form-group{
     flex:1;
     min-width:150px;
@@ -199,6 +222,24 @@ label{
     font-weight:bold;
     color:var(--muted);
     margin-bottom:5px;
+}
+
+input,
+select,
+textarea{
+    width:100%;
+    padding:12px;
+    border:1px solid var(--border);
+    border-radius:12px;
+    background:var(--card);
+    color:var(--text);
+    font-size:15px;
+    font-family:inherit;
+}
+
+textarea{
+    resize:vertical;
+    min-height:80px;
 }
 
 button{
@@ -220,7 +261,9 @@ button:disabled{
     color:white;
 }
 
-.btn-primary:hover{background:var(--primary-dark)}
+.btn-primary:hover{
+    background:var(--primary-dark);
+}
 
 .btn-secondary{
     background:#eef0ff;
@@ -237,7 +280,9 @@ button:disabled{
     color:var(--danger);
 }
 
-.full{width:100%}
+.full{
+    width:100%;
+}
 
 .activity-list{
     display:flex;
@@ -253,11 +298,16 @@ button:disabled{
     padding:13px;
     border:1px solid var(--border);
     border-radius:14px;
-    background:#fff;
+    background:var(--card);
 }
 
-.activity-item strong{display:block}
-.activity-item small{color:var(--muted)}
+.activity-item strong{
+    display:block;
+}
+
+.activity-item small{
+    color:var(--muted);
+}
 
 .delete-btn{
     background:#fdecef;
@@ -265,65 +315,78 @@ button:disabled{
     padding:8px 11px;
 }
 
-.timer{text-align:center}
-
-.timer-display{
-    font-size:58px;
-    font-weight:bold;
-    letter-spacing:3px;
-    margin:20px 0 8px;
-    color:var(--primary);
-    font-variant-numeric:tabular-nums;
+.edit-btn{
+    background:#eef0ff;
+    color:#4f5fd1;
+    padding:8px 11px;
 }
 
-.timer-status{
-    color:var(--muted);
-    min-height:20px;
-    margin-bottom:18px;
-}
-
-.timer-buttons{
+.item-buttons{
     display:flex;
-    justify-content:center;
-    gap:8px;
-    flex-wrap:wrap;
+    gap:6px;
+    flex-shrink:0;
 }
 
-.timer-help{
-    max-width:500px;
-    margin:0 auto 20px;
+.empty{
+    text-align:center;
     color:var(--muted);
-    line-height:1.5;
-    font-size:14px;
+    padding:20px 10px;
 }
 
-.week-grid{
-    display:grid;
-    grid-template-columns:repeat(7,1fr);
-    gap:7px;
-    overflow-x:auto;
+.badge{
+    display:inline-block;
+    background:#eef0ff;
+    color:#4f5fd1;
+    border-radius:20px;
+    padding:5px 9px;
+    font-size:11px;
+    font-weight:bold;
 }
 
-.day-box{
-    min-width:75px;
-    background:#f8f9ff;
-    border:1px solid var(--border);
+.message{
+    display:none;
+    margin-bottom:15px;
+    padding:12px;
     border-radius:12px;
-    padding:10px 6px;
+    background:#e8f7ef;
+    color:#168354;
+    font-weight:bold;
     text-align:center;
 }
 
-.day-box strong{
-    display:block;
-    font-size:12px;
+.goal-row{
+    margin-bottom:15px;
 }
 
-.day-box .day-minutes{
+.goal-top{
+    display:flex;
+    justify-content:space-between;
+    gap:10px;
+    font-size:14px;
+}
+
+.insight-grid{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:10px;
+}
+
+.insight{
+    background:var(--soft);
+    border:1px solid var(--border);
+    border-radius:14px;
+    padding:14px;
+}
+
+.insight strong{
     display:block;
-    font-size:18px;
+    font-size:22px;
     color:var(--primary);
-    font-weight:bold;
-    margin:6px 0;
+    margin-top:5px;
+}
+
+.insight small{
+    color:var(--muted);
 }
 
 .chart-wrap{
@@ -337,32 +400,16 @@ canvas{
     display:block;
 }
 
-.insight-grid{
-    display:grid;
-    grid-template-columns:repeat(2,1fr);
-    gap:10px;
-}
-
-.insight{
-    background:#f8f9ff;
-    border:1px solid var(--border);
-    border-radius:14px;
-    padding:14px;
-}
-
-.insight strong{
-    display:block;
-    font-size:22px;
-    color:var(--primary);
-    margin-top:4px;
-}
-
 .level-box{
     text-align:center;
     background:linear-gradient(135deg,#f0f2ff,#f8f9ff);
     border:1px solid var(--border);
     border-radius:16px;
     padding:20px;
+}
+
+body.dark .level-box{
+    background:var(--soft);
 }
 
 .level-number{
@@ -388,31 +435,124 @@ canvas{
     color:white;
 }
 
-.message{
-    display:none;
-    margin-bottom:15px;
-    padding:12px;
+.week-grid{
+    display:grid;
+    grid-template-columns:repeat(7,1fr);
+    gap:7px;
+    overflow-x:auto;
+}
+
+.day-box{
+    min-width:75px;
+    background:var(--soft);
+    border:1px solid var(--border);
     border-radius:12px;
-    background:#e8f7ef;
-    color:#168354;
-    font-weight:bold;
+    padding:10px 6px;
     text-align:center;
 }
 
-.empty{
-    text-align:center;
+.day-box strong{
+    display:block;
+    font-size:12px;
+}
+
+.day-box .day-minutes{
+    display:block;
+    font-size:18px;
+    color:var(--primary);
+    font-weight:bold;
+    margin:6px 0;
+}
+
+.day-box small{
     color:var(--muted);
-    padding:20px 10px;
 }
 
-.badge{
-    display:inline-block;
-    background:#eef0ff;
-    color:#4f5fd1;
-    border-radius:20px;
-    padding:5px 9px;
-    font-size:11px;
+.timer{
+    text-align:center;
+}
+
+.timer-help{
+    max-width:550px;
+    margin:0 auto 20px;
+    color:var(--muted);
+    line-height:1.5;
+    font-size:14px;
+}
+
+.timer-display{
+    font-size:58px;
     font-weight:bold;
+    letter-spacing:3px;
+    margin:20px 0 8px;
+    color:var(--primary);
+    font-variant-numeric:tabular-nums;
+}
+
+.timer-status{
+    color:var(--muted);
+    min-height:20px;
+    margin-bottom:18px;
+}
+
+.timer-buttons{
+    display:flex;
+    justify-content:center;
+    gap:8px;
+    flex-wrap:wrap;
+}
+
+.settings-row{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:15px;
+    padding:13px 0;
+    border-bottom:1px solid var(--border);
+}
+
+.settings-row:last-child{
+    border-bottom:0;
+}
+
+.switch{
+    position:relative;
+    width:48px;
+    height:26px;
+    flex-shrink:0;
+}
+
+.switch input{
+    display:none;
+}
+
+.slider{
+    position:absolute;
+    inset:0;
+    background:#cbd5e1;
+    border-radius:30px;
+    cursor:pointer;
+    transition:.2s;
+}
+
+.slider:before{
+    content:"";
+    position:absolute;
+    width:20px;
+    height:20px;
+    left:3px;
+    top:3px;
+    background:white;
+    border-radius:50%;
+    transition:.2s;
+}
+
+.switch input:checked + .slider{
+    background:var(--primary);
+}
+
+.switch input:checked + .slider:before{
+    transform:translateX(22px);
 }
 
 footer{
@@ -422,17 +562,23 @@ footer{
     padding:20px;
 }
 
-@media(max-width:650px){
+hr{
+    border:0;
+    border-top:1px solid var(--border);
+    margin:18px 0;
+}
+
+@media(max-width:750px){
 
     .stats{
         grid-template-columns:repeat(2,1fr);
     }
 
-    .activity-grid{
-        grid-template-columns:1fr;
+    .insight-grid{
+        grid-template-columns:repeat(2,1fr);
     }
 
-    .insight-grid{
+    .activity-grid{
         grid-template-columns:1fr;
     }
 
@@ -448,8 +594,30 @@ footer{
         min-width:130px;
     }
 }
-</style>
 
+@media(max-width:480px){
+
+    .container{
+        padding:10px;
+    }
+
+    .card{
+        padding:15px;
+    }
+
+    .insight-grid{
+        grid-template-columns:1fr 1fr;
+    }
+
+    .activity-item{
+        align-items:flex-start;
+    }
+
+    .item-buttons{
+        flex-direction:column;
+    }
+}
+</style>
 </head>
 
 <body>
@@ -461,574 +629,679 @@ footer{
 
 <div class="container">
 
-<div class="nav">
+    <div class="nav">
 
-<button class="nav-btn active" onclick="showPage('today',this)">
-Today
-</button>
+        <button class="nav-btn active"
+                onclick="showPage('today',this)">
+            🏠 Today
+        </button>
 
-<button class="nav-btn" onclick="showPage('trackers',this)">
-Trackers
-</button>
+        <button class="nav-btn"
+                onclick="showPage('trackers',this)">
+            📊 Trackers
+        </button>
 
-<button class="nav-btn" onclick="showPage('progress',this)">
-Progress
-</button>
+        <button class="nav-btn"
+                onclick="showPage('progress',this)">
+            📈 Progress
+        </button>
 
-<button class="nav-btn" onclick="showPage('checkin',this)">
-Check-in
-</button>
+        <button class="nav-btn"
+                onclick="showPage('checkin',this)">
+            ❤️ Check-in
+        </button>
 
-<button class="nav-btn" onclick="showPage('week',this)">
-This Week
-</button>
+        <button class="nav-btn"
+                onclick="showPage('week',this)">
+            📅 This Week
+        </button>
 
-<button class="nav-btn" onclick="showPage('timer',this)">
-Stopwatch
-</button>
+        <button class="nav-btn"
+                onclick="showPage('timer',this)">
+            ⏱️ Stopwatch
+        </button>
 
-<button class="nav-btn" onclick="showPage('data',this)">
-Data
-</button>
+        <button class="nav-btn"
+                onclick="showPage('data',this)">
+            💾 Data
+        </button>
+
+    </div>
+
+    <div id="message" class="message"></div>
+
+
+    <!-- =====================================================
+         TODAY
+         ===================================================== -->
+
+    <section id="today" class="page active">
+
+        <div class="card">
+
+            <h2>Today's Progress</h2>
+
+            <div class="stats">
+
+                <div class="stat">
+                    <strong id="todayActivities">0</strong>
+                    <span>Activities</span>
+                </div>
+
+                <div class="stat">
+                    <strong id="todayMinutes">0</strong>
+                    <span>Minutes</span>
+                </div>
+
+                <div class="stat">
+                    <strong id="dayStreak">0</strong>
+                    <span>Day Streak</span>
+                </div>
+
+                <div class="stat">
+                    <strong id="totalMinutes">0</strong>
+                    <span>Total Minutes</span>
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="card">
+
+            <h2>Today's Goal Progress</h2>
+
+            <div id="todayGoals"></div>
+
+        </div>
+
+
+        <div class="card">
+
+            <h2>Quick Add Activity</h2>
+
+            <div class="row">
+
+                <div class="form-group">
+
+                    <label>Activity</label>
+
+                    <select id="quickCategory">
+                        <option>Exercise</option>
+                        <option>Walking</option>
+                        <option>Learning</option>
+                        <option>Reading</option>
+                        <option>Work/Study</option>
+                        <option>Recreation</option>
+                        <option>Meditation</option>
+                        <option>Social</option>
+                        <option>Mindfulness</option>
+                        <option>Other</option>
+                    </select>
+
+                </div>
+
+                <div class="form-group">
+
+                    <label>Minutes</label>
+
+                    <input id="quickMinutes"
+                           type="number"
+                           min="1"
+                           step="0.01"
+                           placeholder="e.g. 30">
+
+                </div>
+
+            </div>
+
+            <br>
+
+            <button class="btn-primary full"
+                    onclick="quickAdd()">
+                + Add Activity
+            </button>
+
+        </div>
+
+
+        <div class="card">
+
+            <h2>Today's Activities</h2>
+
+            <div id="todayActivityList"
+                 class="activity-list"></div>
+
+        </div>
+
+
+        <div class="card">
+
+            <h2>Today's Trackers</h2>
+
+            <div id="todayTrackerGrid"
+                 class="activity-grid"></div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         TRACKERS
+         ===================================================== -->
+
+    <section id="trackers" class="page">
+
+        <div class="card">
+
+            <h2>Individual Trackers</h2>
+
+            <p style="color:var(--muted)">
+                Track each area separately. Daily totals are
+                calculated automatically.
+            </p>
+
+            <div id="trackerGrid"
+                 class="activity-grid"></div>
+
+        </div>
+
+
+        <div class="card">
+
+            <h2>Add Activity</h2>
+
+            <div class="row">
+
+                <div class="form-group">
+
+                    <label>Activity</label>
+
+                    <select id="activityCategory">
+                        <option>Exercise</option>
+                        <option>Walking</option>
+                        <option>Learning</option>
+                        <option>Reading</option>
+                        <option>Work/Study</option>
+                        <option>Recreation</option>
+                        <option>Meditation</option>
+                        <option>Social</option>
+                        <option>Mindfulness</option>
+                        <option>Other</option>
+                    </select>
+
+                </div>
+
+                <div class="form-group">
+
+                    <label>Activity name</label>
+
+                    <input id="activityName"
+                           type="text"
+                           placeholder="e.g. Gym, Book, Study">
+
+                </div>
+
+                <div class="form-group">
+
+                    <label>Minutes</label>
+
+                    <input id="activityMinutes"
+                           type="number"
+                           min="1"
+                           step="0.01"
+                           placeholder="30">
+
+                </div>
+
+            </div>
+
+            <br>
+
+            <button class="btn-primary"
+                    onclick="addActivity()">
+                + Add Activity
+            </button>
+
+        </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         PROGRESS
+         ===================================================== -->
+
+    <section id="progress" class="page">
+
+        <div class="card">
+
+            <h2>Progress Overview</h2>
+
+            <div class="insight-grid">
+
+                <div class="insight">
+                    Current streak
+                    <strong id="progressCurrentStreak">0</strong>
+                    <small>consecutive days</small>
+                </div>
+
+                <div class="insight">
+                    Longest streak
+                    <strong id="longestStreak">0</strong>
+                    <small>best streak</small>
+                </div>
+
+                <div class="insight">
+                    Total activities
+                    <strong id="progressActivities">0</strong>
+                    <small>all time</small>
+                </div>
+
+                <div class="insight">
+                    Average/day
+                    <strong id="averageMinutes">0</strong>
+                    <small>last 30 days</small>
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="card">
+
+            <h2>7-Day Activity Chart</h2>
+
+            <div class="chart-wrap">
+                <canvas id="weeklyChart"></canvas>
+            </div>
+
+        </div>
+
+
+        <div class="card">
+
+            <h2>30-Day Activity History</h2>
+
+            <div class="chart-wrap">
+                <canvas id="monthlyChart"></canvas>
+            </div>
+
+        </div>
+
+
+        <div class="card">
+
+            <h2>Category Balance — Last 30 Days</h2>
+
+            <div id="categoryBalance"></div>
+
+        </div>
+
+
+        <div class="card">
+
+            <h2>Your Level</h2>
+
+            <div class="level-box">
+
+                <div class="level-number"
+                     id="levelNumber">
+                    1
+                </div>
+
+                <div>Level</div>
+
+                <br>
+
+                <strong id="xpText">0 XP</strong>
+
+                <div class="progress">
+                    <div id="xpBar"
+                         class="progress-bar"></div>
+                </div>
+
+                <small id="nextLevelText">
+                    100 XP to next level
+                </small>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         CHECK-IN
+         ===================================================== -->
+
+    <section id="checkin" class="page">
+
+        <div class="card">
+
+            <h2>Daily Check-in</h2>
+
+            <p style="color:var(--muted)">
+                Take a moment to record how your day is going.
+            </p>
+
+            <label>How would you rate today?</label>
+
+            <div class="rating"
+                 id="ratingButtons">
+
+                <button onclick="selectRating(1)">1</button>
+                <button onclick="selectRating(2)">2</button>
+                <button onclick="selectRating(3)">3</button>
+                <button onclick="selectRating(4)">4</button>
+                <button onclick="selectRating(5)">5</button>
+
+            </div>
+
+            <br>
+
+            <label>How was your energy?</label>
+
+            <select id="energyRating">
+                <option value="">Select</option>
+                <option value="Low">Low</option>
+                <option value="Okay">Okay</option>
+                <option value="Good">Good</option>
+                <option value="High">High</option>
+            </select>
+
+            <br><br>
+
+            <label>Today's small win</label>
+
+            <textarea id="smallWin"
+                      placeholder="What is one thing you did today that matters?"></textarea>
+
+            <br>
+
+            <label>Optional note</label>
+
+            <textarea id="dailyNote"
+                      placeholder="Anything you want to remember about today?"></textarea>
+
+            <br>
+
+            <button class="btn-primary full"
+                    onclick="saveCheckin()">
+                Save Today's Check-in
+            </button>
+
+        </div>
+
+
+        <div class="card">
+
+            <h2>Today's Check-in</h2>
+
+            <div id="todayCheckin"></div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         THIS WEEK
+         ===================================================== -->
+
+    <section id="week" class="page">
+
+        <div class="card">
+
+            <h2>7-Day Activity Summary</h2>
+
+            <div id="weeklyCategorySummary"></div>
+
+        </div>
+
+
+        <div class="card">
+
+            <h2>Weekly Activity Breakdown</h2>
+
+            <div id="weeklyDetails"></div>
+
+        </div>
+
+
+        <div class="card">
+
+            <h2>Weekly Summary</h2>
+
+            <div id="weeklySummaryText"></div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         UNIVERSAL STOPWATCH
+         ===================================================== -->
+
+    <section id="timer" class="page">
+
+        <div class="card timer">
+
+            <h2>Universal Stopwatch</h2>
+
+            <p class="timer-help">
+                Use this for walking, exercise, recreation,
+                meditation, work, study or any other activity.
+                Start when you begin and stop &amp; save when
+                you finish.
+            </p>
+
+
+            <div class="form-group"
+                 style="max-width:350px;margin:auto">
+
+                <label>Activity</label>
+
+                <select id="timerCategory">
+                    <option>Exercise</option>
+                    <option>Walking</option>
+                    <option>Learning</option>
+                    <option>Reading</option>
+                    <option>Work/Study</option>
+                    <option>Recreation</option>
+                    <option>Meditation</option>
+                    <option>Social</option>
+                    <option>Mindfulness</option>
+                    <option>Other</option>
+                </select>
+
+            </div>
+
+
+            <div class="form-group"
+                 style="max-width:350px;margin:12px auto">
+
+                <label>Activity name</label>
+
+                <input id="timerName"
+                       placeholder="e.g. Evening walk">
+
+            </div>
+
+
+            <div class="timer-display"
+                 id="timerDisplay">
+                00:00:00
+            </div>
+
+
+            <div class="timer-status"
+                 id="timerStatus">
+                Ready
+            </div>
+
+
+            <div class="timer-buttons">
+
+                <button id="timerStartBtn"
+                        class="btn-primary"
+                        onclick="startTimer()">
+                    Start
+                </button>
+
+                <button id="timerPauseBtn"
+                        class="btn-secondary"
+                        onclick="pauseTimer()"
+                        disabled>
+                    Pause
+                </button>
+
+                <button id="timerStopBtn"
+                        class="btn-danger"
+                        onclick="stopTimer()"
+                        disabled>
+                    Stop &amp; Save
+                </button>
+
+                <button id="timerResetBtn"
+                        class="btn-success"
+                        onclick="resetTimer()">
+                    Reset
+                </button>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         DATA
+         ===================================================== -->
+
+    <section id="data" class="page">
+
+        <div class="card">
+
+            <h2>Data &amp; Downloads</h2>
+
+            <p style="color:var(--muted)">
+                Your UPWARD data is stored locally on this device.
+                Export a backup periodically so you can restore
+                your data if needed.
+            </p>
+
+            <div class="row">
+
+                <button class="btn-primary"
+                        onclick="exportBackup()">
+                    💾 Export Backup
+                </button>
+
+                <button class="btn-secondary"
+                        onclick="document.getElementById('importFile').click()">
+                    📥 Import Backup
+                </button>
+
+                <button class="btn-secondary"
+                        onclick="downloadCSV()">
+                    📄 Download CSV
+                </button>
+
+                <button class="btn-danger"
+                        onclick="clearAllData()">
+                    🗑️ Clear All Data
+                </button>
+
+            </div>
+
+            <input type="file"
+                   id="importFile"
+                   accept=".json"
+                   style="display:none"
+                   onchange="importBackup(event)">
+
+        </div>
+
+
+        <div class="card">
+
+            <h2>Appearance</h2>
+
+            <div class="settings-row">
+
+                <div>
+                    <strong>Dark mode</strong>
+                    <div style="color:var(--muted);font-size:13px">
+                        Use a darker appearance for comfortable viewing.
+                    </div>
+                </div>
+
+                <label class="switch">
+
+                    <input type="checkbox"
+                           id="darkModeToggle"
+                           onchange="toggleDarkMode()">
+
+                    <span class="slider"></span>
+
+                </label>
+
+            </div>
+
+        </div>
+
+
+        <div class="card">
+
+            <h2>About UPWARD</h2>
+
+            <p>
+                UPWARD is your personal activity and progress tracker.
+            </p>
+
+            <p style="color:var(--muted)">
+                Small actions. Real progress.
+            </p>
+
+            <p style="color:var(--muted);font-size:13px">
+                Data is stored locally in your browser.
+                No external libraries or online database are required.
+            </p>
+
+        </div>
+
+    </section>
 
 </div>
 
-<div id="message" class="message"></div>
-
-<!-- TODAY -->
-
-<section id="today" class="page active">
-
-<div class="card">
-
-<h2>Today's Progress</h2>
-
-<div class="stats">
-
-<div class="stat">
-<strong id="todayActivities">0</strong>
-<span>Activities</span>
-</div>
-
-<div class="stat">
-<strong id="todayMinutes">0</strong>
-<span>Minutes</span>
-</div>
-
-<div class="stat">
-<strong id="dayStreak">0</strong>
-<span>Day Streak</span>
-</div>
-
-<div class="stat">
-<strong id="totalMinutes">0</strong>
-<span>Total Minutes</span>
-</div>
-
-</div>
-
-</div>
-
-<div class="card">
-
-<h2>Today's Goal Progress</h2>
-
-<div id="todayGoals"></div>
-
-</div>
-
-<div class="card">
-
-<h2>Quick Add Activity</h2>
-
-<div class="row">
-
-<div class="form-group">
-
-<label>Activity</label>
-
-<select id="quickCategory">
-
-<option>Exercise</option>
-<option>Walking</option>
-<option>Learning</option>
-<option>Reading</option>
-<option>Work/Study</option>
-<option>Recreation</option>
-<option>Meditation</option>
-<option>Social</option>
-<option>Mindfulness</option>
-<option>Other</option>
-
-</select>
-
-</div>
-
-<div class="form-group">
-
-<label>Minutes</label>
-
-<input id="quickMinutes"
-type="number"
-min="1"
-placeholder="e.g. 30">
-
-</div>
-
-</div>
-
-<br>
-
-<button class="btn-primary full" onclick="quickAdd()">
-+ Add Activity
-</button>
-
-</div>
-
-<div class="card">
-
-<h2>Today's Activities</h2>
-
-<div id="todayActivityList" class="activity-list"></div>
-
-</div>
-
-<div class="card">
-
-<h2>Today's Trackers</h2>
-
-<div id="todayTrackerGrid" class="activity-grid"></div>
-
-</div>
-
-</section>
-
-<!-- TRACKERS -->
-
-<section id="trackers" class="page">
-
-<div class="card">
-
-<h2>Individual Trackers</h2>
-
-<p style="color:var(--muted)">
-Track each area separately. Daily totals are calculated automatically.
-</p>
-
-<div id="trackerGrid" class="activity-grid"></div>
-
-</div>
-
-<div class="card">
-
-<h2>Add Activity</h2>
-
-<div class="row">
-
-<div class="form-group">
-
-<label>Activity</label>
-
-<select id="activityCategory">
-
-<option>Exercise</option>
-<option>Walking</option>
-<option>Learning</option>
-<option>Reading</option>
-<option>Work/Study</option>
-<option>Recreation</option>
-<option>Meditation</option>
-<option>Social</option>
-<option>Mindfulness</option>
-<option>Other</option>
-
-</select>
-
-</div>
-
-<div class="form-group">
-
-<label>Activity name</label>
-
-<input id="activityName"
-type="text"
-placeholder="e.g. Gym, Book, Study">
-
-</div>
-
-<div class="form-group">
-
-<label>Minutes</label>
-
-<input id="activityMinutes"
-type="number"
-min="1"
-placeholder="30">
-
-</div>
-
-</div>
-
-<br>
-
-<button class="btn-primary" onclick="addActivity()">
-Add Activity
-</button>
-
-</div>
-
-</section>
-
-<!-- PROGRESS -->
-
-<section id="progress" class="page">
-
-<div class="card">
-
-<h2>Progress Overview</h2>
-
-<div class="insight-grid">
-
-<div class="insight">
-Current streak
-<strong id="progressCurrentStreak">0</strong>
-<small>consecutive days</small>
-</div>
-
-<div class="insight">
-Longest streak
-<strong id="longestStreak">0</strong>
-<small>best streak</small>
-</div>
-
-<div class="insight">
-Total activities
-<strong id="progressActivities">0</strong>
-<small>all time</small>
-</div>
-
-<div class="insight">
-Average/day
-<strong id="averageMinutes">0</strong>
-<small>last 30 days</small>
-</div>
-
-</div>
-
-</div>
-
-<div class="card">
-
-<h2>7-Day Activity Chart</h2>
-
-<div class="chart-wrap">
-<canvas id="weeklyChart"></canvas>
-</div>
-
-</div>
-
-<div class="card">
-
-<h2>30-Day Activity History</h2>
-
-<div class="chart-wrap">
-<canvas id="monthlyChart"></canvas>
-</div>
-
-</div>
-
-<div class="card">
-
-<h2>Category Balance — Last 30 Days</h2>
-
-<div id="categoryBalance"></div>
-
-</div>
-
-<div class="card">
-
-<h2>Your Level</h2>
-
-<div class="level-box">
-
-<div class="level-number" id="levelNumber">
-1
-</div>
-
-<div>
-Level
-</div>
-
-<br>
-
-<strong id="xpText">0 XP</strong>
-
-<div class="progress">
-<div id="xpBar" class="progress-bar"></div>
-</div>
-
-<small id="nextLevelText">
-100 XP to next level
-</small>
-
-</div>
-
-</div>
-
-</section>
-
-<!-- CHECK-IN -->
-
-<section id="checkin" class="page">
-
-<div class="card">
-
-<h2>Daily Check-in</h2>
-
-<p style="color:var(--muted)">
-Take a moment to record how your day is going.
-</p>
-
-<label>How would you rate today?</label>
-
-<div class="rating" id="ratingButtons">
-
-<button onclick="selectRating(1)">1</button> <button onclick="selectRating(2)">2</button> <button onclick="selectRating(3)">3</button> <button onclick="selectRating(4)">4</button> <button onclick="selectRating(5)">5</button>
-
-</div>
-
-<br>
-
-<label>How was your energy?</label>
-
-<select id="energyRating">
-
-<option value="">Select</option>
-<option value="Low">Low</option>
-<option value="Okay">Okay</option>
-<option value="Good">Good</option>
-<option value="High">High</option>
-
-</select>
-
-<br><br>
-
-<label>Today's small win</label>
-
-<textarea id="smallWin"
-placeholder="What is one thing you did today that matters?"></textarea>
-
-<br>
-
-<label>Optional note</label>
-
-<textarea id="dailyNote"
-placeholder="Anything you want to remember about today?"></textarea>
-
-<br>
-
-<button class="btn-primary full" onclick="saveCheckin()">
-Save Today's Check-in
-</button>
-
-</div>
-
-<div class="card">
-
-<h2>Today's Check-in</h2>
-
-<div id="todayCheckin"></div>
-
-</div>
-
-</section>
-
-<!-- WEEK -->
-
-<section id="week" class="page">
-
-<div class="card">
-
-<h2>7-Day Activity Summary</h2>
-
-<div id="weeklyCategorySummary"></div>
-
-</div>
-
-<div class="card">
-
-<h2>Weekly Activity Breakdown</h2>
-
-<div id="weeklyDetails"></div>
-
-</div>
-
-<div class="card">
-
-<h2>Weekly Summary</h2>
-
-<div id="weeklySummaryText"></div>
-
-</div>
-
-</section>
-
-<!-- UNIVERSAL STOPWATCH -->
-
-<section id="timer" class="page">
-
-<div class="card timer">
-
-<h2>Universal Stopwatch</h2>
-
-<p class="timer-help">
-Use this for walking, exercise, recreation, meditation,
-work, study or any other activity. Start when you begin
-and stop &amp; save when you finish.
-</p>
-
-<div class="form-group"
-style="max-width:350px;margin:auto">
-
-<label>Activity</label>
-
-<select id="timerCategory">
-
-<option>Exercise</option>
-<option>Walking</option>
-<option>Learning</option>
-<option>Reading</option>
-<option>Work/Study</option>
-<option>Recreation</option>
-<option>Meditation</option>
-<option>Social</option>
-<option>Mindfulness</option>
-<option>Other</option>
-
-</select>
-
-</div>
-
-<div class="form-group"
-style="max-width:350px;margin:12px auto">
-
-<label>Activity name</label>
-
-<input id="timerName"
-placeholder="e.g. Evening walk">
-
-</div>
-
-<div class="timer-display" id="timerDisplay">
-00:00:00
-</div>
-
-<div class="timer-status" id="timerStatus">
-Ready
-</div>
-
-<div class="timer-buttons">
-
-<button id="timerStartBtn"
-class="btn-primary"
-onclick="startTimer()">
-Start </button>
-
-<button id="timerPauseBtn"
-class="btn-secondary"
-onclick="pauseTimer()"
-disabled>
-Pause </button>
-
-<button id="timerStopBtn"
-class="btn-danger"
-onclick="stopTimer()"
-disabled>
-Stop & Save </button>
-
-<button id="timerResetBtn"
-class="btn-success"
-onclick="resetTimer()">
-Reset </button>
-
-</div>
-
-</div>
-
-</section>
-
-<!-- DATA -->
-
-<section id="data" class="page">
-
-<div class="card">
-
-<h2>Data & Downloads</h2>
-
-<p style="color:var(--muted)">
-Your UPWARD data is stored locally on this device.
-</p>
-
-<div class="row">
-
-<button class="btn-primary" onclick="exportBackup()">
-Export Backup
-</button>
-
-<button class="btn-secondary"
-onclick="document.getElementById('importFile').click()">
-Import Backup </button>
-
-<button class="btn-secondary" onclick="downloadCSV()">
-Download CSV
-</button>
-
-<button class="btn-danger" onclick="clearAllData()">
-Clear All Data
-</button>
-
-</div>
-
-<input
-type="file"
-id="importFile"
-accept=".json"
-style="display:none"
-onchange="importBackup(event)">
-
-</div>
-
-<div class="card">
-
-<h2>About UPWARD</h2>
-
-<p>
-UPWARD is your personal activity and progress tracker.
-</p>
-
-<p style="color:var(--muted)">
-Small actions. Real progress.
-</p>
-
-</div>
-
-</section>
-
-</div>
 
 <footer>
-UPWARD — Small actions. Real progress.
+    UPWARD — Small actions. Real progress.
 </footer>
+
 
 <script>
 
 /* =========================================================
-   UPWARD PHASE 1
-   Universal Stopwatch
-   Existing storage preserved:
-   upwardActivities
-   upwardCheckins
-   upwardSpending
+   UPWARD V2.1
+   Clean single-file application
+
+   Existing localStorage keys preserved:
+   - upwardActivities
+   - upwardCheckins
+   - upwardSpending
+   ========================================================= */
+
+
+/* =========================================================
+   CONFIGURATION
    ========================================================= */
 
 const CATEGORIES = [
@@ -1057,12 +1330,12 @@ const TARGETS = {
     "Other":10
 };
 
-let selectedRating = 0;
-
 
 /* =========================================================
-   UNIVERSAL STOPWATCH STATE
+   STATE
    ========================================================= */
+
+let selectedRating = 0;
 
 let timerElapsedSeconds = 0;
 let timerInterval = null;
@@ -1070,19 +1343,28 @@ let timerRunning = false;
 let timerStartedAt = null;
 
 
-/* ================= STORAGE ================= */
+/* =========================================================
+   STORAGE
+   ========================================================= */
 
 function getActivities(){
 
     try{
-        return JSON.parse(
+
+        const data = JSON.parse(
             localStorage.getItem("upwardActivities")
-        ) || [];
-    }catch(e){
+        );
+
+        return Array.isArray(data) ? data : [];
+
+    }catch(error){
+
         return [];
+
     }
 
 }
+
 
 function saveActivities(data){
 
@@ -1093,17 +1375,27 @@ function saveActivities(data){
 
 }
 
+
 function getCheckins(){
 
     try{
-        return JSON.parse(
+
+        const data = JSON.parse(
             localStorage.getItem("upwardCheckins")
-        ) || {};
-    }catch(e){
+        );
+
+        return data && typeof data === "object"
+            ? data
+            : {};
+
+    }catch(error){
+
         return {};
+
     }
 
 }
+
 
 function saveCheckins(data){
 
@@ -1115,7 +1407,9 @@ function saveCheckins(data){
 }
 
 
-/* ================= DATE ================= */
+/* =========================================================
+   DATE FUNCTIONS
+   ========================================================= */
 
 function getTodayString(){
 
@@ -1129,17 +1423,19 @@ function getTodayString(){
 
 }
 
+
 function dateFromString(str){
 
-    const p = str.split("-");
+    const parts = String(str).split("-");
 
     return new Date(
-        Number(p[0]),
-        Number(p[1])-1,
-        Number(p[2])
+        Number(parts[0]),
+        Number(parts[1])-1,
+        Number(parts[2])
     );
 
 }
+
 
 function getLastNDays(n){
 
@@ -1152,7 +1448,9 @@ function getLastNDays(n){
 
         const d = new Date(today);
 
-        d.setDate(today.getDate()-i);
+        d.setDate(
+            today.getDate()-i
+        );
 
         result.push(
             [
@@ -1168,6 +1466,7 @@ function getLastNDays(n){
 
 }
 
+
 function getLast7Days(){
 
     return getLastNDays(7);
@@ -1175,18 +1474,27 @@ function getLast7Days(){
 }
 
 
-/* ================= NAVIGATION ================= */
+/* =========================================================
+   NAVIGATION
+   ========================================================= */
 
 function showPage(pageId,button){
 
     document.querySelectorAll(".page")
-        .forEach(p=>p.classList.remove("active"));
+        .forEach(page=>{
+            page.classList.remove("active");
+        });
 
     document.querySelectorAll(".nav-btn")
-        .forEach(b=>b.classList.remove("active"));
+        .forEach(btn=>{
+            btn.classList.remove("active");
+        });
 
-    document.getElementById(pageId)
-        .classList.add("active");
+    const page = document.getElementById(pageId);
+
+    if(page){
+        page.classList.add("active");
+    }
 
     if(button){
         button.classList.add("active");
@@ -1194,30 +1502,82 @@ function showPage(pageId,button){
 
     render();
 
+    window.scrollTo({
+        top:0,
+        behavior:"smooth"
+    });
+
 }
 
 
-/* ================= MESSAGE ================= */
+/* =========================================================
+   MESSAGES
+   ========================================================= */
 
 function showMessage(message){
 
-    const box =
-        document.getElementById("message");
+    const box = document.getElementById("message");
+
+    if(!box) return;
 
     box.textContent = message;
     box.style.display = "block";
 
-    clearTimeout(window.messageTimer);
+    clearTimeout(window.upwardMessageTimer);
 
-    window.messageTimer =
-        setTimeout(()=>{
-            box.style.display="none";
-        },2500);
+    window.upwardMessageTimer = setTimeout(()=>{
+        box.style.display = "none";
+    },2500);
 
 }
 
 
-/* ================= ADD ACTIVITY ================= */
+/* =========================================================
+   NUMBER HELPERS
+   ========================================================= */
+
+function formatNumber(value){
+
+    const n = Number(value) || 0;
+
+    if(Number.isInteger(n)){
+        return String(n);
+    }
+
+    return n
+        .toFixed(2)
+        .replace(/0+$/,"")
+        .replace(/\.$/,"");
+
+}
+
+
+function formatMinutes(minutes){
+
+    return formatNumber(minutes) + " min";
+
+}
+
+
+/* =========================================================
+   HTML SAFETY
+   ========================================================= */
+
+function escapeHTML(value){
+
+    return String(value ?? "")
+        .replace(/&/g,"&amp;")
+        .replace(/</g,"&lt;")
+        .replace(/>/g,"&gt;")
+        .replace(/"/g,"&quot;")
+        .replace(/'/g,"&#039;");
+
+}
+
+
+/* =========================================================
+   ACTIVITY FUNCTIONS
+   ========================================================= */
 
 function quickAdd(){
 
@@ -1232,6 +1592,7 @@ function quickAdd(){
     if(!minutes || minutes<=0){
 
         showMessage("Please enter valid minutes.");
+
         return;
 
     }
@@ -1242,7 +1603,9 @@ function quickAdd(){
         minutes
     );
 
-    document.getElementById("quickMinutes").value="";
+    document.getElementById(
+        "quickMinutes"
+    ).value="";
 
 }
 
@@ -1254,7 +1617,7 @@ function addActivity(){
 
     const name =
         document.getElementById("activityName")
-        .value.trim();
+            .value.trim();
 
     const minutes =
         Number(
@@ -1264,6 +1627,7 @@ function addActivity(){
     if(!minutes || minutes<=0){
 
         showMessage("Please enter valid minutes.");
+
         return;
 
     }
@@ -1274,8 +1638,13 @@ function addActivity(){
         minutes
     );
 
-    document.getElementById("activityName").value="";
-    document.getElementById("activityMinutes").value="";
+    document.getElementById(
+        "activityName"
+    ).value="";
+
+    document.getElementById(
+        "activityMinutes"
+    ).value="";
 
 }
 
@@ -1287,8 +1656,10 @@ function addActivityRecord(category,name,minutes){
     activities.push({
 
         id:
-            Date.now().toString()+
-            Math.random().toString(36).substring(2),
+            Date.now().toString() +
+            Math.random()
+                .toString(36)
+                .substring(2),
 
         activityName:name,
 
@@ -1313,7 +1684,70 @@ function addActivityRecord(category,name,minutes){
 }
 
 
-/* ================= DELETE ================= */
+/* =========================================================
+   EDIT ACTIVITY
+   ========================================================= */
+
+function editActivity(id){
+
+    const activities = getActivities();
+
+    const item =
+        activities.find(activity=>activity.id===id);
+
+    if(!item){
+
+        showMessage("Activity not found.");
+
+        return;
+
+    }
+
+    const newName = prompt(
+        "Activity name:",
+        item.activityName || item.category
+    );
+
+    if(newName === null){
+        return;
+    }
+
+    const newMinutes = prompt(
+        "Minutes:",
+        item.minutes
+    );
+
+    if(newMinutes === null){
+        return;
+    }
+
+    const minutes = Number(newMinutes);
+
+    if(!minutes || minutes<=0){
+
+        alert("Please enter a valid number of minutes.");
+
+        return;
+
+    }
+
+    item.activityName =
+        newName.trim() || item.category;
+
+    item.minutes = minutes;
+
+    saveActivities(activities);
+
+    showMessage("Activity updated.");
+
+    render();
+
+}
+
+
+/* =========================================================
+   DELETE ACTIVITY
+   ========================================================= */
 
 function deleteActivity(id){
 
@@ -1321,18 +1755,22 @@ function deleteActivity(id){
         return;
     }
 
-    saveActivities(
-        getActivities().filter(
-            item=>item.id!==id
-        )
-    );
+    const updated =
+        getActivities()
+            .filter(item=>item.id!==id);
+
+    saveActivities(updated);
+
+    showMessage("Activity deleted.");
 
     render();
 
 }
 
 
-/* ================= CATEGORY DATA ================= */
+/* =========================================================
+   CATEGORY CALCULATIONS
+   ========================================================= */
 
 function getCategoryMinutes(category,dates){
 
@@ -1342,11 +1780,13 @@ function getCategoryMinutes(category,dates){
             dates.includes(item.date)
         )
         .reduce(
-            (sum,item)=>sum+Number(item.minutes||0),
+            (sum,item)=>
+                sum+Number(item.minutes||0),
             0
         );
 
 }
+
 
 function getCategorySessions(category,dates){
 
@@ -1354,50 +1794,49 @@ function getCategorySessions(category,dates){
         .filter(item=>
             item.category===category &&
             dates.includes(item.date)
-        ).length;
+        )
+        .length;
 
 }
 
 
-/* ================= NUMBER FORMATTING ================= */
+function getTarget(category){
 
-function formatMinutes(minutes){
-
-    const n=Number(minutes)||0;
-
-    if(Number.isInteger(n)){
-        return String(n)+" min";
-    }
-
-    return n.toFixed(2).replace(/0+$/,"")+" min";
+    return TARGETS[category] || 10;
 
 }
 
-
-/* ================= TODAY ================= */
 
 function getTodayActivities(){
 
     return getActivities()
-        .filter(item=>item.date===getTodayString());
+        .filter(item=>
+            item.date===getTodayString()
+        );
 
 }
 
 
+/* =========================================================
+   STREAKS
+   ========================================================= */
+
 function calculateStreak(){
 
     const dates = new Set(
-        getActivities().map(item=>item.date)
+        getActivities()
+            .map(item=>item.date)
     );
 
     let streak=0;
 
-    const current=new Date();
+    const current = new Date();
+
     current.setHours(0,0,0,0);
 
     while(true){
 
-        const key=[
+        const key = [
             current.getFullYear(),
             String(current.getMonth()+1).padStart(2,"0"),
             String(current.getDate()).padStart(2,"0")
@@ -1424,30 +1863,41 @@ function calculateLongestStreak(){
 
     const dates = [
         ...new Set(
-            getActivities().map(item=>item.date)
+            getActivities()
+                .map(item=>item.date)
         )
     ].sort();
 
-    if(!dates.length) return 0;
+    if(!dates.length){
+        return 0;
+    }
 
     let longest=1;
     let current=1;
 
     for(let i=1;i<dates.length;i++){
 
-        const previous=dateFromString(dates[i-1]);
-        const currentDate=dateFromString(dates[i]);
+        const previous =
+            dateFromString(dates[i-1]);
 
-        const difference=
+        const currentDate =
+            dateFromString(dates[i]);
+
+        const difference =
             Math.round(
-                (currentDate-previous)/
+                (currentDate-previous) /
                 (1000*60*60*24)
             );
 
         if(difference===1){
 
             current++;
-            longest=Math.max(longest,current);
+
+            longest =
+                Math.max(
+                    longest,
+                    current
+                );
 
         }else{
 
@@ -1462,395 +1912,475 @@ function calculateLongestStreak(){
 }
 
 
-/* ================= STATS ================= */
+/* =========================================================
+   TODAY STATS
+   ========================================================= */
 
 function updateStats(){
 
-    const all=getActivities();
-    const today=getTodayActivities();
+    const all = getActivities();
+    const today = getTodayActivities();
 
-    const todayMinutes=today.reduce(
-        (sum,item)=>sum+Number(item.minutes||0),0
-    );
+    const todayMinutes =
+        today.reduce(
+            (sum,item)=>
+                sum+Number(item.minutes||0),
+            0
+        );
 
-    const totalMinutes=all.reduce(
-        (sum,item)=>sum+Number(item.minutes||0),0
-    );
+    const totalMinutes =
+        all.reduce(
+            (sum,item)=>
+                sum+Number(item.minutes||0),
+            0
+        );
 
-    document.getElementById("todayActivities")
-        .textContent=today.length;
+    document.getElementById(
+        "todayActivities"
+    ).textContent = today.length;
 
-    document.getElementById("todayMinutes")
-        .textContent=formatNumber(todayMinutes);
+    document.getElementById(
+        "todayMinutes"
+    ).textContent = formatNumber(todayMinutes);
 
-    document.getElementById("totalMinutes")
-        .textContent=formatNumber(totalMinutes);
+    document.getElementById(
+        "totalMinutes"
+    ).textContent = formatNumber(totalMinutes);
 
-    document.getElementById("dayStreak")
-        .textContent=calculateStreak();
-
-}
-
-
-/* ================= NUMBER DISPLAY ================= */
-
-function formatNumber(value){
-
-    const n=Number(value)||0;
-
-    if(Number.isInteger(n)){
-        return String(n);
-    }
-
-    return n.toFixed(2).replace(/0+$/,"");
+    document.getElementById(
+        "dayStreak"
+    ).textContent = calculateStreak();
 
 }
 
 
-/* ================= TODAY LIST ================= */
+/* =========================================================
+   TODAY ACTIVITIES
+   ========================================================= */
 
 function renderTodayActivities(){
 
-    const container=
-        document.getElementById("todayActivityList");
+    const container =
+        document.getElementById(
+            "todayActivityList"
+        );
 
-    const activities=getTodayActivities();
+    const activities =
+        getTodayActivities();
 
     if(!activities.length){
 
-        container.innerHTML=
-            `<div class="empty">
+        container.innerHTML = `
+            <div class="empty">
                 No activities recorded today yet.
-             </div>`;
+            </div>
+        `;
 
         return;
 
     }
 
-    container.innerHTML=
-        [...activities].reverse()
-        .map(item=>`
+    container.innerHTML =
+        [...activities]
+            .reverse()
+            .map(item=>`
 
-        <div class="activity-item">
+                <div class="activity-item">
 
-            <div>
+                    <div>
 
-                <strong>
-                    ${escapeHTML(
-                        item.activityName||
-                        item.category||
-                        "Activity"
-                    )}
-                </strong>
+                        <strong>
+                            ${escapeHTML(
+                                item.activityName ||
+                                item.category ||
+                                "Activity"
+                            )}
+                        </strong>
 
-                <small>
-                    ${escapeHTML(
-                        item.category||"Other"
-                    )}
-                    ·
-                    ${formatNumber(item.minutes||0)}
-                    min
-                </small>
+                        <small>
+                            ${escapeHTML(
+                                item.category ||
+                                "Other"
+                            )}
+                            ·
+                            ${formatNumber(
+                                item.minutes||0
+                            )}
+                            min
+                        </small>
 
-            </div>
+                    </div>
 
-            <button
-                class="delete-btn"
-                onclick="deleteActivity('${item.id}')">
-                Delete
-            </button>
+                    <div class="item-buttons">
 
-        </div>
+                        <button
+                            class="edit-btn"
+                            onclick="editActivity('${item.id}')">
+                            Edit
+                        </button>
 
-        `).join("");
+                        <button
+                            class="delete-btn"
+                            onclick="deleteActivity('${item.id}')">
+                            Delete
+                        </button>
+
+                    </div>
+
+                </div>
+
+            `)
+            .join("");
 
 }
 
 
-/* ================= TARGETS ================= */
-
-function getTarget(category){
-
-    return TARGETS[category]||10;
-
-}
-
+/* =========================================================
+   DAILY GOALS
+   ========================================================= */
 
 function renderGoals(){
 
-    const today=getTodayString();
+    const today =
+        getTodayString();
 
-    const container=
-        document.getElementById("todayGoals");
+    const container =
+        document.getElementById(
+            "todayGoals"
+        );
 
-    container.innerHTML=
-        CATEGORIES.map(category=>{
+    container.innerHTML =
+        CATEGORIES
+            .map(category=>{
 
-            const minutes=
-                getCategoryMinutes(
-                    category,[today]
-                );
+                const minutes =
+                    getCategoryMinutes(
+                        category,
+                        [today]
+                    );
 
-            const target=getTarget(category);
+                const target =
+                    getTarget(category);
 
-            const percent=
-                Math.min(
-                    100,
-                    Math.round(minutes/target*100)
-                );
+                const percent =
+                    Math.min(
+                        100,
+                        Math.round(
+                            minutes/target*100
+                        )
+                    );
 
-            return `
+                return `
 
-            <div style="margin-bottom:14px">
+                    <div class="goal-row">
 
-                <div style="
-                    display:flex;
-                    justify-content:space-between">
+                        <div class="goal-top">
 
-                    <strong>${category}</strong>
+                            <strong>
+                                ${category}
+                            </strong>
 
-                    <span>
-                        ${formatNumber(minutes)}/${target} min
-                    </span>
+                            <span>
+                                ${formatNumber(minutes)}
+                                /
+                                ${target} min
+                            </span>
 
-                </div>
+                        </div>
 
-                <div class="progress">
+                        <div class="progress">
 
-                    <div class="progress-bar"
-                         style="width:${percent}%">
+                            <div
+                                class="progress-bar"
+                                style="width:${percent}%">
+                            </div>
+
+                        </div>
+
                     </div>
 
-                </div>
+                `;
 
-            </div>
-
-            `;
-
-        }).join("");
+            })
+            .join("");
 
 }
 
 
-/* ================= TRACKERS ================= */
+/* =========================================================
+   TRACKERS
+   ========================================================= */
 
 function renderTrackers(){
 
-    const today=getTodayString();
+    const today =
+        getTodayString();
 
-    document.getElementById("trackerGrid")
-        .innerHTML=
+    document.getElementById(
+        "trackerGrid"
+    ).innerHTML =
 
-        CATEGORIES.map(category=>{
+        CATEGORIES
+            .map(category=>{
 
-            const minutes=
-                getCategoryMinutes(
-                    category,[today]
-                );
+                const minutes =
+                    getCategoryMinutes(
+                        category,
+                        [today]
+                    );
 
-            const sessions=
-                getCategorySessions(
-                    category,[today]
-                );
+                const sessions =
+                    getCategorySessions(
+                        category,
+                        [today]
+                    );
 
-            const target=getTarget(category);
+                const target =
+                    getTarget(category);
 
-            const percent=Math.min(
-                100,
-                Math.round(minutes/target*100)
-            );
+                const percent =
+                    Math.min(
+                        100,
+                        Math.round(
+                            minutes/target*100
+                        )
+                    );
 
-            return `
+                return `
 
-            <div class="activity-card">
+                    <div class="activity-card">
 
-                <h3>${category}</h3>
+                        <h3>
+                            ${category}
+                        </h3>
 
-                <div class="minutes">
-                    ${formatNumber(minutes)} min
-                </div>
+                        <div class="minutes">
+                            ${formatNumber(minutes)} min
+                        </div>
 
-                <small>
-                    ${sessions}
-                    session${sessions===1?"":"s"}
-                </small>
+                        <small>
+                            ${sessions}
+                            session${sessions===1?"":"s"}
+                        </small>
 
-                <div class="progress">
+                        <div class="progress">
 
-                    <div class="progress-bar"
-                         style="width:${percent}%">
+                            <div
+                                class="progress-bar"
+                                style="width:${percent}%">
+                            </div>
+
+                        </div>
+
+                        <small>
+                            Daily target:
+                            ${target} min
+                        </small>
+
                     </div>
 
-                </div>
+                `;
 
-                <small>
-                    Daily target: ${target} min
-                </small>
-
-            </div>
-
-            `;
-
-        }).join("");
+            })
+            .join("");
 
 }
 
 
 function renderTodayTrackers(){
 
-    const today=getTodayString();
+    const today =
+        getTodayString();
 
-    document.getElementById("todayTrackerGrid")
-        .innerHTML=
+    document.getElementById(
+        "todayTrackerGrid"
+    ).innerHTML =
 
-        CATEGORIES.map(category=>{
+        CATEGORIES
+            .map(category=>{
 
-            const minutes=
-                getCategoryMinutes(
-                    category,[today]
-                );
+                const minutes =
+                    getCategoryMinutes(
+                        category,
+                        [today]
+                    );
 
-            return `
+                return `
 
-            <div class="activity-card">
+                    <div class="activity-card">
 
-                <h3>${category}</h3>
+                        <h3>
+                            ${category}
+                        </h3>
 
-                <div class="minutes">
-                    ${formatNumber(minutes)}
-                </div>
+                        <div class="minutes">
+                            ${formatNumber(minutes)}
+                        </div>
 
-                <small>minutes today</small>
+                        <small>
+                            minutes today
+                        </small>
 
-            </div>
+                    </div>
 
-            `;
+                `;
 
-        }).join("");
+            })
+            .join("");
 
 }
 
 
-/* ================= WEEK ================= */
+/* =========================================================
+   WEEKLY
+   ========================================================= */
 
 function renderWeekly(){
 
-    const days=getLast7Days();
+    const days =
+        getLast7Days();
 
-    const summary=
+    const summary =
         document.getElementById(
             "weeklyCategorySummary"
         );
 
-    summary.innerHTML=
-        CATEGORIES.map(category=>{
+    summary.innerHTML =
 
-            const minutes=
-                getCategoryMinutes(
-                    category,days
-                );
+        CATEGORIES
+            .map(category=>{
 
-            const sessions=
-                getCategorySessions(
-                    category,days
-                );
+                const minutes =
+                    getCategoryMinutes(
+                        category,
+                        days
+                    );
 
-            const target=getTarget(category)*7;
+                const sessions =
+                    getCategorySessions(
+                        category,
+                        days
+                    );
 
-            const percent=Math.min(
-                100,
-                Math.round(minutes/target*100)
-            );
+                const target =
+                    getTarget(category)*7;
 
-            return `
+                const percent =
+                    Math.min(
+                        100,
+                        Math.round(
+                            minutes/target*100
+                        )
+                    );
 
-            <div style="
-                margin-bottom:16px;
-                padding-bottom:12px;
-                border-bottom:1px solid var(--border)">
+                return `
 
-                <div style="
-                    display:flex;
-                    justify-content:space-between">
+                    <div style="
+                        margin-bottom:16px;
+                        padding-bottom:12px;
+                        border-bottom:1px solid var(--border)">
 
-                    <strong>${category}</strong>
-                    <strong>${formatNumber(minutes)} min</strong>
+                        <div style="
+                            display:flex;
+                            justify-content:space-between;
+                            gap:10px">
 
-                </div>
+                            <strong>
+                                ${category}
+                            </strong>
 
-                <div class="progress">
+                            <strong>
+                                ${formatNumber(minutes)} min
+                            </strong>
 
-                    <div class="progress-bar"
-                         style="width:${percent}%">
-                    </div>
+                        </div>
 
-                </div>
+                        <div class="progress">
 
-                <small style="color:var(--muted)">
-                    ${sessions} sessions ·
-                    weekly target ${target} min
-                </small>
+                            <div
+                                class="progress-bar"
+                                style="width:${percent}%">
+                            </div>
 
-            </div>
+                        </div>
 
-            `;
-
-        }).join("");
-
-
-    document.getElementById("weeklyDetails")
-        .innerHTML=
-
-        CATEGORIES.map(category=>{
-
-            const boxes=
-                days.map(date=>{
-
-                    const minutes=
-                        getCategoryMinutes(
-                            category,[date]
-                        );
-
-                    const d=dateFromString(date);
-
-                    return `
-
-                    <div class="day-box">
-
-                        <strong>
-                            ${d.toLocaleDateString(
-                                undefined,
-                                {weekday:"short"}
-                            )}
-                        </strong>
-
-                        <span class="day-minutes">
-                            ${formatNumber(minutes)}
-                        </span>
-
-                        <small>min</small>
+                        <small style="color:var(--muted)">
+                            ${sessions} sessions ·
+                            weekly target ${target} min
+                        </small>
 
                     </div>
 
-                    `;
+                `;
 
-                }).join("");
+            })
+            .join("");
 
-            return `
 
-            <div style="margin-bottom:20px">
+    document.getElementById(
+        "weeklyDetails"
+    ).innerHTML =
 
-                <h3>${category}</h3>
+        CATEGORIES
+            .map(category=>{
 
-                <div class="week-grid">
-                    ${boxes}
-                </div>
+                const boxes =
+                    days
+                        .map(date=>{
 
-            </div>
+                            const minutes =
+                                getCategoryMinutes(
+                                    category,
+                                    [date]
+                                );
 
-            `;
+                            const d =
+                                dateFromString(date);
 
-        }).join("");
+                            return `
+
+                                <div class="day-box">
+
+                                    <strong>
+                                        ${d.toLocaleDateString(
+                                            undefined,
+                                            {weekday:"short"}
+                                        )}
+                                    </strong>
+
+                                    <span class="day-minutes">
+                                        ${formatNumber(minutes)}
+                                    </span>
+
+                                    <small>
+                                        min
+                                    </small>
+
+                                </div>
+
+                            `;
+
+                        })
+                        .join("");
+
+                return `
+
+                    <div style="margin-bottom:20px">
+
+                        <h3>
+                            ${category}
+                        </h3>
+
+                        <div class="week-grid">
+                            ${boxes}
+                        </div>
+
+                    </div>
+
+                `;
+
+            })
+            .join("");
 
     renderWeeklySummary();
 
@@ -1859,52 +2389,66 @@ function renderWeekly(){
 
 function renderWeeklySummary(){
 
-    const days=getLast7Days();
+    const days =
+        getLast7Days();
 
-    const total=days.reduce(
-        (sum,date)=>
-            sum+
-            getActivities()
-            .filter(item=>item.date===date)
-            .reduce(
-                (s,item)=>s+Number(item.minutes||0),0
-            ),0
-    );
+    const activities =
+        getActivities();
 
-    const sessions=getActivities()
-        .filter(item=>days.includes(item.date))
-        .length;
+    const weeklyActivities =
+        activities.filter(
+            item=>days.includes(item.date)
+        );
 
-    const activeDays=new Set(
-        getActivities()
-        .filter(item=>days.includes(item.date))
-        .map(item=>item.date)
-    ).size;
+    const total =
+        weeklyActivities.reduce(
+            (sum,item)=>
+                sum+Number(item.minutes||0),
+            0
+        );
+
+    const sessions =
+        weeklyActivities.length;
+
+    const activeDays =
+        new Set(
+            weeklyActivities.map(
+                item=>item.date
+            )
+        ).size;
 
     document.getElementById(
         "weeklySummaryText"
-    ).innerHTML=`
+    ).innerHTML = `
 
         <div class="insight-grid">
 
             <div class="insight">
                 Weekly minutes
-                <strong>${formatNumber(total)}</strong>
+                <strong>
+                    ${formatNumber(total)}
+                </strong>
             </div>
 
             <div class="insight">
                 Sessions
-                <strong>${sessions}</strong>
+                <strong>
+                    ${sessions}
+                </strong>
             </div>
 
             <div class="insight">
                 Active days
-                <strong>${activeDays}/7</strong>
+                <strong>
+                    ${activeDays}/7
+                </strong>
             </div>
 
             <div class="insight">
                 Daily average
-                <strong>${formatNumber(total/7)}</strong>
+                <strong>
+                    ${formatNumber(total/7)}
+                </strong>
             </div>
 
         </div>
@@ -1914,39 +2458,56 @@ function renderWeeklySummary(){
 }
 
 
-/* ================= PROGRESS ================= */
+/* =========================================================
+   PROGRESS
+   ========================================================= */
 
 function renderProgress(){
 
-    const all=getActivities();
+    const all =
+        getActivities();
 
-    const days30=getLastNDays(30);
+    const days30 =
+        getLastNDays(30);
 
-    const total30=days30.reduce(
-        (sum,date)=>
-            sum+
-            all
-            .filter(item=>item.date===date)
-            .reduce(
-                (s,item)=>s+Number(item.minutes||0),0
-            ),0
-    );
+    const total30 =
+        days30.reduce(
+            (sum,date)=>
+                sum+
+                all
+                    .filter(
+                        item=>item.date===date
+                    )
+                    .reduce(
+                        (s,item)=>
+                            s+
+                            Number(
+                                item.minutes||0
+                            ),
+                        0
+                    ),
+            0
+        );
 
     document.getElementById(
         "progressCurrentStreak"
-    ).textContent=calculateStreak();
+    ).textContent =
+        calculateStreak();
 
     document.getElementById(
         "longestStreak"
-    ).textContent=calculateLongestStreak();
+    ).textContent =
+        calculateLongestStreak();
 
     document.getElementById(
         "progressActivities"
-    ).textContent=all.length;
+    ).textContent =
+        all.length;
 
     document.getElementById(
         "averageMinutes"
-    ).textContent=formatNumber(total30/30);
+    ).textContent =
+        formatNumber(total30/30);
 
     drawWeeklyChart();
     drawMonthlyChart();
@@ -1956,29 +2517,96 @@ function renderProgress(){
 }
 
 
+/* =========================================================
+   CANVAS HELPERS
+   ========================================================= */
+
+function prepareCanvas(canvas){
+
+    if(!canvas){
+        return null;
+    }
+
+    const width =
+        canvas.clientWidth || 600;
+
+    const height = 260;
+
+    const ratio =
+        window.devicePixelRatio || 1;
+
+    canvas.width =
+        width*ratio;
+
+    canvas.height =
+        height*ratio;
+
+    const ctx =
+        canvas.getContext("2d");
+
+    ctx.setTransform(
+        ratio,
+        0,
+        0,
+        ratio,
+        0,
+        0
+    );
+
+    return {
+        ctx,
+        width,
+        height
+    };
+
+}
+
+
+/* =========================================================
+   7-DAY BAR CHART
+   ========================================================= */
+
 function drawWeeklyChart(){
 
-    const canvas=document.getElementById("weeklyChart");
+    const canvas =
+        document.getElementById(
+            "weeklyChart"
+        );
 
-    const ctx=canvas.getContext("2d");
+    const prepared =
+        prepareCanvas(canvas);
 
-    const width=canvas.clientWidth||600;
-    const height=260;
+    if(!prepared){
+        return;
+    }
 
-    canvas.width=width*2;
-    canvas.height=height*2;
+    const {
+        ctx,
+        width,
+        height
+    } = prepared;
 
-    ctx.scale(2,2);
+    const days =
+        getLast7Days();
 
-    const days=getLast7Days();
+    const activities =
+        getActivities();
 
-    const values=days.map(date=>
-        getActivities()
-        .filter(item=>item.date===date)
-        .reduce(
-            (sum,item)=>sum+Number(item.minutes||0),0
-        )
-    );
+    const values =
+        days.map(date=>
+            activities
+                .filter(
+                    item=>item.date===date
+                )
+                .reduce(
+                    (sum,item)=>
+                        sum+
+                        Number(
+                            item.minutes||0
+                        ),
+                    0
+                )
+        );
 
     drawBarChart(
         ctx,
@@ -1987,86 +2615,148 @@ function drawWeeklyChart(){
         values,
         days.map(date=>
             dateFromString(date)
-            .toLocaleDateString(
-                undefined,
-                {weekday:"short"}
-            )
+                .toLocaleDateString(
+                    undefined,
+                    {weekday:"short"}
+                )
         )
     );
 
 }
 
 
+/* =========================================================
+   30-DAY LINE CHART
+   ========================================================= */
+
 function drawMonthlyChart(){
 
-    const canvas=document.getElementById("monthlyChart");
+    const canvas =
+        document.getElementById(
+            "monthlyChart"
+        );
 
-    const ctx=canvas.getContext("2d");
+    const prepared =
+        prepareCanvas(canvas);
 
-    const width=canvas.clientWidth||600;
-    const height=260;
+    if(!prepared){
+        return;
+    }
 
-    canvas.width=width*2;
-    canvas.height=height*2;
+    const {
+        ctx,
+        width,
+        height
+    } = prepared;
 
-    ctx.scale(2,2);
+    const days =
+        getLastNDays(30);
 
-    const days=getLastNDays(30);
+    const activities =
+        getActivities();
 
-    const values=days.map(date=>
-        getActivities()
-        .filter(item=>item.date===date)
-        .reduce(
-            (sum,item)=>sum+Number(item.minutes||0),0
-        )
-    );
+    const values =
+        days.map(date=>
+            activities
+                .filter(
+                    item=>item.date===date
+                )
+                .reduce(
+                    (sum,item)=>
+                        sum+
+                        Number(
+                            item.minutes||0
+                        ),
+                    0
+                )
+        );
 
     drawLineChart(
         ctx,
         width,
         height,
-        values
+        values,
+        days
     );
 
 }
 
 
-function drawBarChart(ctx,w,h,values,labels){
+/* =========================================================
+   BAR CHART DRAWING
+   ========================================================= */
+
+function drawBarChart(
+    ctx,
+    w,
+    h,
+    values,
+    labels
+){
 
     ctx.clearRect(0,0,w,h);
 
-    const left=35;
+    const left=40;
+    const right=10;
+    const top=20;
     const bottom=35;
-    const top=15;
-    const chartH=h-top-bottom;
-    const chartW=w-left-10;
 
-    const max=Math.max(...values,10);
+    const chartH =
+        h-top-bottom;
 
-    ctx.strokeStyle="#e5e7eb";
-    ctx.fillStyle="#667eea";
-    ctx.font="11px Arial";
+    const chartW =
+        w-left-right;
+
+    const max =
+        Math.max(
+            ...values,
+            10
+        );
+
+    const dark =
+        document.body.classList.contains("dark");
+
+    ctx.font =
+        "11px Arial";
 
     values.forEach((value,i)=>{
 
-        const slot=chartW/values.length;
-        const barW=Math.max(10,slot*0.55);
+        const slot =
+            chartW/values.length;
 
-        const barH=
+        const barW =
+            Math.max(
+                10,
+                slot*.55
+            );
+
+        const barH =
             value/max*chartH;
 
-        const x=
-            left+i*slot+
+        const x =
+            left+
+            i*slot+
             (slot-barW)/2;
 
-        const y=
-            top+chartH-barH;
+        const y =
+            top+
+            chartH-
+            barH;
+
+        ctx.fillStyle =
+            "#667eea";
 
         ctx.fillRect(
-            x,y,barW,barH
+            x,
+            y,
+            barW,
+            barH
         );
 
-        ctx.fillStyle="#6b7280";
+        ctx.fillStyle =
+            dark
+                ? "#d1d5db"
+                : "#6b7280";
 
         ctx.fillText(
             labels[i],
@@ -2079,64 +2769,121 @@ function drawBarChart(ctx,w,h,values,labels){
             ctx.fillText(
                 formatNumber(value),
                 x,
-                y-5
+                Math.max(
+                    12,
+                    y-5
+                )
             );
 
         }
-
-        ctx.fillStyle="#667eea";
 
     });
 
     ctx.beginPath();
 
-    ctx.strokeStyle="#e5e7eb";
+    ctx.strokeStyle =
+        dark
+            ? "#374151"
+            : "#e5e7eb";
 
-    ctx.moveTo(left,top+chartH);
-    ctx.lineTo(w-10,top+chartH);
+    ctx.moveTo(
+        left,
+        top+chartH
+    );
+
+    ctx.lineTo(
+        w-right,
+        top+chartH
+    );
 
     ctx.stroke();
 
 }
 
 
-function drawLineChart(ctx,w,h,values){
+/* =========================================================
+   LINE CHART DRAWING
+   ========================================================= */
+
+function drawLineChart(
+    ctx,
+    w,
+    h,
+    values,
+    dates
+){
 
     ctx.clearRect(0,0,w,h);
 
-    const left=30;
-    const right=10;
-    const top=15;
-    const bottom=30;
+    const left=35;
+    const right=12;
+    const top=20;
+    const bottom=35;
 
-    const chartW=w-left-right;
-    const chartH=h-top-bottom;
+    const chartW =
+        w-left-right;
 
-    const max=Math.max(...values,10);
+    const chartH =
+        h-top-bottom;
 
-    ctx.strokeStyle="#e5e7eb";
+    const max =
+        Math.max(
+            ...values,
+            10
+        );
+
+    const dark =
+        document.body.classList.contains("dark");
+
+
+    /* Grid */
+
+    ctx.strokeStyle =
+        dark
+            ? "#374151"
+            : "#e5e7eb";
+
+    ctx.lineWidth=1;
 
     for(let i=0;i<=4;i++){
 
-        const y=
-            top+(chartH/4)*i;
+        const y =
+            top+
+            (chartH/4)*i;
 
         ctx.beginPath();
-        ctx.moveTo(left,y);
-        ctx.lineTo(w-right,y);
+
+        ctx.moveTo(
+            left,
+            y
+        );
+
+        ctx.lineTo(
+            w-right,
+            y
+        );
+
         ctx.stroke();
 
     }
+
+
+    /* Line */
 
     ctx.beginPath();
 
     values.forEach((value,i)=>{
 
-        const x=
+        const x =
             left+
-            i*(chartW/(values.length-1));
+            i*
+            (chartW/
+            Math.max(
+                1,
+                values.length-1
+            ));
 
-        const y=
+        const y =
             top+
             chartH-
             (value/max*chartH);
@@ -2149,133 +2896,258 @@ function drawLineChart(ctx,w,h,values){
 
     });
 
-    ctx.strokeStyle="#667eea";
+    ctx.strokeStyle =
+        "#667eea";
+
     ctx.lineWidth=3;
+
     ctx.stroke();
 
-    ctx.lineWidth=1;
+
+    /* Points */
+
+    values.forEach((value,i)=>{
+
+        const x =
+            left+
+            i*
+            (chartW/
+            Math.max(
+                1,
+                values.length-1
+            ));
+
+        const y =
+            top+
+            chartH-
+            (value/max*chartH);
+
+        if(value>0){
+
+            ctx.beginPath();
+
+            ctx.fillStyle =
+                "#667eea";
+
+            ctx.arc(
+                x,
+                y,
+                3,
+                0,
+                Math.PI*2
+            );
+
+            ctx.fill();
+
+        }
+
+    });
+
+
+    /* Date labels */
+
+    ctx.fillStyle =
+        dark
+            ? "#d1d5db"
+            : "#6b7280";
+
+    ctx.font =
+        "10px Arial";
+
+    const labelIndexes = [
+        0,
+        7,
+        14,
+        21,
+        29
+    ];
+
+    labelIndexes.forEach(index=>{
+
+        if(!dates[index]){
+            return;
+        }
+
+        const x =
+            left+
+            index*
+            (chartW/
+            Math.max(
+                1,
+                values.length-1
+            ));
+
+        const d =
+            dateFromString(
+                dates[index]
+            );
+
+        const label =
+            `${d.getDate()}/${d.getMonth()+1}`;
+
+        ctx.fillText(
+            label,
+            x-10,
+            h-12
+        );
+
+    });
 
 }
 
+
+/* =========================================================
+   CATEGORY BALANCE
+   ========================================================= */
 
 function renderCategoryBalance(){
 
-    const container=
-        document.getElementById("categoryBalance");
+    const container =
+        document.getElementById(
+            "categoryBalance"
+        );
 
-    const days=getLastNDays(30);
+    const days =
+        getLastNDays(30);
 
-    const totals=CATEGORIES.map(category=>({
+    const totals =
+        CATEGORIES.map(category=>({
 
-        category,
+            category,
 
-        minutes:getCategoryMinutes(
-            category,days
-        )
+            minutes:
+                getCategoryMinutes(
+                    category,
+                    days
+                )
 
-    }));
+        }));
 
-    const max=Math.max(
-        ...totals.map(x=>x.minutes),
-        1
-    );
+    const max =
+        Math.max(
+            ...totals.map(
+                item=>item.minutes
+            ),
+            1
+        );
 
-    container.innerHTML=
-        totals.map(item=>{
+    container.innerHTML =
+        totals
+            .map(item=>{
 
-            const percent=
-                Math.round(
-                    item.minutes/max*100
-                );
+                const percent =
+                    Math.round(
+                        item.minutes/max*100
+                    );
 
-            return `
+                return `
 
-            <div style="margin-bottom:13px">
+                    <div style="margin-bottom:13px">
 
-                <div style="
-                    display:flex;
-                    justify-content:space-between">
+                        <div style="
+                            display:flex;
+                            justify-content:space-between;
+                            gap:10px">
 
-                    <strong>${item.category}</strong>
+                            <strong>
+                                ${item.category}
+                            </strong>
 
-                    <span>
-                        ${formatNumber(item.minutes)} min
-                    </span>
+                            <span>
+                                ${formatNumber(
+                                    item.minutes
+                                )} min
+                            </span>
 
-                </div>
+                        </div>
 
-                <div class="progress">
+                        <div class="progress">
 
-                    <div class="progress-bar"
-                         style="width:${percent}%">
+                            <div
+                                class="progress-bar"
+                                style="width:${percent}%">
+                            </div>
+
+                        </div>
+
                     </div>
 
-                </div>
+                `;
 
-            </div>
-
-            `;
-
-        }).join("");
+            })
+            .join("");
 
 }
 
 
-/* ================= XP ================= */
+/* =========================================================
+   XP + LEVELS
+   ========================================================= */
 
 function calculateXP(){
 
-    const activities=getActivities();
-
-    return activities.reduce(
-        (sum,item)=>
-            sum+
-            Math.max(
-                1,
-                Math.floor(
-                    Number(item.minutes||0)/5
-                )
-            ),
-        0
-    );
+    return getActivities()
+        .reduce(
+            (sum,item)=>
+                sum+
+                Math.max(
+                    1,
+                    Math.floor(
+                        Number(
+                            item.minutes||0
+                        )/5
+                    )
+                ),
+            0
+        );
 
 }
 
 
 function renderXP(){
 
-    const xp=calculateXP();
+    const xp =
+        calculateXP();
 
-    const level=
-        Math.floor(xp/100)+1;
+    const level =
+        Math.floor(
+            xp/100
+        )+1;
 
-    const currentXP=xp%100;
+    const currentXP =
+        xp%100;
 
     document.getElementById(
         "levelNumber"
-    ).textContent=level;
+    ).textContent =
+        level;
 
     document.getElementById(
         "xpText"
-    ).textContent=`${xp} XP`;
+    ).textContent =
+        `${xp} XP`;
 
     document.getElementById(
         "xpBar"
-    ).style.width=currentXP+"%";
+    ).style.width =
+        currentXP+"%";
 
     document.getElementById(
         "nextLevelText"
-    ).textContent=
+    ).textContent =
         `${100-currentXP} XP to next level`;
 
 }
 
 
-/* ================= CHECK-IN ================= */
+/* =========================================================
+   CHECK-IN
+   ========================================================= */
 
 function selectRating(value){
 
-    selectedRating=value;
+    selectedRating =
+        Number(value);
 
     document.querySelectorAll(
         "#ratingButtons button"
@@ -2283,7 +3155,9 @@ function selectRating(value){
 
         button.classList.toggle(
             "selected",
-            Number(button.textContent)===value
+            Number(
+                button.textContent
+            )===selectedRating
         );
 
     });
@@ -2303,9 +3177,10 @@ function saveCheckin(){
 
     }
 
-    const data=getCheckins();
+    const data =
+        getCheckins();
 
-    data[getTodayString()]={
+    data[getTodayString()] = {
 
         rating:selectedRating,
 
@@ -2324,7 +3199,8 @@ function saveCheckin(){
                 "dailyNote"
             ).value.trim(),
 
-        savedAt:new Date().toISOString()
+        savedAt:
+            new Date().toISOString()
 
     };
 
@@ -2341,41 +3217,52 @@ function saveCheckin(){
 
 function renderCheckin(){
 
-    const today=getTodayString();
+    const today =
+        getTodayString();
 
-    const data=getCheckins()[today];
+    const data =
+        getCheckins()[today];
 
-    const container=
-        document.getElementById("todayCheckin");
+    const container =
+        document.getElementById(
+            "todayCheckin"
+        );
 
     if(!data){
 
-        container.innerHTML=
-            `<div class="empty">
+        container.innerHTML = `
+            <div class="empty">
                 No check-in saved today.
-             </div>`;
+            </div>
+        `;
 
         return;
 
     }
 
-    selectedRating=Number(data.rating)||0;
+    selectedRating =
+        Number(data.rating)||0;
 
-    selectRating(selectedRating);
+    selectRating(
+        selectedRating
+    );
 
     document.getElementById(
         "energyRating"
-    ).value=data.energy||"";
+    ).value =
+        data.energy||"";
 
     document.getElementById(
         "smallWin"
-    ).value=data.smallWin||"";
+    ).value =
+        data.smallWin||"";
 
     document.getElementById(
         "dailyNote"
-    ).value=data.note||"";
+    ).value =
+        data.note||"";
 
-    container.innerHTML=`
+    container.innerHTML = `
 
         <p>
             <span class="badge">
@@ -2385,21 +3272,29 @@ function renderCheckin(){
 
         <p>
             <strong>Energy:</strong>
-            ${escapeHTML(data.energy||"Not recorded")}
+            ${escapeHTML(
+                data.energy ||
+                "Not recorded"
+            )}
         </p>
 
         <p>
             <strong>Small win:</strong><br>
-            ${escapeHTML(data.smallWin||"Not recorded")}
+            ${escapeHTML(
+                data.smallWin ||
+                "Not recorded"
+            )}
         </p>
 
         ${
             data.note
             ?
-            `<p>
+            `
+            <p>
                 <strong>Note:</strong><br>
                 ${escapeHTML(data.note)}
-             </p>`
+            </p>
+            `
             :
             ""
         }
@@ -2410,30 +3305,30 @@ function renderCheckin(){
 
 
 /* =========================================================
-   UNIVERSAL STOPWATCH
+   STOPWATCH
    ========================================================= */
-
-/*
-   The stopwatch uses timestamps rather than simply counting
-   setInterval ticks. This keeps elapsed time much more accurate
-   if the browser temporarily slows or pauses JavaScript.
-*/
-
 
 function formatStopwatchTime(totalSeconds){
 
-    totalSeconds=Math.max(
-        0,
-        Math.floor(totalSeconds)
-    );
+    totalSeconds =
+        Math.max(
+            0,
+            Math.floor(
+                totalSeconds
+            )
+        );
 
-    const hours=
-        Math.floor(totalSeconds/3600);
+    const hours =
+        Math.floor(
+            totalSeconds/3600
+        );
 
-    const minutes=
-        Math.floor((totalSeconds%3600)/60);
+    const minutes =
+        Math.floor(
+            (totalSeconds%3600)/60
+        );
 
-    const seconds=
+    const seconds =
         totalSeconds%60;
 
     return (
@@ -2447,65 +3342,12 @@ function formatStopwatchTime(totalSeconds){
 }
 
 
-function updateTimerDisplay(){
-
-    document.getElementById(
-        "timerDisplay"
-    ).textContent=
-        formatStopwatchTime(
-            timerElapsedSeconds
-        );
-
-}
-
-
-function updateTimerButtons(){
-
-    const startBtn=
-        document.getElementById("timerStartBtn");
-
-    const pauseBtn=
-        document.getElementById("timerPauseBtn");
-
-    const stopBtn=
-        document.getElementById("timerStopBtn");
-
-    if(timerRunning){
-
-        startBtn.disabled=true;
-        pauseBtn.disabled=false;
-        stopBtn.disabled=false;
-
-        pauseBtn.textContent="Pause";
-
-    }else{
-
-        startBtn.disabled=false;
-
-        pauseBtn.disabled=
-            timerElapsedSeconds<=0;
-
-        stopBtn.disabled=
-            timerElapsedSeconds<=0;
-
-        if(timerElapsedSeconds>0){
-
-            startBtn.textContent="Resume";
-
-        }else{
-
-            startBtn.textContent="Start";
-
-        }
-
-    }
-
-}
-
-
 function getCurrentElapsedSeconds(){
 
-    if(!timerRunning || !timerStartedAt){
+    if(
+        !timerRunning ||
+        !timerStartedAt
+    ){
 
         return timerElapsedSeconds;
 
@@ -2515,9 +3357,77 @@ function getCurrentElapsedSeconds(){
         0,
         timerElapsedSeconds+
         Math.floor(
-            (Date.now()-timerStartedAt)/1000
+            (Date.now()-
+             timerStartedAt)/1000
         )
     );
+
+}
+
+
+function updateTimerDisplay(){
+
+    document.getElementById(
+        "timerDisplay"
+    ).textContent =
+        formatStopwatchTime(
+            getCurrentElapsedSeconds()
+        );
+
+}
+
+
+function updateTimerButtons(){
+
+    const startBtn =
+        document.getElementById(
+            "timerStartBtn"
+        );
+
+    const pauseBtn =
+        document.getElementById(
+            "timerPauseBtn"
+        );
+
+    const stopBtn =
+        document.getElementById(
+            "timerStopBtn"
+        );
+
+    if(timerRunning){
+
+        startBtn.disabled=true;
+
+        pauseBtn.disabled=false;
+
+        stopBtn.disabled=false;
+
+        pauseBtn.textContent =
+            "Pause";
+
+    }else{
+
+        startBtn.disabled=false;
+
+        pauseBtn.disabled =
+            timerElapsedSeconds<=0;
+
+        stopBtn.disabled =
+            timerElapsedSeconds<=0;
+
+        if(timerElapsedSeconds>0){
+
+            startBtn.textContent =
+                "Resume";
+
+        }else{
+
+            startBtn.textContent =
+                "Start";
+
+        }
+
+    }
 
 }
 
@@ -2528,27 +3438,30 @@ function startTimer(){
         return;
     }
 
-    timerStartedAt=Date.now();
+    timerStartedAt =
+        Date.now();
+
     timerRunning=true;
 
     document.getElementById(
         "timerStatus"
-    ).textContent=
+    ).textContent =
         timerElapsedSeconds>0
         ? "Stopwatch resumed..."
         : "Stopwatch running...";
 
     updateTimerButtons();
+
     updateTimerDisplay();
 
-    timerInterval=setInterval(()=>{
+    stopTimerIntervalOnly();
 
-        timerElapsedSeconds=
-            getCurrentElapsedSeconds();
+    timerInterval =
+        setInterval(()=>{
 
-        updateTimerDisplay();
+            updateTimerDisplay();
 
-    },250);
+        },250);
 
 }
 
@@ -2559,10 +3472,11 @@ function pauseTimer(){
         return;
     }
 
-    timerElapsedSeconds=
+    timerElapsedSeconds =
         getCurrentElapsedSeconds();
 
     timerStartedAt=null;
+
     timerRunning=false;
 
     stopTimerIntervalOnly();
@@ -2571,7 +3485,7 @@ function pauseTimer(){
 
     document.getElementById(
         "timerStatus"
-    ).textContent=
+    ).textContent =
         "Paused — press Resume to continue.";
 
     updateTimerButtons();
@@ -2583,10 +3497,11 @@ function stopTimer(){
 
     if(timerRunning){
 
-        timerElapsedSeconds=
+        timerElapsedSeconds =
             getCurrentElapsedSeconds();
 
         timerStartedAt=null;
+
         timerRunning=false;
 
         stopTimerIntervalOnly();
@@ -2597,34 +3512,34 @@ function stopTimer(){
 
         document.getElementById(
             "timerStatus"
-        ).textContent=
+        ).textContent =
             "Nothing to save.";
 
         updateTimerButtons();
+
         return;
 
     }
 
-    const category=
+    const category =
         document.getElementById(
             "timerCategory"
         ).value;
 
-    const name=
+    const name =
         document.getElementById(
             "timerName"
-        ).value.trim()||
+        ).value.trim() ||
         category;
 
-    /*
-       Preserve the existing activity schema by saving minutes.
-       Decimal minutes allow the stopwatch to retain more accurate
-       duration than rounding everything to a whole minute.
-    */
+    const savedSeconds =
+        timerElapsedSeconds;
 
-    const minutes=
+    const minutes =
         Number(
-            (timerElapsedSeconds/60).toFixed(2)
+            (
+                savedSeconds/60
+            ).toFixed(2)
         );
 
     addActivityRecord(
@@ -2635,20 +3550,20 @@ function stopTimer(){
 
     document.getElementById(
         "timerStatus"
-    ).textContent=
-        `Saved — ${formatStopwatchTime(timerElapsedSeconds)}`;
+    ).textContent =
+        `Saved — ${formatStopwatchTime(
+            savedSeconds
+        )}`;
 
     timerElapsedSeconds=0;
+
     timerStartedAt=null;
+
     timerRunning=false;
 
     updateTimerDisplay();
-    updateTimerButtons();
 
-    /*
-       Leave the selected activity and name in place so the next
-       session can be started quickly.
-    */
+    updateTimerButtons();
 
 }
 
@@ -2657,7 +3572,10 @@ function stopTimerIntervalOnly(){
 
     if(timerInterval){
 
-        clearInterval(timerInterval);
+        clearInterval(
+            timerInterval
+        );
+
         timerInterval=null;
 
     }
@@ -2670,14 +3588,16 @@ function resetTimer(){
     stopTimerIntervalOnly();
 
     timerElapsedSeconds=0;
+
     timerStartedAt=null;
+
     timerRunning=false;
 
     updateTimerDisplay();
 
     document.getElementById(
         "timerStatus"
-    ).textContent=
+    ).textContent =
         "Ready";
 
     updateTimerButtons();
@@ -2685,87 +3605,173 @@ function resetTimer(){
 }
 
 
-/* ================= BACKUP ================= */
+/* =========================================================
+   DARK MODE
+   ========================================================= */
+
+function applyDarkMode(){
+
+    const enabled =
+        localStorage.getItem(
+            "upwardDarkMode"
+        ) === "true";
+
+    document.body.classList.toggle(
+        "dark",
+        enabled
+    );
+
+    const toggle =
+        document.getElementById(
+            "darkModeToggle"
+        );
+
+    if(toggle){
+        toggle.checked=enabled;
+    }
+
+}
+
+
+function toggleDarkMode(){
+
+    const enabled =
+        document.getElementById(
+            "darkModeToggle"
+        ).checked;
+
+    localStorage.setItem(
+        "upwardDarkMode",
+        enabled ? "true" : "false"
+    );
+
+    document.body.classList.toggle(
+        "dark",
+        enabled
+    );
+
+    renderProgress();
+
+}
+
+
+/* =========================================================
+   BACKUP
+   ========================================================= */
 
 function exportBackup(){
 
-    const backup={
+    const backup = {
 
-        version:4,
+        version:5,
 
         exportedAt:
             new Date().toISOString(),
 
-        activities:getActivities(),
+        activities:
+            getActivities(),
 
-        checkins:getCheckins(),
+        checkins:
+            getCheckins(),
 
         spending:
             JSON.parse(
                 localStorage.getItem(
                     "upwardSpending"
-                )||"[]"
-            )
+                ) || "[]"
+            ),
+
+        darkMode:
+            localStorage.getItem(
+                "upwardDarkMode"
+            ) === "true"
 
     };
 
-    const blob=new Blob(
-        [
-            JSON.stringify(
-                backup,
-                null,
-                2
-            )
-        ],
-        {type:"application/json"}
-    );
+    const blob =
+        new Blob(
+            [
+                JSON.stringify(
+                    backup,
+                    null,
+                    2
+                )
+            ],
+            {
+                type:
+                    "application/json"
+            }
+        );
 
     downloadBlob(
         blob,
         "upward-backup.json"
     );
 
+    showMessage(
+        "Backup exported successfully."
+    );
+
 }
 
 
+/* =========================================================
+   IMPORT BACKUP
+   ========================================================= */
+
 function importBackup(event){
 
-    const file=
+    const file =
         event.target.files[0];
 
-    if(!file)return;
+    if(!file){
+        return;
+    }
 
-    const reader=new FileReader();
+    const reader =
+        new FileReader();
 
     reader.onload=function(){
 
         try{
 
-            const data=
+            const data =
                 JSON.parse(
                     reader.result
                 );
 
+
             if(Array.isArray(data)){
 
-                saveActivities(data);
+                /* Old activity-only format */
+
+                saveActivities(
+                    data
+                );
 
             }else if(
-                data.activities &&
-                Array.isArray(data.activities)
+                data &&
+                Array.isArray(
+                    data.activities
+                )
             ){
 
                 saveActivities(
                     data.activities
                 );
 
-                if(data.checkins){
+
+                if(
+                    data.checkins &&
+                    typeof data.checkins==="object"
+                ){
 
                     saveCheckins(
                         data.checkins
                     );
 
                 }
+
 
                 if(
                     Array.isArray(
@@ -2782,6 +3788,20 @@ function importBackup(event){
 
                 }
 
+
+                if(
+                    typeof data.darkMode==="boolean"
+                ){
+
+                    localStorage.setItem(
+                        "upwardDarkMode",
+                        data.darkMode
+                            ? "true"
+                            : "false"
+                    );
+
+                }
+
             }else{
 
                 throw new Error(
@@ -2790,13 +3810,15 @@ function importBackup(event){
 
             }
 
+            applyDarkMode();
+
             showMessage(
                 "Backup imported successfully."
             );
 
             render();
 
-        }catch(e){
+        }catch(error){
 
             alert(
                 "Could not import this backup file."
@@ -2813,11 +3835,14 @@ function importBackup(event){
 }
 
 
-/* ================= CSV ================= */
+/* =========================================================
+   CSV EXPORT
+   ========================================================= */
 
 function downloadCSV(){
 
-    const activities=getActivities();
+    const activities =
+        getActivities();
 
     if(!activities.length){
 
@@ -2829,56 +3854,92 @@ function downloadCSV(){
 
     }
 
-    const rows=[
+    const rows = [
+
         [
             "Date",
             "Activity",
             "Category",
             "Minutes"
         ]
+
     ];
 
     activities.forEach(item=>{
 
         rows.push([
-            item.date||"",
-            item.activityName||"",
-            item.category||"",
-            item.minutes||0
+
+            item.date || "",
+
+            item.activityName || "",
+
+            item.category || "",
+
+            item.minutes || 0
+
         ]);
 
     });
 
-    const csv=
-        rows.map(row=>
-            row.map(value=>
-                `"${String(value)
-                    .replace(/"/g,'""')}"`
-            ).join(",")
-        ).join("\n");
+
+    const csv =
+        rows
+            .map(row=>
+                row
+                    .map(value=>
+                        `"${String(value)
+                            .replace(
+                                /"/g,
+                                '""'
+                            )}"`
+                    )
+                    .join(",")
+            )
+            .join("\n");
+
 
     downloadBlob(
+
         new Blob(
             [csv],
-            {type:"text/csv;charset=utf-8"}
+            {
+                type:
+                    "text/csv;charset=utf-8"
+            }
         ),
+
         "upward-activities.csv"
+
+    );
+
+    showMessage(
+        "CSV downloaded."
     );
 
 }
 
 
-/* ================= DOWNLOAD ================= */
+/* =========================================================
+   DOWNLOAD HELPER
+   ========================================================= */
 
-function downloadBlob(blob,filename){
+function downloadBlob(
+    blob,
+    filename
+){
 
-    const url=
-        URL.createObjectURL(blob);
+    const url =
+        URL.createObjectURL(
+            blob
+        );
 
-    const a=
-        document.createElement("a");
+    const a =
+        document.createElement(
+            "a"
+        );
 
     a.href=url;
+
     a.download=filename;
 
     document.body.appendChild(a);
@@ -2887,26 +3948,69 @@ function downloadBlob(blob,filename){
 
     a.remove();
 
-    URL.revokeObjectURL(url);
+    setTimeout(()=>{
+        URL.revokeObjectURL(url);
+    },100);
 
 }
 
 
-/* ================= HELPERS ================= */
+/* =========================================================
+   CLEAR ALL DATA
+   ========================================================= */
 
-function escapeHTML(value){
+function clearAllData(){
 
-    return String(value ?? "")
-        .replace(/&/g,"&amp;")
-        .replace(/</g,"&lt;")
-        .replace(/>/g,"&gt;")
-        .replace(/"/g,"&quot;")
-        .replace(/'/g,"&#039;");
+    const confirmed =
+        confirm(
+            "This will permanently remove your UPWARD activities and check-ins from this browser. Continue?"
+        );
+
+    if(!confirmed){
+        return;
+    }
+
+    const second =
+        confirm(
+            "Are you sure? Export a backup first if you want to keep your data."
+        );
+
+    if(!second){
+        return;
+    }
+
+    localStorage.removeItem(
+        "upwardActivities"
+    );
+
+    localStorage.removeItem(
+        "upwardCheckins"
+    );
+
+    localStorage.removeItem(
+        "upwardSpending"
+    );
+
+    localStorage.removeItem(
+        "upwardDarkMode"
+    );
+
+    selectedRating=0;
+
+    applyDarkMode();
+
+    showMessage(
+        "UPWARD data cleared."
+    );
+
+    render();
 
 }
 
 
-/* ================= STARTUP ================= */
+/* =========================================================
+   RENDER EVERYTHING
+   ========================================================= */
 
 function render(){
 
@@ -2933,33 +4037,69 @@ function render(){
 }
 
 
-/* ================= SERVICE WORKER ================= */
+/* =========================================================
+   WINDOW RESIZE
+   ========================================================= */
+
+let resizeTimer=null;
+
+window.addEventListener(
+    "resize",
+    ()=>{
+
+        clearTimeout(
+            resizeTimer
+        );
+
+        resizeTimer =
+            setTimeout(()=>{
+
+                drawWeeklyChart();
+
+                drawMonthlyChart();
+
+            },150);
+
+    }
+);
+
+
+/* =========================================================
+   SERVICE WORKER
+   ========================================================= */
 
 if("serviceWorker" in navigator){
 
-    window.addEventListener("load",()=>{
+    window.addEventListener(
+        "load",
+        ()=>{
 
-        navigator.serviceWorker
-            .register("./sw.js")
-            .catch(error=>{
+            navigator.serviceWorker
+                .register("./sw.js")
+                .catch(error=>{
 
-                console.log(
-                    "Service worker registration failed:",
-                    error
-                );
+                    console.log(
+                        "Service worker registration failed:",
+                        error
+                    );
 
-            });
+                });
 
-    });
+        }
+    );
 
 }
 
 
-/* ================= START APP ================= */
+/* =========================================================
+   START APP
+   ========================================================= */
 
 document.addEventListener(
     "DOMContentLoaded",
     ()=>{
+
+        applyDarkMode();
 
         render();
 
