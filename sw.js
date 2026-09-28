@@ -3,7 +3,6 @@ const CACHE_NAME = "upward-v4-20260928b";
 const APP_FILES = [
     "./",
     "./index.html",
-    "./style.css",
     "./manifest.json",
     "./sw.js",
     "./icon-192.png",
@@ -21,13 +20,13 @@ self.addEventListener("install", event => {
 self.addEventListener("activate", event => {
     event.waitUntil(
         caches.keys()
-            .then(keys => {
-                return Promise.all(
+            .then(keys =>
+                Promise.all(
                     keys
                         .filter(key => key !== CACHE_NAME)
                         .map(key => caches.delete(key))
-                );
-            })
+                )
+            )
             .then(() => self.clients.claim())
     );
 });
@@ -38,12 +37,11 @@ self.addEventListener("fetch", event => {
     event.respondWith(
         caches.match(event.request)
             .then(cached => {
-                if (cached) {
-                    return cached;
-                }
+                if (cached) return cached;
 
                 return fetch(event.request)
                     .then(response => {
+
                         if (
                             !response ||
                             response.status !== 200 ||
@@ -55,7 +53,9 @@ self.addEventListener("fetch", event => {
                         const copy = response.clone();
 
                         caches.open(CACHE_NAME)
-                            .then(cache => cache.put(event.request, copy));
+                            .then(cache => {
+                                cache.put(event.request, copy);
+                            });
 
                         return response;
                     })
