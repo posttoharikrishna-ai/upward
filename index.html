@@ -13,7 +13,6 @@
 <title>UPWARD — Small actions. Real progress.</title>
 
 <style>
-
 :root{
     --bg:#f5f7fb;
     --card:#ffffff;
@@ -28,9 +27,7 @@
     --radius:18px;
 }
 
-*{
-    box-sizing:border-box;
-}
+*{box-sizing:border-box}
 
 body{
     margin:0;
@@ -88,13 +85,8 @@ header p{
     color:white;
 }
 
-.page{
-    display:none;
-}
-
-.page.active{
-    display:block;
-}
+.page{display:none}
+.page.active{display:block}
 
 .card{
     background:var(--card);
@@ -104,10 +96,7 @@ header p{
     box-shadow:var(--shadow);
 }
 
-.card h2,
-.card h3{
-    margin-top:0;
-}
+.card h2,.card h3{margin-top:0}
 
 .stats{
     display:grid;
@@ -160,9 +149,7 @@ header p{
     color:var(--primary);
 }
 
-.activity-card small{
-    color:var(--muted);
-}
+.activity-card small{color:var(--muted)}
 
 .progress{
     height:9px;
@@ -185,14 +172,19 @@ header p{
     flex-wrap:wrap;
 }
 
-input,
-select{
+input,select,textarea{
     width:100%;
     padding:12px;
     border:1px solid var(--border);
     border-radius:12px;
     background:white;
     font-size:15px;
+    font-family:inherit;
+}
+
+textarea{
+    resize:vertical;
+    min-height:80px;
 }
 
 .form-group{
@@ -222,9 +214,7 @@ button{
     color:white;
 }
 
-.btn-primary:hover{
-    background:var(--primary-dark);
-}
+.btn-primary:hover{background:var(--primary-dark)}
 
 .btn-secondary{
     background:#eef0ff;
@@ -241,9 +231,7 @@ button{
     color:var(--danger);
 }
 
-.full{
-    width:100%;
-}
+.full{width:100%}
 
 .activity-list{
     display:flex;
@@ -262,13 +250,8 @@ button{
     background:#fff;
 }
 
-.activity-item strong{
-    display:block;
-}
-
-.activity-item small{
-    color:var(--muted);
-}
+.activity-item strong{display:block}
+.activity-item small{color:var(--muted)}
 
 .delete-btn{
     background:#fdecef;
@@ -276,9 +259,7 @@ button{
     padding:8px 11px;
 }
 
-.timer{
-    text-align:center;
-}
+.timer{text-align:center}
 
 .timer-display{
     font-size:58px;
@@ -343,8 +324,66 @@ button{
     margin:6px 0;
 }
 
-.category-select{
-    margin-bottom:12px;
+.chart-wrap{
+    width:100%;
+    overflow:hidden;
+}
+
+canvas{
+    width:100%;
+    height:260px;
+    display:block;
+}
+
+.insight-grid{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:10px;
+}
+
+.insight{
+    background:#f8f9ff;
+    border:1px solid var(--border);
+    border-radius:14px;
+    padding:14px;
+}
+
+.insight strong{
+    display:block;
+    font-size:22px;
+    color:var(--primary);
+    margin-top:4px;
+}
+
+.level-box{
+    text-align:center;
+    background:linear-gradient(135deg,#f0f2ff,#f8f9ff);
+    border:1px solid var(--border);
+    border-radius:16px;
+    padding:20px;
+}
+
+.level-number{
+    font-size:42px;
+    font-weight:bold;
+    color:var(--primary);
+}
+
+.rating{
+    display:flex;
+    gap:7px;
+    flex-wrap:wrap;
+}
+
+.rating button{
+    background:#f0f2ff;
+    color:#667eea;
+    min-width:44px;
+}
+
+.rating button.selected{
+    background:var(--primary);
+    color:white;
 }
 
 .message{
@@ -364,6 +403,16 @@ button{
     padding:20px 10px;
 }
 
+.badge{
+    display:inline-block;
+    background:#eef0ff;
+    color:#4f5fd1;
+    border-radius:20px;
+    padding:5px 9px;
+    font-size:11px;
+    font-weight:bold;
+}
+
 footer{
     text-align:center;
     color:var(--muted);
@@ -381,6 +430,10 @@ footer{
         grid-template-columns:1fr;
     }
 
+    .insight-grid{
+        grid-template-columns:1fr;
+    }
+
     .week-grid{
         grid-template-columns:repeat(7,75px);
     }
@@ -389,7 +442,6 @@ footer{
         font-size:48px;
     }
 }
-
 </style>
 </head>
 
@@ -402,448 +454,598 @@ footer{
 
 <div class="container">
 
-    <div class="nav">
+<div class="nav">
 
-        <button class="nav-btn active"
-                onclick="showPage('today',this)">
-            Today
-        </button>
+<button class="nav-btn active" onclick="showPage('today',this)">
+Today
+</button>
 
-        <button class="nav-btn"
-                onclick="showPage('trackers',this)">
-            Trackers
-        </button>
+<button class="nav-btn" onclick="showPage('trackers',this)">
+Trackers
+</button>
 
-        <button class="nav-btn"
-                onclick="showPage('week',this)">
-            This Week
-        </button>
+<button class="nav-btn" onclick="showPage('progress',this)">
+Progress
+</button>
 
-        <button class="nav-btn"
-                onclick="showPage('timer',this)">
-            Timer
-        </button>
+<button class="nav-btn" onclick="showPage('checkin',this)">
+Check-in
+</button>
 
-        <button class="nav-btn"
-                onclick="showPage('data',this)">
-            Data
-        </button>
+<button class="nav-btn" onclick="showPage('week',this)">
+This Week
+</button>
 
-    </div>
+<button class="nav-btn" onclick="showPage('timer',this)">
+Timer
+</button>
 
-    <div id="message" class="message"></div>
+<button class="nav-btn" onclick="showPage('data',this)">
+Data
+</button>
 
+</div>
 
-    <!-- ================= TODAY ================= -->
+<div id="message" class="message"></div>
 
-    <section id="today" class="page active">
 
-        <div class="card">
+<!-- TODAY -->
 
-            <h2>Today's Progress</h2>
+<section id="today" class="page active">
 
-            <div class="stats">
+<div class="card">
 
-                <div class="stat">
-                    <strong id="todayActivities">0</strong>
-                    <span>Activities</span>
-                </div>
+<h2>Today's Progress</h2>
 
-                <div class="stat">
-                    <strong id="todayMinutes">0</strong>
-                    <span>Minutes</span>
-                </div>
+<div class="stats">
 
-                <div class="stat">
-                    <strong id="dayStreak">0</strong>
-                    <span>Day Streak</span>
-                </div>
+<div class="stat">
+<strong id="todayActivities">0</strong>
+<span>Activities</span>
+</div>
 
-                <div class="stat">
-                    <strong id="totalMinutes">0</strong>
-                    <span>Total Minutes</span>
-                </div>
+<div class="stat">
+<strong id="todayMinutes">0</strong>
+<span>Minutes</span>
+</div>
 
-            </div>
+<div class="stat">
+<strong id="dayStreak">0</strong>
+<span>Day Streak</span>
+</div>
 
-        </div>
+<div class="stat">
+<strong id="totalMinutes">0</strong>
+<span>Total Minutes</span>
+</div>
 
-
-        <div class="card">
-
-            <h2>Quick Add Activity</h2>
-
-            <div class="row">
-
-                <div class="form-group">
-
-                    <label>Activity</label>
-
-                    <select id="quickCategory">
-
-                        <option value="Exercise">Exercise</option>
-                        <option value="Walking">Walking</option>
-                        <option value="Learning">Learning</option>
-                        <option value="Reading">Reading</option>
-                        <option value="Work/Study">Work/Study</option>
-                        <option value="Recreation">Recreation</option>
-                        <option value="Meditation">Meditation</option>
-                        <option value="Social">Social</option>
-                        <option value="Mindfulness">Mindfulness</option>
-                        <option value="Other">Other</option>
-
-                    </select>
-
-                </div>
-
-
-                <div class="form-group">
-
-                    <label>Minutes</label>
-
-                    <input
-                        id="quickMinutes"
-                        type="number"
-                        min="1"
-                        placeholder="e.g. 30">
-
-                </div>
-
-            </div>
-
-            <br>
-
-            <button class="btn-primary full"
-                    onclick="quickAdd()">
-                + Add Activity
-            </button>
-
-        </div>
-
-
-        <div class="card">
-
-            <h2>Today's Activities</h2>
-
-            <div id="todayActivityList"
-                 class="activity-list">
-            </div>
-
-        </div>
-
-
-        <div class="card">
-
-            <h2>Today's Trackers</h2>
-
-            <div id="todayTrackerGrid"
-                 class="activity-grid">
-            </div>
-
-        </div>
-
-    </section>
-
-
-
-    <!-- ================= TRACKERS ================= -->
-
-    <section id="trackers" class="page">
-
-        <div class="card">
-
-            <h2>Individual Trackers</h2>
-
-            <p style="color:var(--muted)">
-                Track each area separately. Your daily and weekly totals
-                are calculated automatically.
-            </p>
-
-            <div id="trackerGrid"
-                 class="activity-grid">
-            </div>
-
-        </div>
-
-
-        <div class="card">
-
-            <h2>Add Activity</h2>
-
-            <div class="row">
-
-                <div class="form-group">
-
-                    <label>Activity</label>
-
-                    <select id="activityCategory">
-
-                        <option value="Exercise">Exercise</option>
-                        <option value="Walking">Walking</option>
-                        <option value="Learning">Learning</option>
-                        <option value="Reading">Reading</option>
-                        <option value="Work/Study">Work/Study</option>
-                        <option value="Recreation">Recreation</option>
-                        <option value="Meditation">Meditation</option>
-                        <option value="Social">Social</option>
-                        <option value="Mindfulness">Mindfulness</option>
-                        <option value="Other">Other</option>
-
-                    </select>
-
-                </div>
-
-
-                <div class="form-group">
-
-                    <label>Activity name</label>
-
-                    <input
-                        id="activityName"
-                        type="text"
-                        placeholder="e.g. Gym, Book, Study">
-
-                </div>
-
-
-                <div class="form-group">
-
-                    <label>Minutes</label>
-
-                    <input
-                        id="activityMinutes"
-                        type="number"
-                        min="1"
-                        placeholder="30">
-
-                </div>
-
-            </div>
-
-            <br>
-
-            <button class="btn-primary"
-                    onclick="addActivity()">
-                Add Activity
-            </button>
-
-        </div>
-
-    </section>
-
-
-
-    <!-- ================= WEEK ================= -->
-
-    <section id="week" class="page">
-
-        <div class="card">
-
-            <h2>7-Day Activity Summary</h2>
-
-            <p style="color:var(--muted)">
-                Minutes recorded during the last seven days.
-            </p>
-
-            <div id="weeklyCategorySummary">
-            </div>
-
-        </div>
-
-
-        <div class="card">
-
-            <h2>Weekly Activity Breakdown</h2>
-
-            <div id="weeklyDetails">
-            </div>
-
-        </div>
-
-    </section>
-
-
-
-    <!-- ================= TIMER ================= -->
-
-    <section id="timer" class="page">
-
-        <div class="card timer">
-
-            <h2>Activity Timer</h2>
-
-            <p style="color:var(--muted)">
-                Start a timer and let UPWARD record the completed session.
-            </p>
-
-
-            <div class="form-group"
-                 style="max-width:350px;margin:auto">
-
-                <label>Activity</label>
-
-                <select id="timerCategory">
-
-                    <option value="Exercise">Exercise</option>
-                    <option value="Walking">Walking</option>
-                    <option value="Learning">Learning</option>
-                    <option value="Reading">Reading</option>
-                    <option value="Work/Study">Work/Study</option>
-                    <option value="Recreation">Recreation</option>
-                    <option value="Meditation">Meditation</option>
-                    <option value="Social">Social</option>
-
-                </select>
-
-            </div>
-
-
-            <div class="form-group"
-                 style="max-width:350px;margin:12px auto">
-
-                <label>Activity name</label>
-
-                <input
-                    id="timerName"
-                    type="text"
-                    placeholder="e.g. Study">
-
-            </div>
-
-
-            <div class="timer-display"
-                 id="timerDisplay">
-                00:00
-            </div>
-
-            <div class="timer-status"
-                 id="timerStatus">
-                Ready
-            </div>
-
-
-            <div class="preset-buttons">
-
-                <button onclick="setTimer(10)">10 min</button>
-                <button onclick="setTimer(25)">25 min</button>
-                <button onclick="setTimer(30)">30 min</button>
-                <button onclick="setTimer(45)">45 min</button>
-                <button onclick="setTimer(60)">60 min</button>
-
-            </div>
-
-
-            <div class="timer-buttons">
-
-                <button class="btn-primary"
-                        onclick="startTimer()">
-                    Start
-                </button>
-
-                <button class="btn-secondary"
-                        onclick="pauseTimer()">
-                    Pause
-                </button>
-
-                <button class="btn-danger"
-                        onclick="stopTimer()">
-                    Stop
-                </button>
-
-                <button class="btn-success"
-                        onclick="resetTimer()">
-                    Reset
-                </button>
-
-            </div>
-
-        </div>
-
-    </section>
-
-
-
-    <!-- ================= DATA ================= -->
-
-    <section id="data" class="page">
-
-        <div class="card">
-
-            <h2>Data & Downloads</h2>
-
-            <p style="color:var(--muted)">
-                Your UPWARD activity data is stored locally on this device.
-            </p>
-
-            <div class="row">
-
-                <button class="btn-primary"
-                        onclick="exportBackup()">
-                    Export Backup
-                </button>
-
-                <button class="btn-secondary"
-                        onclick="document.getElementById('importFile').click()">
-                    Import Backup
-                </button>
-
-                <button class="btn-secondary"
-                        onclick="downloadCSV()">
-                    Download CSV
-                </button>
-
-                <button class="btn-danger"
-                        onclick="clearAllData()">
-                    Clear All Data
-                </button>
-
-            </div>
-
-            <input
-                type="file"
-                id="importFile"
-                accept=".json"
-                style="display:none"
-                onchange="importBackup(event)">
-
-        </div>
-
-
-        <div class="card">
-
-            <h2>About UPWARD</h2>
-
-            <p>
-                UPWARD is your personal activity and progress tracker.
-            </p>
-
-            <p style="color:var(--muted)">
-                Small actions. Real progress.
-            </p>
-
-        </div>
-
-    </section>
+</div>
 
 </div>
 
 
-<footer>
-    UPWARD — Small actions. Real progress.
-</footer>
+<div class="card">
 
+<h2>Today's Goal Progress</h2>
+
+<div id="todayGoals"></div>
+
+</div>
+
+
+<div class="card">
+
+<h2>Quick Add Activity</h2>
+
+<div class="row">
+
+<div class="form-group">
+
+<label>Activity</label>
+
+<select id="quickCategory">
+
+<option>Exercise</option>
+<option>Walking</option>
+<option>Learning</option>
+<option>Reading</option>
+<option>Work/Study</option>
+<option>Recreation</option>
+<option>Meditation</option>
+<option>Social</option>
+<option>Mindfulness</option>
+<option>Other</option>
+
+</select>
+
+</div>
+
+<div class="form-group">
+
+<label>Minutes</label>
+
+<input id="quickMinutes"
+type="number"
+min="1"
+placeholder="e.g. 30">
+
+</div>
+
+</div>
+
+<br>
+
+<button class="btn-primary full" onclick="quickAdd()">
++ Add Activity
+</button>
+
+</div>
+
+
+<div class="card">
+
+<h2>Today's Activities</h2>
+
+<div id="todayActivityList" class="activity-list"></div>
+
+</div>
+
+
+<div class="card">
+
+<h2>Today's Trackers</h2>
+
+<div id="todayTrackerGrid" class="activity-grid"></div>
+
+</div>
+
+</section>
+
+
+<!-- TRACKERS -->
+
+<section id="trackers" class="page">
+
+<div class="card">
+
+<h2>Individual Trackers</h2>
+
+<p style="color:var(--muted)">
+Track each area separately. Daily totals are calculated automatically.
+</p>
+
+<div id="trackerGrid" class="activity-grid"></div>
+
+</div>
+
+
+<div class="card">
+
+<h2>Add Activity</h2>
+
+<div class="row">
+
+<div class="form-group">
+
+<label>Activity</label>
+
+<select id="activityCategory">
+
+<option>Exercise</option>
+<option>Walking</option>
+<option>Learning</option>
+<option>Reading</option>
+<option>Work/Study</option>
+<option>Recreation</option>
+<option>Meditation</option>
+<option>Social</option>
+<option>Mindfulness</option>
+<option>Other</option>
+
+</select>
+
+</div>
+
+<div class="form-group">
+
+<label>Activity name</label>
+
+<input id="activityName"
+type="text"
+placeholder="e.g. Gym, Book, Study">
+
+</div>
+
+<div class="form-group">
+
+<label>Minutes</label>
+
+<input id="activityMinutes"
+type="number"
+min="1"
+placeholder="30">
+
+</div>
+
+</div>
+
+<br>
+
+<button class="btn-primary" onclick="addActivity()">
+Add Activity
+</button>
+
+</div>
+
+</section>
+
+
+<!-- PROGRESS -->
+
+<section id="progress" class="page">
+
+<div class="card">
+
+<h2>Progress Overview</h2>
+
+<div class="insight-grid">
+
+<div class="insight">
+Current streak
+<strong id="progressCurrentStreak">0</strong>
+<small>consecutive days</small>
+</div>
+
+<div class="insight">
+Longest streak
+<strong id="longestStreak">0</strong>
+<small>best streak</small>
+</div>
+
+<div class="insight">
+Total activities
+<strong id="progressActivities">0</strong>
+<small>all time</small>
+</div>
+
+<div class="insight">
+Average/day
+<strong id="averageMinutes">0</strong>
+<small>last 30 days</small>
+</div>
+
+</div>
+
+</div>
+
+
+<div class="card">
+
+<h2>7-Day Activity Chart</h2>
+
+<div class="chart-wrap">
+<canvas id="weeklyChart"></canvas>
+</div>
+
+</div>
+
+
+<div class="card">
+
+<h2>30-Day Activity History</h2>
+
+<div class="chart-wrap">
+<canvas id="monthlyChart"></canvas>
+</div>
+
+</div>
+
+
+<div class="card">
+
+<h2>Category Balance — Last 30 Days</h2>
+
+<div id="categoryBalance"></div>
+
+</div>
+
+
+<div class="card">
+
+<h2>Your Level</h2>
+
+<div class="level-box">
+
+<div class="level-number" id="levelNumber">
+1
+</div>
+
+<div>
+Level
+</div>
+
+<br>
+
+<strong id="xpText">0 XP</strong>
+
+<div class="progress">
+<div id="xpBar" class="progress-bar"></div>
+</div>
+
+<small id="nextLevelText">
+100 XP to next level
+</small>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- CHECK-IN -->
+
+<section id="checkin" class="page">
+
+<div class="card">
+
+<h2>Daily Check-in</h2>
+
+<p style="color:var(--muted)">
+Take a moment to record how your day is going.
+</p>
+
+<label>How would you rate today?</label>
+
+<div class="rating" id="ratingButtons">
+
+<button onclick="selectRating(1)">1</button>
+<button onclick="selectRating(2)">2</button>
+<button onclick="selectRating(3)">3</button>
+<button onclick="selectRating(4)">4</button>
+<button onclick="selectRating(5)">5</button>
+
+</div>
+
+<br>
+
+<label>How was your energy?</label>
+
+<select id="energyRating">
+
+<option value="">Select</option>
+<option value="Low">Low</option>
+<option value="Okay">Okay</option>
+<option value="Good">Good</option>
+<option value="High">High</option>
+
+</select>
+
+<br><br>
+
+<label>Today's small win</label>
+
+<textarea id="smallWin"
+placeholder="What is one thing you did today that matters?"></textarea>
+
+<br>
+
+<label>Optional note</label>
+
+<textarea id="dailyNote"
+placeholder="Anything you want to remember about today?"></textarea>
+
+<br>
+
+<button class="btn-primary full" onclick="saveCheckin()">
+Save Today's Check-in
+</button>
+
+</div>
+
+
+<div class="card">
+
+<h2>Today's Check-in</h2>
+
+<div id="todayCheckin"></div>
+
+</div>
+
+</section>
+
+
+<!-- WEEK -->
+
+<section id="week" class="page">
+
+<div class="card">
+
+<h2>7-Day Activity Summary</h2>
+
+<div id="weeklyCategorySummary"></div>
+
+</div>
+
+
+<div class="card">
+
+<h2>Weekly Activity Breakdown</h2>
+
+<div id="weeklyDetails"></div>
+
+</div>
+
+
+<div class="card">
+
+<h2>Weekly Summary</h2>
+
+<div id="weeklySummaryText"></div>
+
+</div>
+
+</section>
+
+
+<!-- TIMER -->
+
+<section id="timer" class="page">
+
+<div class="card timer">
+
+<h2>Activity Timer</h2>
+
+<p style="color:var(--muted)">
+Start a timer and UPWARD will record the completed session.
+</p>
+
+<div class="form-group"
+style="max-width:350px;margin:auto">
+
+<label>Activity</label>
+
+<select id="timerCategory">
+
+<option>Exercise</option>
+<option>Walking</option>
+<option>Learning</option>
+<option>Reading</option>
+<option>Work/Study</option>
+<option>Recreation</option>
+<option>Meditation</option>
+<option>Social</option>
+
+</select>
+
+</div>
+
+<div class="form-group"
+style="max-width:350px;margin:12px auto">
+
+<label>Activity name</label>
+
+<input id="timerName"
+placeholder="e.g. Study">
+
+</div>
+
+<div class="timer-display" id="timerDisplay">
+00:00
+</div>
+
+<div class="timer-status" id="timerStatus">
+Ready
+</div>
+
+<div class="preset-buttons">
+
+<button onclick="setTimer(10)">10 min</button>
+<button onclick="setTimer(25)">25 min</button>
+<button onclick="setTimer(30)">30 min</button>
+<button onclick="setTimer(45)">45 min</button>
+<button onclick="setTimer(60)">60 min</button>
+
+</div>
+
+<div class="timer-buttons">
+
+<button class="btn-primary" onclick="startTimer()">
+Start
+</button>
+
+<button class="btn-secondary" onclick="pauseTimer()">
+Pause
+</button>
+
+<button class="btn-danger" onclick="stopTimer()">
+Stop
+</button>
+
+<button class="btn-success" onclick="resetTimer()">
+Reset
+</button>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- DATA -->
+
+<section id="data" class="page">
+
+<div class="card">
+
+<h2>Data & Downloads</h2>
+
+<p style="color:var(--muted)">
+Your UPWARD data is stored locally on this device.
+</p>
+
+<div class="row">
+
+<button class="btn-primary" onclick="exportBackup()">
+Export Backup
+</button>
+
+<button class="btn-secondary"
+onclick="document.getElementById('importFile').click()">
+Import Backup
+</button>
+
+<button class="btn-secondary" onclick="downloadCSV()">
+Download CSV
+</button>
+
+<button class="btn-danger" onclick="clearAllData()">
+Clear All Data
+</button>
+
+</div>
+
+<input
+type="file"
+id="importFile"
+accept=".json"
+style="display:none"
+onchange="importBackup(event)">
+
+</div>
+
+
+<div class="card">
+
+<h2>About UPWARD</h2>
+
+<p>
+UPWARD is your personal activity and progress tracker.
+</p>
+
+<p style="color:var(--muted)">
+Small actions. Real progress.
+</p>
+
+</div>
+
+</section>
+
+</div>
+
+<footer>
+UPWARD — Small actions. Real progress.
+</footer>
 
 
 <script>
 
 /* =========================================================
-   UPWARD STAGE 2
-   Existing activity storage preserved:
-   localStorage key = upwardActivities
+   UPWARD STAGE 3
+   Existing storage preserved:
+   upwardActivities
    ========================================================= */
-
-
-/* ================= ACTIVITY CATEGORIES ================= */
 
 const CATEGORIES = [
     "Exercise",
@@ -858,98 +1060,118 @@ const CATEGORIES = [
     "Other"
 ];
 
+const TARGETS = {
+    "Exercise":30,
+    "Walking":30,
+    "Learning":30,
+    "Reading":20,
+    "Work/Study":60,
+    "Recreation":20,
+    "Meditation":10,
+    "Social":20,
+    "Mindfulness":10,
+    "Other":10
+};
+
+let selectedRating = 0;
+
+let timerSeconds = 0;
+let timerInterval = null;
+let timerRunning = false;
+let timerMode = "stopwatch";
+let timerOriginalMinutes = 0;
+
 
 /* ================= STORAGE ================= */
 
 function getActivities(){
 
     try{
-
         return JSON.parse(
             localStorage.getItem("upwardActivities")
         ) || [];
-
-    }catch(error){
-
+    }catch(e){
         return [];
-
     }
 
 }
 
-
-function saveActivities(activities){
+function saveActivities(data){
 
     localStorage.setItem(
         "upwardActivities",
-        JSON.stringify(activities)
+        JSON.stringify(data)
+    );
+
+}
+
+function getCheckins(){
+
+    try{
+        return JSON.parse(
+            localStorage.getItem("upwardCheckins")
+        ) || {};
+    }catch(e){
+        return {};
+    }
+
+}
+
+function saveCheckins(data){
+
+    localStorage.setItem(
+        "upwardCheckins",
+        JSON.stringify(data)
     );
 
 }
 
 
-/* ================= DATE HELPERS ================= */
+/* ================= DATE ================= */
 
 function getTodayString(){
 
     const d = new Date();
 
-    const year = d.getFullYear();
-
-    const month = String(
-        d.getMonth()+1
-    ).padStart(2,"0");
-
-    const day = String(
-        d.getDate()
-    ).padStart(2,"0");
-
-    return `${year}-${month}-${day}`;
+    return [
+        d.getFullYear(),
+        String(d.getMonth()+1).padStart(2,"0"),
+        String(d.getDate()).padStart(2,"0")
+    ].join("-");
 
 }
 
-
 function dateFromString(str){
 
-    const parts = str.split("-");
+    const p = str.split("-");
 
     return new Date(
-        Number(parts[0]),
-        Number(parts[1])-1,
-        Number(parts[2])
+        Number(p[0]),
+        Number(p[1])-1,
+        Number(p[2])
     );
 
 }
 
-
-function getLast7Days(){
+function getLastNDays(n){
 
     const result = [];
-
     const today = new Date();
 
     today.setHours(0,0,0,0);
 
-    for(let i=6;i>=0;i--){
+    for(let i=n-1;i>=0;i--){
 
         const d = new Date(today);
 
-        d.setDate(
-            today.getDate()-i
-        );
-
-        const year = d.getFullYear();
-
-        const month = String(
-            d.getMonth()+1
-        ).padStart(2,"0");
-
-        const day = String(
-            d.getDate()
-        ).padStart(2,"0");
+        d.setDate(today.getDate()-i);
 
         result.push(
-            `${year}-${month}-${day}`
+            [
+                d.getFullYear(),
+                String(d.getMonth()+1).padStart(2,"0"),
+                String(d.getDate()).padStart(2,"0")
+            ].join("-")
         );
 
     }
@@ -958,31 +1180,28 @@ function getLast7Days(){
 
 }
 
+function getLast7Days(){
+
+    return getLastNDays(7);
+
+}
+
 
 /* ================= NAVIGATION ================= */
 
 function showPage(pageId,button){
 
-    document
-        .querySelectorAll(".page")
-        .forEach(page=>{
-            page.classList.remove("active");
-        });
+    document.querySelectorAll(".page")
+        .forEach(p=>p.classList.remove("active"));
 
-    document
-        .querySelectorAll(".nav-btn")
-        .forEach(btn=>{
-            btn.classList.remove("active");
-        });
+    document.querySelectorAll(".nav-btn")
+        .forEach(b=>b.classList.remove("active"));
 
-    document
-        .getElementById(pageId)
+    document.getElementById(pageId)
         .classList.add("active");
 
     if(button){
-
         button.classList.add("active");
-
     }
 
     render();
@@ -998,7 +1217,6 @@ function showMessage(message){
         document.getElementById("message");
 
     box.textContent = message;
-
     box.style.display = "block";
 
     clearTimeout(window.messageTimer);
@@ -1016,23 +1234,16 @@ function showMessage(message){
 function quickAdd(){
 
     const category =
-        document.getElementById(
-            "quickCategory"
-        ).value;
+        document.getElementById("quickCategory").value;
 
     const minutes =
         Number(
-            document.getElementById(
-                "quickMinutes"
-            ).value
+            document.getElementById("quickMinutes").value
         );
 
     if(!minutes || minutes<=0){
 
-        showMessage(
-            "Please enter valid minutes."
-        );
-
+        showMessage("Please enter valid minutes.");
         return;
 
     }
@@ -1043,9 +1254,7 @@ function quickAdd(){
         minutes
     );
 
-    document.getElementById(
-        "quickMinutes"
-    ).value = "";
+    document.getElementById("quickMinutes").value="";
 
 }
 
@@ -1053,28 +1262,20 @@ function quickAdd(){
 function addActivity(){
 
     const category =
-        document.getElementById(
-            "activityCategory"
-        ).value;
+        document.getElementById("activityCategory").value;
 
     const name =
-        document.getElementById(
-            "activityName"
-        ).value.trim();
+        document.getElementById("activityName")
+        .value.trim();
 
     const minutes =
         Number(
-            document.getElementById(
-                "activityMinutes"
-            ).value
+            document.getElementById("activityMinutes").value
         );
 
     if(!minutes || minutes<=0){
 
-        showMessage(
-            "Please enter valid minutes."
-        );
-
+        showMessage("Please enter valid minutes.");
         return;
 
     }
@@ -1085,33 +1286,21 @@ function addActivity(){
         minutes
     );
 
-    document.getElementById(
-        "activityName"
-    ).value = "";
-
-    document.getElementById(
-        "activityMinutes"
-    ).value = "";
+    document.getElementById("activityName").value="";
+    document.getElementById("activityMinutes").value="";
 
 }
 
 
-function addActivityRecord(
-    category,
-    name,
-    minutes
-){
+function addActivityRecord(category,name,minutes){
 
-    const activities =
-        getActivities();
+    const activities = getActivities();
 
     activities.push({
 
         id:
-            Date.now().toString() +
-            Math.random()
-                .toString(36)
-                .substring(2),
+            Date.now().toString()+
+            Math.random().toString(36).substring(2),
 
         activityName:name,
 
@@ -1121,8 +1310,7 @@ function addActivityRecord(
 
         date:getTodayString(),
 
-        createdAt:
-            new Date().toISOString()
+        createdAt:new Date().toISOString()
 
     });
 
@@ -1141,19 +1329,44 @@ function addActivityRecord(
 
 function deleteActivity(id){
 
-    if(!confirm(
-        "Delete this activity?"
-    )){
+    if(!confirm("Delete this activity?")){
         return;
     }
 
-    const updated =
-        getActivities()
-        .filter(item=>item.id!==id);
-
-    saveActivities(updated);
+    saveActivities(
+        getActivities().filter(
+            item=>item.id!==id
+        )
+    );
 
     render();
+
+}
+
+
+/* ================= CATEGORY DATA ================= */
+
+function getCategoryMinutes(category,dates){
+
+    return getActivities()
+        .filter(item=>
+            item.category===category &&
+            dates.includes(item.date)
+        )
+        .reduce(
+            (sum,item)=>sum+Number(item.minutes||0),
+            0
+        );
+
+}
+
+function getCategorySessions(category,dates){
+
+    return getActivities()
+        .filter(item=>
+            item.category===category &&
+            dates.includes(item.date)
+        ).length;
 
 }
 
@@ -1162,114 +1375,40 @@ function deleteActivity(id){
 
 function getTodayActivities(){
 
-    const today =
-        getTodayString();
-
     return getActivities()
-        .filter(item=>item.date===today);
-
-}
-
-
-function updateStats(){
-
-    const all =
-        getActivities();
-
-    const today =
-        getTodayActivities();
-
-    const todayMinutes =
-        today.reduce(
-            (sum,item)=>
-                sum + Number(item.minutes||0),
-            0
-        );
-
-    const totalMinutes =
-        all.reduce(
-            (sum,item)=>
-                sum + Number(item.minutes||0),
-            0
-        );
-
-    document.getElementById(
-        "todayActivities"
-    ).textContent =
-        today.length;
-
-    document.getElementById(
-        "todayMinutes"
-    ).textContent =
-        todayMinutes;
-
-    document.getElementById(
-        "totalMinutes"
-    ).textContent =
-        totalMinutes;
-
-    document.getElementById(
-        "dayStreak"
-    ).textContent =
-        calculateStreak();
+        .filter(item=>item.date===getTodayString());
 
 }
 
 
 function calculateStreak(){
 
-    const activities =
-        getActivities();
+    const dates = new Set(
+        getActivities().map(item=>item.date)
+    );
 
-    if(!activities.length){
-        return 0;
-    }
+    let streak=0;
 
-    const dates =
-        new Set(
-            activities.map(
-                item=>item.date
-            )
-        );
-
-    let streak = 0;
-
-    const current =
-        new Date();
-
+    const current=new Date();
     current.setHours(0,0,0,0);
 
     while(true){
 
-        const year =
-            current.getFullYear();
+        const key=[
+            current.getFullYear(),
+            String(current.getMonth()+1).padStart(2,"0"),
+            String(current.getDate()).padStart(2,"0")
+        ].join("-");
 
-        const month =
-            String(
-                current.getMonth()+1
-            ).padStart(2,"0");
-
-        const day =
-            String(
-                current.getDate()
-            ).padStart(2,"0");
-
-        const key =
-            `${year}-${month}-${day}`;
-
-        if(dates.has(key)){
-
-            streak++;
-
-            current.setDate(
-                current.getDate()-1
-            );
-
-        }else{
-
+        if(!dates.has(key)){
             break;
-
         }
+
+        streak++;
+
+        current.setDate(
+            current.getDate()-1
+        );
 
     }
 
@@ -1278,21 +1417,90 @@ function calculateStreak(){
 }
 
 
+function calculateLongestStreak(){
+
+    const dates = [
+        ...new Set(
+            getActivities().map(item=>item.date)
+        )
+    ].sort();
+
+    if(!dates.length) return 0;
+
+    let longest=1;
+    let current=1;
+
+    for(let i=1;i<dates.length;i++){
+
+        const previous=dateFromString(dates[i-1]);
+        const currentDate=dateFromString(dates[i]);
+
+        const difference=
+            Math.round(
+                (currentDate-previous)/
+                (1000*60*60*24)
+            );
+
+        if(difference===1){
+
+            current++;
+            longest=Math.max(longest,current);
+
+        }else{
+
+            current=1;
+
+        }
+
+    }
+
+    return longest;
+
+}
+
+
+/* ================= STATS ================= */
+
+function updateStats(){
+
+    const all=getActivities();
+    const today=getTodayActivities();
+
+    const todayMinutes=today.reduce(
+        (sum,item)=>sum+Number(item.minutes||0),0
+    );
+
+    const totalMinutes=all.reduce(
+        (sum,item)=>sum+Number(item.minutes||0),0
+    );
+
+    document.getElementById("todayActivities")
+        .textContent=today.length;
+
+    document.getElementById("todayMinutes")
+        .textContent=todayMinutes;
+
+    document.getElementById("totalMinutes")
+        .textContent=totalMinutes;
+
+    document.getElementById("dayStreak")
+        .textContent=calculateStreak();
+
+}
+
+
 /* ================= TODAY LIST ================= */
 
 function renderTodayActivities(){
 
-    const container =
-        document.getElementById(
-            "todayActivityList"
-        );
+    const container=
+        document.getElementById("todayActivityList");
 
-    const activities =
-        getTodayActivities();
+    const activities=getTodayActivities();
 
     if(!activities.length){
 
-        container.innerHTML =
+        container.innerHTML=
             `<div class="empty">
                 No activities recorded today yet.
              </div>`;
@@ -1301,44 +1509,104 @@ function renderTodayActivities(){
 
     }
 
-    const sorted =
-        [...activities].reverse();
+    container.innerHTML=
+        [...activities].reverse()
+        .map(item=>`
 
-    container.innerHTML =
-        sorted.map(item=>{
+        <div class="activity-item">
+
+            <div>
+
+                <strong>
+                    ${escapeHTML(
+                        item.activityName||
+                        item.category||
+                        "Activity"
+                    )}
+                </strong>
+
+                <small>
+                    ${escapeHTML(
+                        item.category||"Other"
+                    )}
+                    ·
+                    ${Number(item.minutes)||0}
+                    min
+                </small>
+
+            </div>
+
+            <button
+                class="delete-btn"
+                onclick="deleteActivity('${item.id}')">
+                Delete
+            </button>
+
+        </div>
+
+        `).join("");
+
+}
+
+
+/* ================= TARGETS ================= */
+
+function getTarget(category){
+
+    return TARGETS[category]||10;
+
+}
+
+
+function renderGoals(){
+
+    const today=getTodayString();
+
+    const container=
+        document.getElementById("todayGoals");
+
+    container.innerHTML=
+        CATEGORIES.map(category=>{
+
+            const minutes=
+                getCategoryMinutes(
+                    category,[today]
+                );
+
+            const target=getTarget(category);
+
+            const percent=
+                Math.min(
+                    100,
+                    Math.round(minutes/target*100)
+                );
 
             return `
-                <div class="activity-item">
 
-                    <div>
+            <div style="margin-bottom:14px">
 
-                        <strong>
-                            ${escapeHTML(
-                                item.activityName ||
-                                item.category ||
-                                "Activity"
-                            )}
-                        </strong>
+                <div style="
+                    display:flex;
+                    justify-content:space-between">
 
-                        <small>
-                            ${escapeHTML(
-                                item.category ||
-                                "Other"
-                            )}
-                            ·
-                            ${Number(item.minutes)||0}
-                            min
-                        </small>
+                    <strong>${category}</strong>
 
-                    </div>
-
-                    <button
-                        class="delete-btn"
-                        onclick="deleteActivity('${item.id}')">
-                        Delete
-                    </button>
+                    <span>
+                        ${minutes}/${target} min
+                    </span>
 
                 </div>
+
+                <div class="progress">
+
+                    <div class="progress-bar"
+                         style="width:${percent}%">
+                    </div>
+
+                </div>
+
+            </div>
+
             `;
 
         }).join("");
@@ -1346,110 +1614,63 @@ function renderTodayActivities(){
 }
 
 
-/* ================= CATEGORY TOTALS ================= */
-
-function getCategoryMinutes(
-    category,
-    dateList
-){
-
-    const activities =
-        getActivities();
-
-    return activities
-        .filter(item=>
-            item.category===category &&
-            dateList.includes(item.date)
-        )
-        .reduce(
-            (sum,item)=>
-                sum + Number(item.minutes||0),
-            0
-        );
-
-}
-
-
-function getCategorySessions(
-    category,
-    dateList
-){
-
-    return getActivities()
-        .filter(item=>
-            item.category===category &&
-            dateList.includes(item.date)
-        )
-        .length;
-
-}
-
-
-/* ================= TRACKER CARDS ================= */
+/* ================= TRACKERS ================= */
 
 function renderTrackers(){
 
-    const today =
-        getTodayString();
+    const today=getTodayString();
 
-    const grid =
-        document.getElementById(
-            "trackerGrid"
-        );
+    document.getElementById("trackerGrid")
+        .innerHTML=
 
-    grid.innerHTML =
         CATEGORIES.map(category=>{
 
-            const minutes =
+            const minutes=
                 getCategoryMinutes(
-                    category,
-                    [today]
+                    category,[today]
                 );
 
-            const sessions =
+            const sessions=
                 getCategorySessions(
-                    category,
-                    [today]
+                    category,[today]
                 );
 
-            const target =
-                getTarget(category);
+            const target=getTarget(category);
 
-            const percent =
-                Math.min(
-                    100,
-                    Math.round(
-                        minutes / target * 100
-                    )
-                );
+            const percent=Math.min(
+                100,
+                Math.round(minutes/target*100)
+            );
 
             return `
-                <div class="activity-card">
 
-                    <h3>
-                        ${category}
-                    </h3>
+            <div class="activity-card">
 
-                    <div class="minutes">
-                        ${minutes} min
+                <h3>${category}</h3>
+
+                <div class="minutes">
+                    ${minutes} min
+                </div>
+
+                <small>
+                    ${sessions}
+                    session${sessions===1?"":"s"}
+                </small>
+
+                <div class="progress">
+
+                    <div class="progress-bar"
+                         style="width:${percent}%">
                     </div>
-
-                    <small>
-                        ${sessions} session${sessions===1?"":"s"}
-                    </small>
-
-                    <div class="progress">
-                        <div
-                            class="progress-bar"
-                            style="width:${percent}%">
-                        </div>
-                    </div>
-
-                    <small>
-                        Daily target: ${target} min
-                    </small>
 
                 </div>
+
+                <small>
+                    Daily target: ${target} min
+                </small>
+
+            </div>
+
             `;
 
         }).join("");
@@ -1459,35 +1680,32 @@ function renderTrackers(){
 
 function renderTodayTrackers(){
 
-    const today =
-        getTodayString();
+    const today=getTodayString();
 
-    const grid =
-        document.getElementById(
-            "todayTrackerGrid"
-        );
+    document.getElementById("todayTrackerGrid")
+        .innerHTML=
 
-    grid.innerHTML =
         CATEGORIES.map(category=>{
 
-            const minutes =
+            const minutes=
                 getCategoryMinutes(
-                    category,
-                    [today]
+                    category,[today]
                 );
 
             return `
-                <div class="activity-card">
 
-                    <h3>${category}</h3>
+            <div class="activity-card">
 
-                    <div class="minutes">
-                        ${minutes}
-                    </div>
+                <h3>${category}</h3>
 
-                    <small>minutes today</small>
-
+                <div class="minutes">
+                    ${minutes}
                 </div>
+
+                <small>minutes today</small>
+
+            </div>
+
             `;
 
         }).join("");
@@ -1495,207 +1713,699 @@ function renderTodayTrackers(){
 }
 
 
-/* ================= TARGETS ================= */
-
-function getTarget(category){
-
-    const targets = {
-
-        "Exercise":30,
-
-        "Walking":30,
-
-        "Learning":30,
-
-        "Reading":20,
-
-        "Work/Study":60,
-
-        "Recreation":20,
-
-        "Meditation":10,
-
-        "Social":20,
-
-        "Mindfulness":10,
-
-        "Other":10
-
-    };
-
-    return targets[category] || 10;
-
-}
-
-
-/* ================= WEEKLY ================= */
+/* ================= WEEK ================= */
 
 function renderWeekly(){
 
-    const days =
-        getLast7Days();
+    const days=getLast7Days();
 
-    const summary =
+    const summary=
         document.getElementById(
             "weeklyCategorySummary"
         );
 
-    summary.innerHTML =
+    summary.innerHTML=
         CATEGORIES.map(category=>{
 
-            const minutes =
+            const minutes=
                 getCategoryMinutes(
-                    category,
-                    days
+                    category,days
                 );
 
-            const sessions =
+            const sessions=
                 getCategorySessions(
-                    category,
-                    days
+                    category,days
                 );
+
+            const target=getTarget(category)*7;
+
+            const percent=Math.min(
+                100,
+                Math.round(minutes/target*100)
+            );
 
             return `
-                <div
-                    style="
-                    margin-bottom:16px;
-                    padding-bottom:12px;
-                    border-bottom:1px solid var(--border);
-                    ">
 
-                    <div
-                        style="
-                        display:flex;
-                        justify-content:space-between;
-                        ">
+            <div style="
+                margin-bottom:16px;
+                padding-bottom:12px;
+                border-bottom:1px solid var(--border)">
 
-                        <strong>
-                            ${category}
-                        </strong>
+                <div style="
+                    display:flex;
+                    justify-content:space-between">
 
-                        <strong>
-                            ${minutes} min
-                        </strong>
-
-                    </div>
-
-                    <div class="progress">
-
-                        <div
-                            class="progress-bar"
-                            style="
-                            width:${Math.min(
-                                100,
-                                minutes /
-                                (getTarget(category)*7)
-                                *100
-                            )}%
-                            ">
-                        </div>
-
-                    </div>
-
-                    <small style="color:var(--muted)">
-                        ${sessions}
-                        session${sessions===1?"":"s"}
-                        · weekly target
-                        ${getTarget(category)*7} min
-                    </small>
+                    <strong>${category}</strong>
+                    <strong>${minutes} min</strong>
 
                 </div>
+
+                <div class="progress">
+
+                    <div class="progress-bar"
+                         style="width:${percent}%">
+                    </div>
+
+                </div>
+
+                <small style="color:var(--muted)">
+                    ${sessions} sessions ·
+                    weekly target ${target} min
+                </small>
+
+            </div>
+
             `;
 
         }).join("");
 
 
-    const details =
-        document.getElementById(
-            "weeklyDetails"
-        );
+    document.getElementById("weeklyDetails")
+        .innerHTML=
 
-    details.innerHTML =
         CATEGORIES.map(category=>{
 
-            const boxes =
+            const boxes=
                 days.map(date=>{
 
-                    const minutes =
+                    const minutes=
                         getCategoryMinutes(
-                            category,
-                            [date]
+                            category,[date]
                         );
 
-                    const d =
-                        dateFromString(date);
-
-                    const label =
-                        d.toLocaleDateString(
-                            undefined,
-                            {weekday:"short"}
-                        );
+                    const d=dateFromString(date);
 
                     return `
-                        <div class="day-box">
 
-                            <strong>
-                                ${label}
-                            </strong>
+                    <div class="day-box">
 
-                            <span class="day-minutes">
-                                ${minutes}
-                            </span>
+                        <strong>
+                            ${d.toLocaleDateString(
+                                undefined,
+                                {weekday:"short"}
+                            )}
+                        </strong>
 
-                            <small>
-                                min
-                            </small>
+                        <span class="day-minutes">
+                            ${minutes}
+                        </span>
 
-                        </div>
+                        <small>min</small>
+
+                    </div>
+
                     `;
 
                 }).join("");
 
             return `
-                <div style="margin-bottom:20px">
 
-                    <h3>
-                        ${category}
-                    </h3>
+            <div style="margin-bottom:20px">
 
-                    <div class="week-grid">
-                        ${boxes}
-                    </div>
+                <h3>${category}</h3>
 
+                <div class="week-grid">
+                    ${boxes}
                 </div>
+
+            </div>
+
             `;
 
         }).join("");
+
+    renderWeeklySummary();
+
+}
+
+
+function renderWeeklySummary(){
+
+    const days=getLast7Days();
+
+    const total=days.reduce(
+        (sum,date)=>
+            sum+
+            getActivities()
+            .filter(item=>item.date===date)
+            .reduce(
+                (s,item)=>s+Number(item.minutes||0),0
+            ),0
+    );
+
+    const sessions=getActivities()
+        .filter(item=>days.includes(item.date))
+        .length;
+
+    const activeDays=new Set(
+        getActivities()
+        .filter(item=>days.includes(item.date))
+        .map(item=>item.date)
+    ).size;
+
+    document.getElementById(
+        "weeklySummaryText"
+    ).innerHTML=`
+
+        <div class="insight-grid">
+
+            <div class="insight">
+                Weekly minutes
+                <strong>${total}</strong>
+            </div>
+
+            <div class="insight">
+                Sessions
+                <strong>${sessions}</strong>
+            </div>
+
+            <div class="insight">
+                Active days
+                <strong>${activeDays}/7</strong>
+            </div>
+
+            <div class="insight">
+                Daily average
+                <strong>${Math.round(total/7)}</strong>
+            </div>
+
+        </div>
+
+    `;
+
+}
+
+
+/* ================= PROGRESS ================= */
+
+function renderProgress(){
+
+    const all=getActivities();
+
+    const days30=getLastNDays(30);
+
+    const total30=days30.reduce(
+        (sum,date)=>
+            sum+
+            all
+            .filter(item=>item.date===date)
+            .reduce(
+                (s,item)=>s+Number(item.minutes||0),0
+            ),0
+    );
+
+    document.getElementById(
+        "progressCurrentStreak"
+    ).textContent=calculateStreak();
+
+    document.getElementById(
+        "longestStreak"
+    ).textContent=calculateLongestStreak();
+
+    document.getElementById(
+        "progressActivities"
+    ).textContent=all.length;
+
+    document.getElementById(
+        "averageMinutes"
+    ).textContent=Math.round(total30/30);
+
+    drawWeeklyChart();
+    drawMonthlyChart();
+    renderCategoryBalance();
+    renderXP();
+
+}
+
+
+function drawWeeklyChart(){
+
+    const canvas=document.getElementById("weeklyChart");
+
+    const ctx=canvas.getContext("2d");
+
+    const width=canvas.clientWidth||600;
+    const height=260;
+
+    canvas.width=width*2;
+    canvas.height=height*2;
+
+    ctx.scale(2,2);
+
+    const days=getLast7Days();
+
+    const values=days.map(date=>
+        getActivities()
+        .filter(item=>item.date===date)
+        .reduce(
+            (sum,item)=>sum+Number(item.minutes||0),0
+        )
+    );
+
+    drawBarChart(
+        ctx,
+        width,
+        height,
+        values,
+        days.map(date=>
+            dateFromString(date)
+            .toLocaleDateString(
+                undefined,
+                {weekday:"short"}
+            )
+        )
+    );
+
+}
+
+
+function drawMonthlyChart(){
+
+    const canvas=document.getElementById("monthlyChart");
+
+    const ctx=canvas.getContext("2d");
+
+    const width=canvas.clientWidth||600;
+    const height=260;
+
+    canvas.width=width*2;
+    canvas.height=height*2;
+
+    ctx.scale(2,2);
+
+    const days=getLastNDays(30);
+
+    const values=days.map(date=>
+        getActivities()
+        .filter(item=>item.date===date)
+        .reduce(
+            (sum,item)=>sum+Number(item.minutes||0),0
+        )
+    );
+
+    drawLineChart(
+        ctx,
+        width,
+        height,
+        values
+    );
+
+}
+
+
+function drawBarChart(ctx,w,h,values,labels){
+
+    ctx.clearRect(0,0,w,h);
+
+    const left=35;
+    const bottom=35;
+    const top=15;
+    const chartH=h-top-bottom;
+    const chartW=w-left-10;
+
+    const max=Math.max(...values,10);
+
+    ctx.strokeStyle="#e5e7eb";
+    ctx.fillStyle="#667eea";
+    ctx.font="11px Arial";
+
+    values.forEach((value,i)=>{
+
+        const slot=chartW/values.length;
+        const barW=Math.max(10,slot*0.55);
+
+        const barH=
+            value/max*chartH;
+
+        const x=
+            left+i*slot+
+            (slot-barW)/2;
+
+        const y=
+            top+chartH-barH;
+
+        ctx.fillRect(
+            x,y,barW,barH
+        );
+
+        ctx.fillStyle="#6b7280";
+
+        ctx.fillText(
+            labels[i],
+            x,
+            h-12
+        );
+
+        if(value>0){
+
+            ctx.fillText(
+                value,
+                x,
+                y-5
+            );
+
+        }
+
+        ctx.fillStyle="#667eea";
+
+    });
+
+    ctx.beginPath();
+
+    ctx.strokeStyle="#e5e7eb";
+
+    ctx.moveTo(left,top+chartH);
+    ctx.lineTo(w-10,top+chartH);
+
+    ctx.stroke();
+
+}
+
+
+function drawLineChart(ctx,w,h,values){
+
+    ctx.clearRect(0,0,w,h);
+
+    const left=30;
+    const right=10;
+    const top=15;
+    const bottom=30;
+
+    const chartW=w-left-right;
+    const chartH=h-top-bottom;
+
+    const max=Math.max(...values,10);
+
+    ctx.strokeStyle="#e5e7eb";
+
+    for(let i=0;i<=4;i++){
+
+        const y=
+            top+(chartH/4)*i;
+
+        ctx.beginPath();
+        ctx.moveTo(left,y);
+        ctx.lineTo(w-right,y);
+        ctx.stroke();
+
+    }
+
+    ctx.beginPath();
+
+    values.forEach((value,i)=>{
+
+        const x=
+            left+
+            i*(chartW/(values.length-1));
+
+        const y=
+            top+
+            chartH-
+            (value/max*chartH);
+
+        if(i===0){
+            ctx.moveTo(x,y);
+        }else{
+            ctx.lineTo(x,y);
+        }
+
+    });
+
+    ctx.strokeStyle="#667eea";
+    ctx.lineWidth=3;
+    ctx.stroke();
+
+    ctx.lineWidth=1;
+
+}
+
+
+function renderCategoryBalance(){
+
+    const container=
+        document.getElementById("categoryBalance");
+
+    const days=getLastNDays(30);
+
+    const totals=CATEGORIES.map(category=>({
+
+        category,
+
+        minutes:getCategoryMinutes(
+            category,days
+        )
+
+    }));
+
+    const max=Math.max(
+        ...totals.map(x=>x.minutes),
+        1
+    );
+
+    container.innerHTML=
+        totals.map(item=>{
+
+            const percent=
+                Math.round(
+                    item.minutes/max*100
+                );
+
+            return `
+
+            <div style="margin-bottom:13px">
+
+                <div style="
+                    display:flex;
+                    justify-content:space-between">
+
+                    <strong>${item.category}</strong>
+
+                    <span>
+                        ${item.minutes} min
+                    </span>
+
+                </div>
+
+                <div class="progress">
+
+                    <div class="progress-bar"
+                         style="width:${percent}%">
+                    </div>
+
+                </div>
+
+            </div>
+
+            `;
+
+        }).join("");
+
+}
+
+
+/* ================= XP ================= */
+
+function calculateXP(){
+
+    const activities=getActivities();
+
+    return activities.reduce(
+        (sum,item)=>
+            sum+
+            Math.max(
+                1,
+                Math.floor(
+                    Number(item.minutes||0)/5
+                )
+            ),
+        0
+    );
+
+}
+
+
+function renderXP(){
+
+    const xp=calculateXP();
+
+    const level=
+        Math.floor(xp/100)+1;
+
+    const currentXP=xp%100;
+
+    document.getElementById(
+        "levelNumber"
+    ).textContent=level;
+
+    document.getElementById(
+        "xpText"
+    ).textContent=`${xp} XP`;
+
+    document.getElementById(
+        "xpBar"
+    ).style.width=currentXP+"%";
+
+    document.getElementById(
+        "nextLevelText"
+    ).textContent=
+        `${100-currentXP} XP to next level`;
+
+}
+
+
+/* ================= CHECK-IN ================= */
+
+function selectRating(value){
+
+    selectedRating=value;
+
+    document.querySelectorAll(
+        "#ratingButtons button"
+    ).forEach(button=>{
+
+        button.classList.toggle(
+            "selected",
+            Number(button.textContent)===value
+        );
+
+    });
+
+}
+
+
+function saveCheckin(){
+
+    if(!selectedRating){
+
+        showMessage(
+            "Please select a rating first."
+        );
+
+        return;
+
+    }
+
+    const data=getCheckins();
+
+    data[getTodayString()]={
+
+        rating:selectedRating,
+
+        energy:
+            document.getElementById(
+                "energyRating"
+            ).value,
+
+        smallWin:
+            document.getElementById(
+                "smallWin"
+            ).value.trim(),
+
+        note:
+            document.getElementById(
+                "dailyNote"
+            ).value.trim(),
+
+        savedAt:new Date().toISOString()
+
+    };
+
+    saveCheckins(data);
+
+    showMessage(
+        "Today's check-in saved."
+    );
+
+    renderCheckin();
+
+}
+
+
+function renderCheckin(){
+
+    const today=getTodayString();
+
+    const data=getCheckins()[today];
+
+    const container=
+        document.getElementById("todayCheckin");
+
+    if(!data){
+
+        container.innerHTML=
+            `<div class="empty">
+                No check-in saved today.
+             </div>`;
+
+        return;
+
+    }
+
+    selectedRating=Number(data.rating)||0;
+
+    selectRating(selectedRating);
+
+    document.getElementById(
+        "energyRating"
+    ).value=data.energy||"";
+
+    document.getElementById(
+        "smallWin"
+    ).value=data.smallWin||"";
+
+    document.getElementById(
+        "dailyNote"
+    ).value=data.note||"";
+
+    container.innerHTML=`
+
+        <p>
+            <span class="badge">
+                Rating ${data.rating}/5
+            </span>
+        </p>
+
+        <p>
+            <strong>Energy:</strong>
+            ${escapeHTML(data.energy||"Not recorded")}
+        </p>
+
+        <p>
+            <strong>Small win:</strong><br>
+            ${escapeHTML(data.smallWin||"Not recorded")}
+        </p>
+
+        ${
+            data.note
+            ?
+            `<p>
+                <strong>Note:</strong><br>
+                ${escapeHTML(data.note)}
+             </p>`
+            :
+            ""
+        }
+
+    `;
 
 }
 
 
 /* ================= TIMER ================= */
 
-let timerSeconds = 0;
-let timerInterval = null;
-let timerRunning = false;
-let timerMode = "stopwatch";
-
-
 function updateTimerDisplay(){
 
-    const minutes =
-        Math.floor(
-            timerSeconds / 60
-        );
+    const minutes=
+        Math.floor(timerSeconds/60);
 
-    const seconds =
-        timerSeconds % 60;
+    const seconds=
+        timerSeconds%60;
 
     document.getElementById(
         "timerDisplay"
-    ).textContent =
-        String(minutes).padStart(2,"0")
-        + ":" +
+    ).textContent=
+        String(minutes).padStart(2,"0")+
+        ":"+
         String(seconds).padStart(2,"0");
 
 }
@@ -1705,16 +2415,17 @@ function setTimer(minutes){
 
     stopTimerInterval();
 
-    timerMode = "countdown";
+    timerMode="countdown";
 
-    timerSeconds =
-        minutes * 60;
+    timerOriginalMinutes=minutes;
+
+    timerSeconds=minutes*60;
 
     updateTimerDisplay();
 
     document.getElementById(
         "timerStatus"
-    ).textContent =
+    ).textContent=
         `${minutes}-minute timer ready`;
 
 }
@@ -1722,55 +2433,48 @@ function setTimer(minutes){
 
 function startTimer(){
 
-    if(timerRunning){
-        return;
-    }
+    if(timerRunning)return;
 
     if(timerSeconds<=0){
 
-        timerMode = "stopwatch";
-
-        timerSeconds = 0;
+        timerMode="stopwatch";
+        timerSeconds=0;
 
     }
 
-    timerRunning = true;
+    timerRunning=true;
 
     document.getElementById(
         "timerStatus"
-    ).textContent =
-        "Timer running...";
+    ).textContent="Timer running...";
 
-    timerInterval =
-        setInterval(()=>{
+    timerInterval=setInterval(()=>{
 
-            if(
-                timerMode==="countdown"
-            ){
+        if(timerMode==="countdown"){
 
-                timerSeconds--;
-
-                if(timerSeconds<=0){
-
-                    timerSeconds = 0;
-
-                    stopTimerInterval();
-
-                    completeTimer();
-
-                    return;
-
-                }
-
-            }else{
-
-                timerSeconds++;
-
-            }
+            timerSeconds--;
 
             updateTimerDisplay();
 
-        },1000);
+            if(timerSeconds<=0){
+
+                timerSeconds=0;
+
+                stopTimerInterval();
+
+                completeTimer();
+
+            }
+
+        }else{
+
+            timerSeconds++;
+
+            updateTimerDisplay();
+
+        }
+
+    },1000);
 
 }
 
@@ -1783,8 +2487,7 @@ function pauseTimer(){
 
         document.getElementById(
             "timerStatus"
-        ).textContent =
-            "Paused";
+        ).textContent="Paused";
 
     }
 
@@ -1793,12 +2496,52 @@ function pauseTimer(){
 
 function stopTimer(){
 
-    stopTimerInterval();
+    if(timerRunning){
+
+        stopTimerInterval();
+
+        if(timerMode==="stopwatch"){
+
+            const minutes=
+                Math.floor(timerSeconds/60);
+
+            if(minutes>0){
+
+                const category=
+                    document.getElementById(
+                        "timerCategory"
+                    ).value;
+
+                const name=
+                    document.getElementById(
+                        "timerName"
+                    ).value.trim()||
+                    category;
+
+                addActivityRecord(
+                    category,
+                    name,
+                    minutes
+                );
+
+                document.getElementById(
+                    "timerStatus"
+                ).textContent=
+                    "Stopped and recorded.";
+
+                resetTimer();
+
+                return;
+
+            }
+
+        }
+
+    }
 
     document.getElementById(
         "timerStatus"
-    ).textContent =
-        "Stopped";
+    ).textContent="Stopped";
 
 }
 
@@ -1807,15 +2550,12 @@ function stopTimerInterval(){
 
     if(timerInterval){
 
-        clearInterval(
-            timerInterval
-        );
-
-        timerInterval = null;
+        clearInterval(timerInterval);
+        timerInterval=null;
 
     }
 
-    timerRunning = false;
+    timerRunning=false;
 
 }
 
@@ -1824,198 +2564,111 @@ function resetTimer(){
 
     stopTimerInterval();
 
-    timerSeconds = 0;
-
-    timerMode = "stopwatch";
+    timerSeconds=0;
+    timerOriginalMinutes=0;
+    timerMode="stopwatch";
 
     updateTimerDisplay();
 
     document.getElementById(
         "timerStatus"
-    ).textContent =
-        "Ready";
+    ).textContent="Ready";
 
 }
 
 
 function completeTimer(){
 
-    timerRunning = false;
-
-    updateTimerDisplay();
-
-    const category =
+    const category=
         document.getElementById(
             "timerCategory"
         ).value;
 
-    const name =
+    const name=
         document.getElementById(
             "timerName"
-        ).value.trim() ||
+        ).value.trim()||
         category;
 
-    let minutes = 0;
+    const minutes=timerOriginalMinutes;
 
-    if(timerMode==="countdown"){
+    if(minutes>0){
 
-        /*
-         * The selected timer duration is recovered
-         * from the display before completion.
-         */
-        minutes =
-            getTimerOriginalMinutes();
-
-    }
-
-    if(minutes<=0){
+        addActivityRecord(
+            category,
+            name,
+            minutes
+        );
 
         document.getElementById(
             "timerStatus"
-        ).textContent =
-            "Timer finished";
+        ).textContent=
+            "Completed and recorded.";
 
-        showMessage(
-            "Timer finished."
-        );
+        if(
+            "Notification" in window &&
+            Notification.permission==="granted"
+        ){
 
-        return;
+            try{
 
-    }
+                new Notification(
+                    "UPWARD",
+                    {
+                        body:
+                        `${name} completed — ${minutes} minutes recorded.`
+                    }
+                );
 
-    addActivityRecord(
-        category,
-        name,
-        minutes
-    );
+            }catch(e){}
 
-    document.getElementById(
-        "timerStatus"
-    ).textContent =
-        "Completed and recorded.";
-
-    if(
-        "Notification" in window &&
-        Notification.permission==="granted"
-    ){
-
-        new Notification(
-            "UPWARD",
-            {
-                body:
-                    `${name} completed — ${minutes} minutes recorded.`
-            }
-        );
+        }
 
     }
 
-    timerSeconds = 0;
-
-    timerMode = "stopwatch";
+    timerSeconds=0;
+    timerOriginalMinutes=0;
+    timerMode="stopwatch";
 
     updateTimerDisplay();
 
 }
 
 
-function getTimerOriginalMinutes(){
-
-    /*
-     * The timer duration is inferred from the
-     * selected preset by using the last selected
-     * duration stored here.
-     */
-
-    return window.upwardTimerMinutes || 0;
-
-}
-
-
-/* Override preset setter to remember duration */
-
-const originalSetTimer = setTimer;
-
-setTimer = function(minutes){
-
-    window.upwardTimerMinutes = minutes;
-
-    originalSetTimer(minutes);
-
-};
-
-
-/* ================= NOTIFICATION PERMISSION ================= */
-
-function requestNotificationPermission(){
-
-    if(!("Notification" in window)){
-
-        showMessage(
-            "Notifications are not supported on this device/browser."
-        );
-
-        return;
-
-    }
-
-    Notification.requestPermission()
-        .then(permission=>{
-
-            if(permission==="granted"){
-
-                showMessage(
-                    "UPWARD notifications enabled."
-                );
-
-            }else{
-
-                showMessage(
-                    "Notification permission was not granted."
-                );
-
-            }
-
-        });
-
-}
-
-
-/* ================= EXPORT ================= */
+/* ================= BACKUP ================= */
 
 function exportBackup(){
 
-    const backup = {
+    const backup={
 
-        version:2,
+        version:3,
 
         exportedAt:
             new Date().toISOString(),
 
-        activities:
-            getActivities(),
+        activities:getActivities(),
+
+        checkins:getCheckins(),
 
         spending:
             JSON.parse(
                 localStorage.getItem(
                     "upwardSpending"
-                ) || "[]"
+                )||"[]"
             )
 
     };
 
-    const blob =
-        new Blob(
-            [
-                JSON.stringify(
-                    backup,
-                    null,
-                    2
-                )
-            ],
-            {
-                type:"application/json"
-            }
-        );
+    const blob=new Blob(
+        [
+            JSON.stringify(
+                backup,
+                null,
+                2
+            )
+        ],
+        {type:"application/json"}
+    );
 
     downloadBlob(
         blob,
@@ -2025,91 +2678,83 @@ function exportBackup(){
 }
 
 
-/* ================= IMPORT ================= */
-
 function importBackup(event){
 
-    const file =
+    const file=
         event.target.files[0];
 
-    if(!file){
-        return;
-    }
+    if(!file)return;
 
-    const reader =
-        new FileReader();
+    const reader=new FileReader();
 
-    reader.onload =
-        function(){
+    reader.onload=function(){
 
-            try{
+        try{
 
-                const data =
-                    JSON.parse(
-                        reader.result
-                    );
+            const data=
+                JSON.parse(
+                    reader.result
+                );
 
-                /*
-                 * Supports both the new backup
-                 * structure and the original
-                 * activities array format.
-                 */
+            if(Array.isArray(data)){
 
-                if(
-                    Array.isArray(data)
-                ){
+                saveActivities(data);
 
-                    saveActivities(data);
+            }else if(
+                data.activities &&
+                Array.isArray(data.activities)
+            ){
 
-                }else if(
-                    data.activities &&
-                    Array.isArray(
-                        data.activities
-                    )
-                ){
+                saveActivities(
+                    data.activities
+                );
 
-                    saveActivities(
-                        data.activities
-                    );
+                if(data.checkins){
 
-                    if(
-                        Array.isArray(
-                            data.spending
-                        )
-                    ){
-
-                        localStorage.setItem(
-                            "upwardSpending",
-                            JSON.stringify(
-                                data.spending
-                            )
-                        );
-
-                    }
-
-                }else{
-
-                    throw new Error(
-                        "Invalid backup"
+                    saveCheckins(
+                        data.checkins
                     );
 
                 }
 
-                showMessage(
-                    "Backup imported successfully."
-                );
+                if(
+                    Array.isArray(
+                        data.spending
+                    )
+                ){
 
-                render();
+                    localStorage.setItem(
+                        "upwardSpending",
+                        JSON.stringify(
+                            data.spending
+                        )
+                    );
 
-            }catch(error){
+                }
 
-                alert(
-                    "Could not import this backup file."
+            }else{
+
+                throw new Error(
+                    "Invalid backup"
                 );
 
             }
 
-        };
+            showMessage(
+                "Backup imported successfully."
+            );
+
+            render();
+
+        }catch(e){
+
+            alert(
+                "Could not import this backup file."
+            );
+
+        }
+
+    };
 
     reader.readAsText(file);
 
@@ -2120,8 +2765,7 @@ function importBackup(event){
 
 function downloadCSV(){
 
-    const activities =
-        getActivities();
+    const activities=getActivities();
 
     if(!activities.length){
 
@@ -2133,29 +2777,27 @@ function downloadCSV(){
 
     }
 
-    const rows = [
-
+    const rows=[
         [
             "Date",
             "Activity",
             "Category",
             "Minutes"
         ]
-
     ];
 
     activities.forEach(item=>{
 
         rows.push([
-            item.date || "",
-            item.activityName || "",
-            item.category || "",
-            item.minutes || 0
+            item.date||"",
+            item.activityName||"",
+            item.category||"",
+            item.minutes||0
         ]);
 
     });
 
-    const csv =
+    const csv=
         rows.map(row=>
             row.map(value=>
                 `"${String(value)
@@ -2163,14 +2805,11 @@ function downloadCSV(){
             ).join(",")
         ).join("\n");
 
-    const blob =
+    downloadBlob(
         new Blob(
             [csv],
             {type:"text/csv;charset=utf-8"}
-        );
-
-    downloadBlob(
-        blob,
+        ),
         "upward-activities.csv"
     );
 
@@ -2179,20 +2818,16 @@ function downloadCSV(){
 
 /* ================= DOWNLOAD ================= */
 
-function downloadBlob(
-    blob,
-    filename
-){
+function downloadBlob(blob,filename){
 
-    const url =
+    const url=
         URL.createObjectURL(blob);
 
-    const a =
+    const a=
         document.createElement("a");
 
-    a.href = url;
-
-    a.download = filename;
+    a.href=url;
+    a.download=filename;
 
     document.body.appendChild(a);
 
@@ -2205,21 +2840,24 @@ function downloadBlob(
 }
 
 
-/* ================= CLEAR DATA ================= */
+/* ================= CLEAR ================= */
 
 function clearAllData(){
 
-    const confirmed =
-        confirm(
-            "This will permanently delete all UPWARD activity data on this device. Continue?"
-        );
+    if(!confirm(
+        "This will permanently delete all UPWARD activity, check-in and spending data on this device. Continue?"
+    )){
 
-    if(!confirmed){
         return;
+
     }
 
     localStorage.removeItem(
         "upwardActivities"
+    );
+
+    localStorage.removeItem(
+        "upwardCheckins"
     );
 
     localStorage.removeItem(
@@ -2257,6 +2895,8 @@ function render(){
 
     updateStats();
 
+    renderGoals();
+
     renderTodayActivities();
 
     renderTrackers();
@@ -2264,6 +2904,10 @@ function render(){
     renderTodayTrackers();
 
     renderWeekly();
+
+    renderProgress();
+
+    renderCheckin();
 
 }
 
@@ -2275,23 +2919,21 @@ render();
 
 /* ================= SERVICE WORKER ================= */
 
-if(
-    "serviceWorker" in navigator
-){
+if("serviceWorker" in navigator){
 
     window.addEventListener(
         "load",
         ()=>{
+
             navigator.serviceWorker
                 .register("./sw.js")
-                .catch(
-                    error=>{
-                        console.log(
-                            "Service worker registration failed:",
-                            error
-                        );
-                    }
+                .catch(error=>
+                    console.log(
+                        "Service worker registration failed:",
+                        error
+                    )
                 );
+
         }
     );
 
