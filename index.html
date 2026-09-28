@@ -1,10 +1,11 @@
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 
 <meta name="viewport"
-      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+   content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
 <meta name="theme-color" content="#667eea">
 
@@ -209,6 +210,11 @@ button{
     font-weight:600;
 }
 
+button:disabled{
+    opacity:.45;
+    cursor:not-allowed;
+}
+
 .btn-primary{
     background:var(--primary);
     color:white;
@@ -264,14 +270,16 @@ button{
 .timer-display{
     font-size:58px;
     font-weight:bold;
-    letter-spacing:2px;
-    margin:15px 0;
+    letter-spacing:3px;
+    margin:20px 0 8px;
     color:var(--primary);
+    font-variant-numeric:tabular-nums;
 }
 
 .timer-status{
     color:var(--muted);
     min-height:20px;
+    margin-bottom:18px;
 }
 
 .timer-buttons{
@@ -281,18 +289,12 @@ button{
     flex-wrap:wrap;
 }
 
-.preset-buttons{
-    display:flex;
-    justify-content:center;
-    gap:7px;
-    flex-wrap:wrap;
-    margin:12px 0;
-}
-
-.preset-buttons button{
-    padding:9px 13px;
-    background:#f0f2ff;
-    color:#4f5fd1;
+.timer-help{
+    max-width:500px;
+    margin:0 auto 20px;
+    color:var(--muted);
+    line-height:1.5;
+    font-size:14px;
 }
 
 .week-grid{
@@ -439,10 +441,15 @@ footer{
     }
 
     .timer-display{
-        font-size:48px;
+        font-size:45px;
+    }
+
+    .timer-buttons button{
+        min-width:130px;
     }
 }
 </style>
+
 </head>
 
 <body>
@@ -477,7 +484,7 @@ This Week
 </button>
 
 <button class="nav-btn" onclick="showPage('timer',this)">
-Timer
+Stopwatch
 </button>
 
 <button class="nav-btn" onclick="showPage('data',this)">
@@ -487,7 +494,6 @@ Data
 </div>
 
 <div id="message" class="message"></div>
-
 
 <!-- TODAY -->
 
@@ -523,7 +529,6 @@ Data
 
 </div>
 
-
 <div class="card">
 
 <h2>Today's Goal Progress</h2>
@@ -531,7 +536,6 @@ Data
 <div id="todayGoals"></div>
 
 </div>
-
 
 <div class="card">
 
@@ -581,7 +585,6 @@ placeholder="e.g. 30">
 
 </div>
 
-
 <div class="card">
 
 <h2>Today's Activities</h2>
@@ -589,7 +592,6 @@ placeholder="e.g. 30">
 <div id="todayActivityList" class="activity-list"></div>
 
 </div>
-
 
 <div class="card">
 
@@ -600,7 +602,6 @@ placeholder="e.g. 30">
 </div>
 
 </section>
-
 
 <!-- TRACKERS -->
 
@@ -617,7 +618,6 @@ Track each area separately. Daily totals are calculated automatically.
 <div id="trackerGrid" class="activity-grid"></div>
 
 </div>
-
 
 <div class="card">
 
@@ -679,7 +679,6 @@ Add Activity
 
 </section>
 
-
 <!-- PROGRESS -->
 
 <section id="progress" class="page">
@@ -718,7 +717,6 @@ Average/day
 
 </div>
 
-
 <div class="card">
 
 <h2>7-Day Activity Chart</h2>
@@ -728,7 +726,6 @@ Average/day
 </div>
 
 </div>
-
 
 <div class="card">
 
@@ -740,7 +737,6 @@ Average/day
 
 </div>
 
-
 <div class="card">
 
 <h2>Category Balance — Last 30 Days</h2>
@@ -748,7 +744,6 @@ Average/day
 <div id="categoryBalance"></div>
 
 </div>
-
 
 <div class="card">
 
@@ -782,7 +777,6 @@ Level
 
 </section>
 
-
 <!-- CHECK-IN -->
 
 <section id="checkin" class="page">
@@ -799,11 +793,7 @@ Take a moment to record how your day is going.
 
 <div class="rating" id="ratingButtons">
 
-<button onclick="selectRating(1)">1</button>
-<button onclick="selectRating(2)">2</button>
-<button onclick="selectRating(3)">3</button>
-<button onclick="selectRating(4)">4</button>
-<button onclick="selectRating(5)">5</button>
+<button onclick="selectRating(1)">1</button> <button onclick="selectRating(2)">2</button> <button onclick="selectRating(3)">3</button> <button onclick="selectRating(4)">4</button> <button onclick="selectRating(5)">5</button>
 
 </div>
 
@@ -843,7 +833,6 @@ Save Today's Check-in
 
 </div>
 
-
 <div class="card">
 
 <h2>Today's Check-in</h2>
@@ -853,7 +842,6 @@ Save Today's Check-in
 </div>
 
 </section>
-
 
 <!-- WEEK -->
 
@@ -867,7 +855,6 @@ Save Today's Check-in
 
 </div>
 
-
 <div class="card">
 
 <h2>Weekly Activity Breakdown</h2>
@@ -875,7 +862,6 @@ Save Today's Check-in
 <div id="weeklyDetails"></div>
 
 </div>
-
 
 <div class="card">
 
@@ -887,17 +873,18 @@ Save Today's Check-in
 
 </section>
 
-
-<!-- TIMER -->
+<!-- UNIVERSAL STOPWATCH -->
 
 <section id="timer" class="page">
 
 <div class="card timer">
 
-<h2>Activity Timer</h2>
+<h2>Universal Stopwatch</h2>
 
-<p style="color:var(--muted)">
-Start a timer and UPWARD will record the completed session.
+<p class="timer-help">
+Use this for walking, exercise, recreation, meditation,
+work, study or any other activity. Start when you begin
+and stop &amp; save when you finish.
 </p>
 
 <div class="form-group"
@@ -915,6 +902,8 @@ style="max-width:350px;margin:auto">
 <option>Recreation</option>
 <option>Meditation</option>
 <option>Social</option>
+<option>Mindfulness</option>
+<option>Other</option>
 
 </select>
 
@@ -926,52 +915,47 @@ style="max-width:350px;margin:12px auto">
 <label>Activity name</label>
 
 <input id="timerName"
-placeholder="e.g. Study">
+placeholder="e.g. Evening walk">
 
 </div>
 
 <div class="timer-display" id="timerDisplay">
-00:00
+00:00:00
 </div>
 
 <div class="timer-status" id="timerStatus">
 Ready
 </div>
 
-<div class="preset-buttons">
-
-<button onclick="setTimer(10)">10 min</button>
-<button onclick="setTimer(25)">25 min</button>
-<button onclick="setTimer(30)">30 min</button>
-<button onclick="setTimer(45)">45 min</button>
-<button onclick="setTimer(60)">60 min</button>
-
-</div>
-
 <div class="timer-buttons">
 
-<button class="btn-primary" onclick="startTimer()">
-Start
-</button>
+<button id="timerStartBtn"
+class="btn-primary"
+onclick="startTimer()">
+Start </button>
 
-<button class="btn-secondary" onclick="pauseTimer()">
-Pause
-</button>
+<button id="timerPauseBtn"
+class="btn-secondary"
+onclick="pauseTimer()"
+disabled>
+Pause </button>
 
-<button class="btn-danger" onclick="stopTimer()">
-Stop
-</button>
+<button id="timerStopBtn"
+class="btn-danger"
+onclick="stopTimer()"
+disabled>
+Stop & Save </button>
 
-<button class="btn-success" onclick="resetTimer()">
-Reset
-</button>
+<button id="timerResetBtn"
+class="btn-success"
+onclick="resetTimer()">
+Reset </button>
 
 </div>
 
 </div>
 
 </section>
-
 
 <!-- DATA -->
 
@@ -993,8 +977,7 @@ Export Backup
 
 <button class="btn-secondary"
 onclick="document.getElementById('importFile').click()">
-Import Backup
-</button>
+Import Backup </button>
 
 <button class="btn-secondary" onclick="downloadCSV()">
 Download CSV
@@ -1014,7 +997,6 @@ style="display:none"
 onchange="importBackup(event)">
 
 </div>
-
 
 <div class="card">
 
@@ -1038,13 +1020,15 @@ Small actions. Real progress.
 UPWARD — Small actions. Real progress.
 </footer>
 
-
 <script>
 
 /* =========================================================
-   UPWARD STAGE 3
+   UPWARD PHASE 1
+   Universal Stopwatch
    Existing storage preserved:
    upwardActivities
+   upwardCheckins
+   upwardSpending
    ========================================================= */
 
 const CATEGORIES = [
@@ -1075,11 +1059,15 @@ const TARGETS = {
 
 let selectedRating = 0;
 
-let timerSeconds = 0;
+
+/* =========================================================
+   UNIVERSAL STOPWATCH STATE
+   ========================================================= */
+
+let timerElapsedSeconds = 0;
 let timerInterval = null;
 let timerRunning = false;
-let timerMode = "stopwatch";
-let timerOriginalMinutes = 0;
+let timerStartedAt = null;
 
 
 /* ================= STORAGE ================= */
@@ -1317,7 +1305,7 @@ function addActivityRecord(category,name,minutes){
     saveActivities(activities);
 
     showMessage(
-        `${category}: ${minutes} minutes recorded.`
+        `${category}: ${formatMinutes(minutes)} recorded.`
     );
 
     render();
@@ -1367,6 +1355,21 @@ function getCategorySessions(category,dates){
             item.category===category &&
             dates.includes(item.date)
         ).length;
+
+}
+
+
+/* ================= NUMBER FORMATTING ================= */
+
+function formatMinutes(minutes){
+
+    const n=Number(minutes)||0;
+
+    if(Number.isInteger(n)){
+        return String(n)+" min";
+    }
+
+    return n.toFixed(2).replace(/0+$/,"")+" min";
 
 }
 
@@ -1478,13 +1481,28 @@ function updateStats(){
         .textContent=today.length;
 
     document.getElementById("todayMinutes")
-        .textContent=todayMinutes;
+        .textContent=formatNumber(todayMinutes);
 
     document.getElementById("totalMinutes")
-        .textContent=totalMinutes;
+        .textContent=formatNumber(totalMinutes);
 
     document.getElementById("dayStreak")
         .textContent=calculateStreak();
+
+}
+
+
+/* ================= NUMBER DISPLAY ================= */
+
+function formatNumber(value){
+
+    const n=Number(value)||0;
+
+    if(Number.isInteger(n)){
+        return String(n);
+    }
+
+    return n.toFixed(2).replace(/0+$/,"");
 
 }
 
@@ -1530,7 +1548,7 @@ function renderTodayActivities(){
                         item.category||"Other"
                     )}
                     ·
-                    ${Number(item.minutes)||0}
+                    ${formatNumber(item.minutes||0)}
                     min
                 </small>
 
@@ -1592,7 +1610,7 @@ function renderGoals(){
                     <strong>${category}</strong>
 
                     <span>
-                        ${minutes}/${target} min
+                        ${formatNumber(minutes)}/${target} min
                     </span>
 
                 </div>
@@ -1649,7 +1667,7 @@ function renderTrackers(){
                 <h3>${category}</h3>
 
                 <div class="minutes">
-                    ${minutes} min
+                    ${formatNumber(minutes)} min
                 </div>
 
                 <small>
@@ -1699,7 +1717,7 @@ function renderTodayTrackers(){
                 <h3>${category}</h3>
 
                 <div class="minutes">
-                    ${minutes}
+                    ${formatNumber(minutes)}
                 </div>
 
                 <small>minutes today</small>
@@ -1756,7 +1774,7 @@ function renderWeekly(){
                     justify-content:space-between">
 
                     <strong>${category}</strong>
-                    <strong>${minutes} min</strong>
+                    <strong>${formatNumber(minutes)} min</strong>
 
                 </div>
 
@@ -1807,7 +1825,7 @@ function renderWeekly(){
                         </strong>
 
                         <span class="day-minutes">
-                            ${minutes}
+                            ${formatNumber(minutes)}
                         </span>
 
                         <small>min</small>
@@ -1871,7 +1889,7 @@ function renderWeeklySummary(){
 
             <div class="insight">
                 Weekly minutes
-                <strong>${total}</strong>
+                <strong>${formatNumber(total)}</strong>
             </div>
 
             <div class="insight">
@@ -1886,7 +1904,7 @@ function renderWeeklySummary(){
 
             <div class="insight">
                 Daily average
-                <strong>${Math.round(total/7)}</strong>
+                <strong>${formatNumber(total/7)}</strong>
             </div>
 
         </div>
@@ -1928,7 +1946,7 @@ function renderProgress(){
 
     document.getElementById(
         "averageMinutes"
-    ).textContent=Math.round(total30/30);
+    ).textContent=formatNumber(total30/30);
 
     drawWeeklyChart();
     drawMonthlyChart();
@@ -2059,7 +2077,7 @@ function drawBarChart(ctx,w,h,values,labels){
         if(value>0){
 
             ctx.fillText(
-                value,
+                formatNumber(value),
                 x,
                 y-5
             );
@@ -2181,7 +2199,7 @@ function renderCategoryBalance(){
                     <strong>${item.category}</strong>
 
                     <span>
-                        ${item.minutes} min
+                        ${formatNumber(item.minutes)} min
                     </span>
 
                 </div>
@@ -2391,105 +2409,172 @@ function renderCheckin(){
 }
 
 
-/* ================= TIMER ================= */
+/* =========================================================
+   UNIVERSAL STOPWATCH
+   ========================================================= */
 
-function updateTimerDisplay(){
+/*
+   The stopwatch uses timestamps rather than simply counting
+   setInterval ticks. This keeps elapsed time much more accurate
+   if the browser temporarily slows or pauses JavaScript.
+*/
+
+
+function formatStopwatchTime(totalSeconds){
+
+    totalSeconds=Math.max(
+        0,
+        Math.floor(totalSeconds)
+    );
+
+    const hours=
+        Math.floor(totalSeconds/3600);
 
     const minutes=
-        Math.floor(timerSeconds/60);
+        Math.floor((totalSeconds%3600)/60);
 
     const seconds=
-        timerSeconds%60;
+        totalSeconds%60;
 
-    document.getElementById(
-        "timerDisplay"
-    ).textContent=
+    return (
+        String(hours).padStart(2,"0")+
+        ":"+
         String(minutes).padStart(2,"0")+
         ":"+
-        String(seconds).padStart(2,"0");
+        String(seconds).padStart(2,"0")
+    );
 
 }
 
 
-function setTimer(minutes){
-
-    stopTimerInterval();
-
-    timerMode="countdown";
-
-    timerOriginalMinutes=minutes;
-
-    timerSeconds=minutes*60;
-
-    updateTimerDisplay();
+function updateTimerDisplay(){
 
     document.getElementById(
-        "timerStatus"
+        "timerDisplay"
     ).textContent=
-        `${minutes}-minute timer ready`;
+        formatStopwatchTime(
+            timerElapsedSeconds
+        );
+
+}
+
+
+function updateTimerButtons(){
+
+    const startBtn=
+        document.getElementById("timerStartBtn");
+
+    const pauseBtn=
+        document.getElementById("timerPauseBtn");
+
+    const stopBtn=
+        document.getElementById("timerStopBtn");
+
+    if(timerRunning){
+
+        startBtn.disabled=true;
+        pauseBtn.disabled=false;
+        stopBtn.disabled=false;
+
+        pauseBtn.textContent="Pause";
+
+    }else{
+
+        startBtn.disabled=false;
+
+        pauseBtn.disabled=
+            timerElapsedSeconds<=0;
+
+        stopBtn.disabled=
+            timerElapsedSeconds<=0;
+
+        if(timerElapsedSeconds>0){
+
+            startBtn.textContent="Resume";
+
+        }else{
+
+            startBtn.textContent="Start";
+
+        }
+
+    }
+
+}
+
+
+function getCurrentElapsedSeconds(){
+
+    if(!timerRunning || !timerStartedAt){
+
+        return timerElapsedSeconds;
+
+    }
+
+    return Math.max(
+        0,
+        timerElapsedSeconds+
+        Math.floor(
+            (Date.now()-timerStartedAt)/1000
+        )
+    );
 
 }
 
 
 function startTimer(){
 
-    if(timerRunning)return;
-
-    if(timerSeconds<=0){
-
-        timerMode="stopwatch";
-        timerSeconds=0;
-
+    if(timerRunning){
+        return;
     }
 
+    timerStartedAt=Date.now();
     timerRunning=true;
 
     document.getElementById(
         "timerStatus"
-    ).textContent="Timer running...";
+    ).textContent=
+        timerElapsedSeconds>0
+        ? "Stopwatch resumed..."
+        : "Stopwatch running...";
+
+    updateTimerButtons();
+    updateTimerDisplay();
 
     timerInterval=setInterval(()=>{
 
-        if(timerMode==="countdown"){
+        timerElapsedSeconds=
+            getCurrentElapsedSeconds();
 
-            timerSeconds--;
+        updateTimerDisplay();
 
-            updateTimerDisplay();
-
-            if(timerSeconds<=0){
-
-                timerSeconds=0;
-
-                stopTimerInterval();
-
-                completeTimer();
-
-            }
-
-        }else{
-
-            timerSeconds++;
-
-            updateTimerDisplay();
-
-        }
-
-    },1000);
+    },250);
 
 }
 
 
 function pauseTimer(){
 
-    stopTimerInterval();
-
-    if(timerSeconds>0){
-
-        document.getElementById(
-            "timerStatus"
-        ).textContent="Paused";
-
+    if(!timerRunning){
+        return;
     }
+
+    timerElapsedSeconds=
+        getCurrentElapsedSeconds();
+
+    timerStartedAt=null;
+    timerRunning=false;
+
+    stopTimerIntervalOnly();
+
+    updateTimerDisplay();
+
+    document.getElementById(
+        "timerStatus"
+    ).textContent=
+        "Paused — press Resume to continue.";
+
+    updateTimerButtons();
 
 }
 
@@ -2498,86 +2583,27 @@ function stopTimer(){
 
     if(timerRunning){
 
-        stopTimerInterval();
+        timerElapsedSeconds=
+            getCurrentElapsedSeconds();
 
-        if(timerMode==="stopwatch"){
+        timerStartedAt=null;
+        timerRunning=false;
 
-            const minutes=
-                Math.floor(timerSeconds/60);
-
-            if(minutes>0){
-
-                const category=
-                    document.getElementById(
-                        "timerCategory"
-                    ).value;
-
-                const name=
-                    document.getElementById(
-                        "timerName"
-                    ).value.trim()||
-                    category;
-
-                addActivityRecord(
-                    category,
-                    name,
-                    minutes
-                );
-
-                document.getElementById(
-                    "timerStatus"
-                ).textContent=
-                    "Stopped and recorded.";
-
-                resetTimer();
-
-                return;
-
-            }
-
-        }
+        stopTimerIntervalOnly();
 
     }
 
-    document.getElementById(
-        "timerStatus"
-    ).textContent="Stopped";
+    if(timerElapsedSeconds<=0){
 
-}
+        document.getElementById(
+            "timerStatus"
+        ).textContent=
+            "Nothing to save.";
 
-
-function stopTimerInterval(){
-
-    if(timerInterval){
-
-        clearInterval(timerInterval);
-        timerInterval=null;
+        updateTimerButtons();
+        return;
 
     }
-
-    timerRunning=false;
-
-}
-
-
-function resetTimer(){
-
-    stopTimerInterval();
-
-    timerSeconds=0;
-    timerOriginalMinutes=0;
-    timerMode="stopwatch";
-
-    updateTimerDisplay();
-
-    document.getElementById(
-        "timerStatus"
-    ).textContent="Ready";
-
-}
-
-
-function completeTimer(){
 
     const category=
         document.getElementById(
@@ -2590,47 +2616,71 @@ function completeTimer(){
         ).value.trim()||
         category;
 
-    const minutes=timerOriginalMinutes;
+    /*
+       Preserve the existing activity schema by saving minutes.
+       Decimal minutes allow the stopwatch to retain more accurate
+       duration than rounding everything to a whole minute.
+    */
 
-    if(minutes>0){
-
-        addActivityRecord(
-            category,
-            name,
-            minutes
+    const minutes=
+        Number(
+            (timerElapsedSeconds/60).toFixed(2)
         );
 
-        document.getElementById(
-            "timerStatus"
-        ).textContent=
-            "Completed and recorded.";
+    addActivityRecord(
+        category,
+        name,
+        minutes
+    );
 
-        if(
-            "Notification" in window &&
-            Notification.permission==="granted"
-        ){
+    document.getElementById(
+        "timerStatus"
+    ).textContent=
+        `Saved — ${formatStopwatchTime(timerElapsedSeconds)}`;
 
-            try{
+    timerElapsedSeconds=0;
+    timerStartedAt=null;
+    timerRunning=false;
 
-                new Notification(
-                    "UPWARD",
-                    {
-                        body:
-                        `${name} completed — ${minutes} minutes recorded.`
-                    }
-                );
+    updateTimerDisplay();
+    updateTimerButtons();
 
-            }catch(e){}
+    /*
+       Leave the selected activity and name in place so the next
+       session can be started quickly.
+    */
 
-        }
+}
+
+
+function stopTimerIntervalOnly(){
+
+    if(timerInterval){
+
+        clearInterval(timerInterval);
+        timerInterval=null;
 
     }
 
-    timerSeconds=0;
-    timerOriginalMinutes=0;
-    timerMode="stopwatch";
+}
+
+
+function resetTimer(){
+
+    stopTimerIntervalOnly();
+
+    timerElapsedSeconds=0;
+    timerStartedAt=null;
+    timerRunning=false;
 
     updateTimerDisplay();
+
+    document.getElementById(
+        "timerStatus"
+    ).textContent=
+        "Ready";
+
+    updateTimerButtons();
 
 }
 
@@ -2641,7 +2691,7 @@ function exportBackup(){
 
     const backup={
 
-        version:3,
+        version:4,
 
         exportedAt:
             new Date().toISOString(),
@@ -2758,6 +2808,8 @@ function importBackup(event){
 
     reader.readAsText(file);
 
+    event.target.value="";
+
 }
 
 
@@ -2835,111 +2887,4 @@ function downloadBlob(blob,filename){
 
     a.remove();
 
-    URL.revokeObjectURL(url);
-
-}
-
-
-/* ================= CLEAR ================= */
-
-function clearAllData(){
-
-    if(!confirm(
-        "This will permanently delete all UPWARD activity, check-in and spending data on this device. Continue?"
-    )){
-
-        return;
-
-    }
-
-    localStorage.removeItem(
-        "upwardActivities"
-    );
-
-    localStorage.removeItem(
-        "upwardCheckins"
-    );
-
-    localStorage.removeItem(
-        "upwardSpending"
-    );
-
-    resetTimer();
-
-    render();
-
-    showMessage(
-        "All UPWARD data has been cleared."
-    );
-
-}
-
-
-/* ================= SECURITY ================= */
-
-function escapeHTML(value){
-
-    return String(value)
-        .replace(/&/g,"&amp;")
-        .replace(/</g,"&lt;")
-        .replace(/>/g,"&gt;")
-        .replace(/"/g,"&quot;")
-        .replace(/'/g,"&#039;");
-
-}
-
-
-/* ================= RENDER ================= */
-
-function render(){
-
-    updateStats();
-
-    renderGoals();
-
-    renderTodayActivities();
-
-    renderTrackers();
-
-    renderTodayTrackers();
-
-    renderWeekly();
-
-    renderProgress();
-
-    renderCheckin();
-
-}
-
-
-/* ================= INITIALISE ================= */
-
-render();
-
-
-/* ================= SERVICE WORKER ================= */
-
-if("serviceWorker" in navigator){
-
-    window.addEventListener(
-        "load",
-        ()=>{
-
-            navigator.serviceWorker
-                .register("./sw.js")
-                .catch(error=>
-                    console.log(
-                        "Service worker registration failed:",
-                        error
-                    )
-                );
-
-        }
-    );
-
-}
-
-</script>
-
-</body>
-</html>
+    URL.revo
