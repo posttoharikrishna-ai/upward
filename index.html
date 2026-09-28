@@ -1,36 +1,34 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-
 <meta name="theme-color" content="#667eea">
-<meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
 
-<link rel="manifest" href="./manifest.json">
-
 <title>UPWARD — Small actions. Real progress.</title>
 
+<link rel="manifest" href="./manifest.json">
+
 <style>
+/* =========================================================
+   UPWARD — COMPLETE SINGLE FILE APP
+   ========================================================= */
+
 :root{
-    --bg:#f4f6fb;
+    --bg:#f5f7fb;
     --card:#ffffff;
-    --text:#20242d;
-    --muted:#6f7785;
-    --border:#e3e7ef;
+    --text:#1f2937;
+    --muted:#6b7280;
+    --border:#e5e7eb;
     --primary:#667eea;
-    --primary2:#764ba2;
-    --success:#20a464;
-    --warning:#e99a19;
-    --danger:#dc4b4b;
-    --soft:#f0f2ff;
-    --shadow:0 5px 20px rgba(30,40,70,.08);
+    --primary-dark:#4f46e5;
+    --success:#16a34a;
+    --warning:#d97706;
+    --danger:#dc2626;
+    --shadow:0 4px 16px rgba(0,0,0,.07);
     --radius:16px;
-    --chart:#667eea;
-    --chart2:#20a464;
 }
 
 *{
@@ -46,20 +44,16 @@ body{
     font-family:Arial,Helvetica,sans-serif;
     background:var(--bg);
     color:var(--text);
-    line-height:1.45;
-    transition:.2s;
+    min-height:100vh;
 }
 
 body.dark{
-    --bg:#10131a;
-    --card:#191e27;
-    --text:#f1f3f7;
-    --muted:#a8afbd;
-    --border:#303744;
-    --soft:#242a3b;
-    --shadow:0 5px 20px rgba(0,0,0,.25);
-    --chart:#9aa8ff;
-    --chart2:#4dd895;
+    --bg:#111827;
+    --card:#1f2937;
+    --text:#f9fafb;
+    --muted:#9ca3af;
+    --border:#374151;
+    --shadow:0 4px 18px rgba(0,0,0,.25);
 }
 
 button,
@@ -79,150 +73,205 @@ button{
     padding-bottom:80px;
 }
 
+/* HEADER */
+
 header{
-    background:linear-gradient(135deg,var(--primary),var(--primary2));
+    background:linear-gradient(135deg,#667eea,#764ba2);
     color:white;
-    padding:22px 18px 18px;
+    padding:22px 18px;
     position:sticky;
     top:0;
-    z-index:20;
-    box-shadow:0 4px 18px rgba(0,0,0,.15);
+    z-index:50;
+    box-shadow:0 3px 15px rgba(0,0,0,.15);
 }
 
-.header-row{
+.header-inner{
     max-width:1100px;
     margin:auto;
     display:flex;
-    align-items:center;
     justify-content:space-between;
-    gap:15px;
+    align-items:center;
+    gap:12px;
 }
 
-.logo h1{
-    margin:0;
-    font-size:27px;
+.logo{
+    font-size:25px;
+    font-weight:800;
+    letter-spacing:.3px;
 }
 
-.logo p{
-    margin:3px 0 0;
+.tagline{
+    font-size:12px;
     opacity:.9;
-    font-size:13px;
+    margin-top:3px;
 }
 
-.theme-btn{
+.header-actions{
+    display:flex;
+    gap:8px;
+}
+
+.header-btn{
     border:1px solid rgba(255,255,255,.35);
     background:rgba(255,255,255,.15);
     color:white;
-    border-radius:12px;
-    padding:9px 12px;
+    border-radius:10px;
+    padding:9px 11px;
 }
+
+/* NAV */
 
 nav{
-    max-width:1100px;
-    margin:12px auto 0;
-    display:flex;
-    gap:7px;
+    position:sticky;
+    top:77px;
+    z-index:40;
+    background:var(--card);
+    border-bottom:1px solid var(--border);
     overflow-x:auto;
-    scrollbar-width:none;
+    white-space:nowrap;
 }
 
-nav::-webkit-scrollbar{
-    display:none;
+.nav-inner{
+    max-width:1100px;
+    margin:auto;
+    display:flex;
 }
 
 .nav-btn{
-    flex:0 0 auto;
     border:0;
-    background:rgba(255,255,255,.13);
-    color:white;
-    border-radius:11px;
-    padding:9px 12px;
+    background:none;
+    color:var(--muted);
+    padding:13px 14px;
+    font-weight:700;
     font-size:13px;
+    flex:none;
 }
 
 .nav-btn.active{
-    background:white;
     color:var(--primary);
-    font-weight:bold;
+    border-bottom:3px solid var(--primary);
 }
 
-main{
-    padding:18px;
-}
+/* PAGE */
 
 .page{
     display:none;
+    padding:18px;
 }
 
 .page.active{
     display:block;
 }
 
+.page-title{
+    font-size:25px;
+    font-weight:800;
+    margin:5px 0 4px;
+}
+
+.page-subtitle{
+    color:var(--muted);
+    margin:0 0 18px;
+    line-height:1.5;
+}
+
+/* CARDS */
+
+.grid{
+    display:grid;
+    grid-template-columns:repeat(2,minmax(0,1fr));
+    gap:14px;
+}
+
+.grid-3{
+    display:grid;
+    grid-template-columns:repeat(3,minmax(0,1fr));
+    gap:14px;
+}
+
 .card{
     background:var(--card);
     border:1px solid var(--border);
     border-radius:var(--radius);
+    padding:17px;
     box-shadow:var(--shadow);
-    padding:18px;
-    margin-bottom:16px;
+    margin-bottom:14px;
 }
 
 .card h2,
 .card h3{
-    margin:0 0 12px;
-}
-
-.muted{
-    color:var(--muted);
-}
-
-.small{
-    font-size:13px;
-}
-
-.grid{
-    display:grid;
-    gap:14px;
-}
-
-.grid-2{
-    grid-template-columns:repeat(2,minmax(0,1fr));
-}
-
-.grid-3{
-    grid-template-columns:repeat(3,minmax(0,1fr));
-}
-
-.grid-4{
-    grid-template-columns:repeat(4,minmax(0,1fr));
+    margin-top:0;
 }
 
 .stat{
-    background:var(--soft);
-    border-radius:14px;
-    padding:15px;
+    font-size:30px;
+    font-weight:800;
+    margin:5px 0;
 }
 
 .stat-label{
     color:var(--muted);
-    font-size:12px;
-    margin-bottom:4px;
+    font-size:13px;
 }
 
-.stat-value{
-    font-size:25px;
-    font-weight:bold;
+.badge{
+    display:inline-block;
+    padding:4px 9px;
+    border-radius:999px;
+    background:rgba(102,126,234,.12);
+    color:var(--primary);
+    font-size:11px;
+    font-weight:800;
+}
+
+.badge.success{
+    background:rgba(22,163,74,.12);
+    color:var(--success);
+}
+
+.badge.warning{
+    background:rgba(217,119,6,.12);
+    color:var(--warning);
+}
+
+.badge.danger{
+    background:rgba(220,38,38,.12);
+    color:var(--danger);
+}
+
+/* FORMS */
+
+.form-grid{
+    display:grid;
+    grid-template-columns:repeat(2,minmax(0,1fr));
+    gap:12px;
+}
+
+.form-group{
+    margin-bottom:12px;
+}
+
+.form-group.full{
+    grid-column:1/-1;
+}
+
+label{
+    display:block;
+    font-size:12px;
+    font-weight:800;
+    color:var(--muted);
+    margin-bottom:6px;
 }
 
 input,
 select,
 textarea{
     width:100%;
+    padding:11px 12px;
     border:1px solid var(--border);
+    border-radius:10px;
     background:var(--card);
     color:var(--text);
-    border-radius:10px;
-    padding:10px 11px;
     outline:none;
 }
 
@@ -237,22 +286,14 @@ textarea{
     resize:vertical;
 }
 
-label{
-    display:block;
-    font-size:12px;
-    color:var(--muted);
-    margin:0 0 5px;
-}
-
-.form-group{
-    margin-bottom:11px;
-}
+/* BUTTONS */
 
 .btn{
     border:0;
     border-radius:10px;
     padding:10px 14px;
-    font-weight:bold;
+    font-weight:800;
+    margin:3px;
 }
 
 .btn-primary{
@@ -265,183 +306,123 @@ label{
     color:white;
 }
 
-.btn-danger{
-    background:var(--danger);
-    color:white;
-}
-
 .btn-warning{
     background:var(--warning);
     color:white;
 }
 
+.btn-danger{
+    background:var(--danger);
+    color:white;
+}
+
 .btn-secondary{
-    background:var(--soft);
-    color:var(--text);
-    border:1px solid var(--border);
-}
-
-.btn-row{
-    display:flex;
-    flex-wrap:wrap;
-    gap:8px;
-}
-
-.progress-wrap{
     background:var(--border);
-    height:10px;
-    border-radius:20px;
+    color:var(--text);
+}
+
+.btn-small{
+    padding:7px 10px;
+    font-size:12px;
+}
+
+/* PROGRESS */
+
+.progress{
+    height:9px;
+    background:var(--border);
+    border-radius:99px;
     overflow:hidden;
+    margin:8px 0;
 }
 
 .progress-bar{
     height:100%;
-    background:linear-gradient(90deg,var(--primary),var(--primary2));
-    border-radius:20px;
+    background:linear-gradient(90deg,#667eea,#764ba2);
+    border-radius:99px;
     transition:.3s;
 }
 
-.badge{
-    display:inline-block;
-    padding:4px 8px;
-    border-radius:20px;
-    font-size:11px;
-    font-weight:bold;
-    background:var(--soft);
-}
+/* ACTIVITY / TOPIC LIST */
 
-.badge-high{
-    background:#ffe0e0;
-    color:#a72c2c;
-}
-
-.badge-medium{
-    background:#fff0d0;
-    color:#936000;
-}
-
-.badge-standard{
-    background:#dff5e8;
-    color:#167244;
-}
-
-body.dark .badge-high{
-    background:#48272b;
-    color:#ffaaa8;
-}
-
-body.dark .badge-medium{
-    background:#4b3b20;
-    color:#ffd48b;
-}
-
-body.dark .badge-standard{
-    background:#193c2a;
-    color:#8ce0ae;
-}
-
-.message{
-    position:fixed;
-    left:50%;
-    bottom:20px;
-    transform:translateX(-50%);
-    z-index:100;
-    background:#222;
-    color:white;
-    padding:11px 16px;
-    border-radius:10px;
-    box-shadow:var(--shadow);
-    display:none;
-    max-width:90%;
-    text-align:center;
-}
-
-.message.show{
-    display:block;
-}
-
-.activity-form{
-    display:grid;
-    grid-template-columns:2fr 1fr 1fr auto;
-    gap:10px;
-    align-items:end;
-}
-
-.activity-item{
+.list{
     display:flex;
-    justify-content:space-between;
-    align-items:center;
+    flex-direction:column;
     gap:10px;
-    border-bottom:1px solid var(--border);
-    padding:11px 0;
 }
 
-.activity-item:last-child{
-    border-bottom:0;
-}
-
-.activity-main{
-    min-width:0;
-}
-
-.activity-name{
-    font-weight:bold;
-}
-
-.category-card{
+.list-item{
     border:1px solid var(--border);
-    border-radius:14px;
-    padding:14px;
+    border-radius:12px;
+    padding:13px;
+    background:var(--card);
 }
 
-.category-head{
+.list-main{
     display:flex;
     justify-content:space-between;
+    align-items:flex-start;
     gap:10px;
-    margin-bottom:8px;
 }
 
-canvas{
-    width:100%;
-    display:block;
+.list-title{
+    font-weight:800;
 }
 
-.empty{
-    text-align:center;
+.list-meta{
     color:var(--muted);
-    padding:25px 10px;
+    font-size:12px;
+    margin-top:4px;
+    line-height:1.5;
 }
 
-.rating{
+.list-actions{
     display:flex;
-    gap:5px;
+    flex-wrap:wrap;
+    gap:4px;
+    margin-top:9px;
 }
 
-.rating button{
-    border:0;
-    background:none;
-    font-size:30px;
-    padding:2px;
-    opacity:.35;
+/* HERO */
+
+.hero{
+    background:linear-gradient(135deg,#667eea,#764ba2);
+    color:white;
+    border-radius:20px;
+    padding:22px;
+    margin-bottom:16px;
 }
 
-.rating button.selected{
-    opacity:1;
+.hero h1{
+    margin:0 0 5px;
+    font-size:27px;
+}
+
+.hero p{
+    margin:0;
+    opacity:.9;
+}
+
+/* TIMER */
+
+.timer{
+    text-align:center;
+    padding:20px 10px;
 }
 
 .timer-display{
-    text-align:center;
     font-size:58px;
-    font-weight:bold;
+    font-weight:900;
     letter-spacing:2px;
-    padding:15px 0;
+    margin:15px 0;
 }
 
-.timer-selects{
-    display:grid;
-    grid-template-columns:1fr 2fr;
-    gap:10px;
+.timer-context{
+    color:var(--muted);
+    min-height:20px;
 }
+
+/* TABLE */
 
 .table-wrap{
     overflow-x:auto;
@@ -450,15 +431,14 @@ canvas{
 table{
     width:100%;
     border-collapse:collapse;
-    min-width:700px;
+    font-size:13px;
 }
 
 th,
 td{
-    padding:10px 8px;
     border-bottom:1px solid var(--border);
+    padding:10px 7px;
     text-align:left;
-    font-size:13px;
 }
 
 th{
@@ -467,172 +447,114 @@ th{
     text-transform:uppercase;
 }
 
-.topic-row{
-    border:1px solid var(--border);
-    border-radius:13px;
+/* ALERT */
+
+.alert{
     padding:13px;
-    margin-bottom:10px;
-}
-
-.topic-top{
-    display:flex;
-    justify-content:space-between;
-    gap:10px;
-    align-items:flex-start;
-}
-
-.topic-title{
-    font-weight:bold;
-    font-size:16px;
-}
-
-.topic-meta{
-    color:var(--muted);
-    font-size:12px;
-    margin-top:3px;
-}
-
-.topic-actions{
-    display:flex;
-    flex-wrap:wrap;
-    gap:6px;
-    margin-top:10px;
-}
-
-.topic-stats{
-    display:grid;
-    grid-template-columns:repeat(5,1fr);
-    gap:7px;
-    margin-top:10px;
-}
-
-.mini-stat{
-    background:var(--soft);
-    padding:8px;
-    border-radius:9px;
-    font-size:11px;
-}
-
-.mini-stat strong{
-    display:block;
-    font-size:14px;
-    margin-top:2px;
-}
-
-.due-item{
-    border-left:4px solid var(--warning);
-    padding:11px 12px;
-    background:var(--soft);
-    border-radius:9px;
-    margin-bottom:8px;
-}
-
-.overdue{
-    border-left-color:var(--danger);
-}
-
-.due-today{
-    border-left-color:var(--warning);
-}
-
-.upcoming{
-    border-left-color:var(--success);
-}
-
-.search-row{
-    display:grid;
-    grid-template-columns:2fr 1fr 1fr;
-    gap:9px;
-}
-
-.section-title{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    gap:10px;
-    margin-bottom:12px;
-}
-
-.section-title h2{
-    margin:0;
-}
-
-hr{
-    border:0;
-    border-top:1px solid var(--border);
-    margin:18px 0;
-}
-
-.notice{
-    background:var(--soft);
     border-radius:12px;
-    padding:12px;
-    font-size:13px;
+    margin-bottom:12px;
+    background:rgba(102,126,234,.1);
+    border:1px solid rgba(102,126,234,.25);
 }
 
-.checkbox-row{
-    display:flex;
-    align-items:center;
-    gap:8px;
+.alert.warning{
+    background:rgba(217,119,6,.1);
+    border-color:rgba(217,119,6,.25);
 }
 
-.checkbox-row input{
-    width:auto;
+.alert.danger{
+    background:rgba(220,38,38,.1);
+    border-color:rgba(220,38,38,.25);
 }
 
-@media(max-width:800px){
-    .grid-4{
-        grid-template-columns:repeat(2,minmax(0,1fr));
-    }
-
-    .grid-3{
-        grid-template-columns:repeat(2,minmax(0,1fr));
-    }
-
-    .activity-form{
-        grid-template-columns:1fr 1fr;
-    }
-
-    .activity-form button{
-        width:100%;
-    }
-
-    .topic-stats{
-        grid-template-columns:repeat(3,1fr);
-    }
+.alert.success{
+    background:rgba(22,163,74,.1);
+    border-color:rgba(22,163,74,.25);
 }
 
-@media(max-width:560px){
-    main{
-        padding:12px;
+/* CANVAS */
+
+canvas{
+    width:100%;
+    max-height:300px;
+}
+
+/* EMPTY */
+
+.empty{
+    text-align:center;
+    color:var(--muted);
+    padding:25px 10px;
+}
+
+/* TOAST */
+
+#toast{
+    position:fixed;
+    left:50%;
+    bottom:25px;
+    transform:translateX(-50%) translateY(100px);
+    background:#111827;
+    color:white;
+    padding:12px 18px;
+    border-radius:999px;
+    z-index:1000;
+    transition:.3s;
+    opacity:0;
+    max-width:90%;
+    text-align:center;
+}
+
+#toast.show{
+    transform:translateX(-50%) translateY(0);
+    opacity:1;
+}
+
+/* MOBILE */
+
+@media(max-width:700px){
+
+    .grid,
+    .grid-3,
+    .form-grid{
+        grid-template-columns:1fr;
     }
 
     header{
-        padding:16px 12px 12px;
+        padding:15px;
     }
 
-    .logo h1{
-        font-size:23px;
+    .logo{
+        font-size:21px;
     }
 
-    .grid-2,
-    .grid-3,
-    .grid-4,
-    .search-row,
-    .timer-selects{
-        grid-template-columns:1fr;
+    .header-actions{
+        display:none;
     }
 
-    .activity-form{
-        grid-template-columns:1fr;
+    nav{
+        top:67px;
     }
 
-    .topic-stats{
-        grid-template-columns:repeat(2,1fr);
+    .nav-btn{
+        padding:12px 10px;
+        font-size:11px;
+    }
+
+    .page{
+        padding:13px;
+    }
+
+    .page-title{
+        font-size:22px;
     }
 
     .timer-display{
-        font-size:46px;
+        font-size:43px;
+    }
+
+    .hero h1{
+        font-size:23px;
     }
 }
 </style>
@@ -641,78 +563,76 @@ hr{
 <body>
 
 <header>
-    <div class="header-row">
-        <div class="logo">
-            <h1>UPWARD</h1>
-            <p>Small actions. Real progress.</p>
+    <div class="header-inner">
+        <div>
+            <div class="logo">UPWARD</div>
+            <div class="tagline">Small actions. Real progress.</div>
         </div>
 
-        <button class="theme-btn" id="themeToggle" onclick="toggleTheme()">
-            🌙 Dark
-        </button>
+        <div class="header-actions">
+            <button class="header-btn" onclick="toggleDarkMode()">🌙</button>
+            <button class="header-btn" onclick="showPage('data')">💾 Data</button>
+        </div>
     </div>
+</header>
 
-    <nav>
+<nav>
+    <div class="nav-inner">
         <button class="nav-btn active" data-page="today" onclick="showPage('today')">🏠 Today</button>
         <button class="nav-btn" data-page="trackers" onclick="showPage('trackers')">📊 Trackers</button>
-        <button class="nav-btn" data-page="neetpg" onclick="showPage('neetpg')">📚 NEET-PG</button>
         <button class="nav-btn" data-page="progress" onclick="showPage('progress')">📈 Progress</button>
         <button class="nav-btn" data-page="checkin" onclick="showPage('checkin')">❤️ Check-in</button>
         <button class="nav-btn" data-page="week" onclick="showPage('week')">📅 This Week</button>
         <button class="nav-btn" data-page="stopwatch" onclick="showPage('stopwatch')">⏱️ Stopwatch</button>
+        <button class="nav-btn" data-page="neetpg" onclick="showPage('neetpg')">📚 NEET-PG</button>
         <button class="nav-btn" data-page="data" onclick="showPage('data')">💾 Data</button>
-    </nav>
-</header>
+    </div>
+</nav>
 
-<div class="app">
-<main>
+<main class="app">
 
-<!-- =========================================================
+<!-- =====================================================
      TODAY
-========================================================= -->
+===================================================== -->
 
-<section id="page-today" class="page active">
+<section id="today" class="page active">
 
-    <div class="card">
-        <h2>🏠 Today</h2>
-        <div class="muted small" id="todayDate"></div>
+    <div class="hero">
+        <h1>Good progress starts small.</h1>
+        <p id="todayDate"></p>
     </div>
 
-    <div class="grid grid-4">
-        <div class="stat">
-            <div class="stat-label">Today's Activities</div>
-            <div class="stat-value" id="todayActivities">0</div>
+    <div class="grid-3">
+
+        <div class="card">
+            <div class="stat" id="todayActivities">0</div>
+            <div class="stat-label">Activities Today</div>
         </div>
 
-        <div class="stat">
-            <div class="stat-label">Study / Activity Minutes</div>
-            <div class="stat-value" id="todayMinutes">0</div>
+        <div class="card">
+            <div class="stat" id="todayMinutes">0</div>
+            <div class="stat-label">Minutes Today</div>
         </div>
 
-        <div class="stat">
-            <div class="stat-label">Current Streak</div>
-            <div class="stat-value" id="todayStreak">0 🔥</div>
+        <div class="card">
+            <div class="stat" id="currentStreak">0</div>
+            <div class="stat-label">Day Streak</div>
         </div>
 
-        <div class="stat">
-            <div class="stat-label">NEET-PG Due</div>
-            <div class="stat-value" id="todayDueCount">0</div>
-        </div>
     </div>
 
     <div class="card">
-        <div class="section-title">
-            <h2>➕ Add Activity</h2>
-            <span class="badge">General UPWARD</span>
-        </div>
 
-        <div class="activity-form">
-            <div>
+        <h2>➕ Add Activity</h2>
+
+        <div class="form-grid">
+
+            <div class="form-group">
                 <label>Activity</label>
                 <input id="activityName" placeholder="e.g. Walking">
             </div>
 
-            <div>
+            <div class="form-group">
                 <label>Category</label>
                 <select id="activityCategory">
                     <option>Exercise</option>
@@ -728,575 +648,670 @@ hr{
                 </select>
             </div>
 
-            <div>
+            <div class="form-group">
                 <label>Minutes</label>
-                <input id="activityMinutes" type="number" min="1" placeholder="30">
+                <input id="activityMinutes" type="number" min="0" placeholder="30">
             </div>
 
-            <button class="btn btn-primary" onclick="addGeneralActivity()">Add</button>
         </div>
+
+        <button class="btn btn-primary" onclick="addActivity()">Add Activity</button>
+
     </div>
 
     <div class="card">
-        <div class="section-title">
-            <h2>🔔 NEET-PG Reminder Queue</h2>
-            <button class="btn btn-secondary" onclick="showPage('neetpg')">Open NEET-PG</button>
-        </div>
-
-        <div id="todayDueList"></div>
-    </div>
-
-    <div class="card">
-        <h2>🎯 Daily Goals</h2>
+        <h2>🎯 Today's Goals</h2>
         <div id="todayGoals"></div>
     </div>
 
+    <div class="card">
+        <h2>Today's Activities</h2>
+        <div id="todayActivityList" class="list"></div>
+    </div>
+
 </section>
 
 
-<!-- =========================================================
+<!-- =====================================================
      TRACKERS
-========================================================= -->
+===================================================== -->
 
-<section id="page-trackers" class="page">
+<section id="trackers" class="page">
+
+    <div class="page-title">📊 Trackers</div>
+    <p class="page-subtitle">Track the activities that matter to you.</p>
 
     <div class="card">
-        <h2>📊 Activity Trackers</h2>
-        <p class="muted small">
-            Your general UPWARD activity tracking remains separate from the NEET-PG study system.
-        </p>
-        <div id="categoryTrackers" class="grid grid-2"></div>
+        <h2>Daily Category Progress</h2>
+        <div id="trackerGoals"></div>
     </div>
 
     <div class="card">
-        <h2>Recent Activities</h2>
-        <div id="recentActivities"></div>
+        <h2>Activity History</h2>
+        <div id="activityHistory" class="list"></div>
     </div>
 
 </section>
 
 
-<!-- =========================================================
-     NEET PG
-========================================================= -->
+<!-- =====================================================
+     PROGRESS
+===================================================== -->
 
-<section id="page-neetpg" class="page">
+<section id="progress" class="page">
 
-    <div class="card">
-        <div class="section-title">
-            <div>
-                <h2>📚 NEET-PG Study Engine</h2>
-                <div class="muted small">
-                    You enter your subjects, chapters, topics and weightage. UPWARD manages tracking and revision.
-                </div>
-            </div>
+    <div class="page-title">📈 Progress</div>
+    <p class="page-subtitle">Look for progress, not perfection.</p>
+
+    <div class="grid-3">
+
+        <div class="card">
+            <div class="stat" id="totalMinutes">0</div>
+            <div class="stat-label">Total Minutes</div>
         </div>
 
-        <div class="grid grid-4">
-            <div class="stat">
-                <div class="stat-label">Topics</div>
-                <div class="stat-value" id="npTopics">0</div>
-            </div>
-
-            <div class="stat">
-                <div class="stat-label">Completed</div>
-                <div class="stat-value" id="npCompleted">0</div>
-            </div>
-
-            <div class="stat">
-                <div class="stat-label">MCQ Accuracy</div>
-                <div class="stat-value" id="npAccuracy">0%</div>
-            </div>
-
-            <div class="stat">
-                <div class="stat-label">Study Time</div>
-                <div class="stat-value" id="npStudyTime">0m</div>
-            </div>
+        <div class="card">
+            <div class="stat" id="totalXP">0</div>
+            <div class="stat-label">XP</div>
         </div>
+
+        <div class="card">
+            <div class="stat" id="levelNumber">1</div>
+            <div class="stat-label">Level</div>
+        </div>
+
     </div>
 
-    <!-- ADD TOPIC -->
+    <div class="card">
+        <h2>Last 7 Days</h2>
+        <canvas id="sevenDayChart" width="800" height="300"></canvas>
+    </div>
 
     <div class="card">
-        <h2>➕ Add Topic</h2>
+        <h2>Last 30 Days</h2>
+        <canvas id="thirtyDayChart" width="800" height="300"></canvas>
+    </div>
 
-        <div class="grid grid-3">
+    <div class="card">
+        <h2>Category Balance</h2>
+        <div id="categoryBalance"></div>
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     CHECK IN
+===================================================== -->
+
+<section id="checkin" class="page">
+
+    <div class="page-title">❤️ Daily Check-in</div>
+    <p class="page-subtitle">A quick record of how your day felt.</p>
+
+    <div class="card">
+
+        <div class="form-group">
+            <label>Mood — 1 to 5</label>
+            <select id="checkMood">
+                <option value="1">1 — Very low</option>
+                <option value="2">2 — Low</option>
+                <option value="3" selected>3 — Okay</option>
+                <option value="4">4 — Good</option>
+                <option value="5">5 — Very good</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label>Energy — 1 to 5</label>
+            <select id="checkEnergy">
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3" selected>3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label>Note</label>
+            <textarea id="checkNote" placeholder="What went well? What was difficult?"></textarea>
+        </div>
+
+        <button class="btn btn-primary" onclick="saveCheckin()">Save Check-in</button>
+
+    </div>
+
+    <div class="card">
+        <h2>Recent Check-ins</h2>
+        <div id="checkinList" class="list"></div>
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     THIS WEEK
+===================================================== -->
+
+<section id="week" class="page">
+
+    <div class="page-title">📅 This Week</div>
+    <p class="page-subtitle">See your activity pattern across the week.</p>
+
+    <div class="card">
+        <div id="weekSummary"></div>
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     UNIVERSAL STOPWATCH
+===================================================== -->
+
+<section id="stopwatch" class="page">
+
+    <div class="page-title">⏱️ Universal Stopwatch</div>
+    <p class="page-subtitle">Use this for any activity or study session.</p>
+
+    <div class="card timer">
+
+        <div class="timer-context" id="universalTimerContext">
+            No activity selected
+        </div>
+
+        <div class="timer-display" id="universalTimerDisplay">
+            00:00:00
+        </div>
+
+        <input id="universalTimerName" placeholder="What are you working on?">
+
+        <div style="margin-top:15px">
+            <button class="btn btn-success" onclick="startUniversalTimer()">▶ Start</button>
+            <button class="btn btn-warning" onclick="pauseUniversalTimer()">⏸ Pause</button>
+            <button class="btn btn-primary" onclick="saveUniversalTimer()">💾 Save</button>
+            <button class="btn btn-danger" onclick="resetUniversalTimer()">↻ Reset</button>
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     NEET PG
+===================================================== -->
+
+<section id="neetpg" class="page">
+
+    <div class="page-title">📚 NEET-PG Study</div>
+
+    <p class="page-subtitle">
+        Organise subjects and your own topics, record weightage,
+        MCQs, videos, study time and spaced-repetition revisions.
+    </p>
+
+    <div id="revisionAlert"></div>
+
+    <!-- NEET STATS -->
+
+    <div class="grid-3">
+
+        <div class="card">
+            <div class="stat" id="neetSubjectsCount">0</div>
+            <div class="stat-label">Subjects</div>
+        </div>
+
+        <div class="card">
+            <div class="stat" id="neetTopicsCount">0</div>
+            <div class="stat-label">Topics</div>
+        </div>
+
+        <div class="card">
+            <div class="stat" id="neetStudyMinutes">0</div>
+            <div class="stat-label">Study Minutes</div>
+        </div>
+
+    </div>
+
+
+    <!-- SUBJECT -->
+
+    <div class="card">
+
+        <h2>📖 Add Subject</h2>
+
+        <div class="form-grid">
+
+            <div class="form-group">
+                <label>Subject Name</label>
+                <input id="subjectName" placeholder="e.g. Pathology">
+            </div>
+
+            <div class="form-group">
+                <label>Subject Weightage / Marks</label>
+                <input id="subjectWeightage" type="number" min="0" step="0.1" placeholder="Enter your value">
+            </div>
+
+        </div>
+
+        <button class="btn btn-primary" onclick="addSubject()">Add Subject</button>
+
+    </div>
+
+
+    <!-- SUBJECT LIST -->
+
+    <div class="card">
+
+        <h2>📚 Subjects</h2>
+
+        <div id="subjectList" class="list"></div>
+
+    </div>
+
+
+    <!-- TOPIC ENTRY -->
+
+    <div class="card">
+
+        <h2>📝 Add Topic</h2>
+
+        <div class="form-grid">
 
             <div class="form-group">
                 <label>Subject</label>
-                <select id="npSubject">
-                    <option>Medicine</option>
-                    <option>Surgery</option>
-                    <option>Pathology</option>
-                    <option>PSM</option>
-                    <option>Pharmacology</option>
-                    <option>Microbiology</option>
-                    <option>OBG</option>
-                    <option>Anatomy</option>
-                    <option>Physiology</option>
-                    <option>Biochemistry</option>
-                    <option>Pediatrics</option>
-                    <option>Orthopedics</option>
-                    <option>FMT</option>
-                    <option>Dermatology</option>
-                    <option>Psychiatry</option>
-                    <option>Ophthalmology</option>
-                    <option>Radiology</option>
-                    <option>ENT</option>
-                    <option>Anaesthesia</option>
-                </select>
+                <select id="topicSubject"></select>
             </div>
 
             <div class="form-group">
-                <label>Chapter</label>
-                <input id="npChapter" placeholder="e.g. Cardiology">
+                <label>Topic Name</label>
+                <input id="topicName" placeholder="e.g. Nephrotic syndrome">
             </div>
 
             <div class="form-group">
-                <label>Topic</label>
-                <input id="npTopic" placeholder="e.g. Heart Failure">
+                <label>Topic Marks / Weightage</label>
+                <input id="topicWeightage" type="number" min="0" step="0.1" placeholder="Enter your value">
             </div>
 
             <div class="form-group">
-                <label>Weightage / Marks</label>
-                <input id="npWeightage" type="number" min="0" step="0.1" placeholder="e.g. 8">
-            </div>
-
-            <div class="form-group">
-                <label>Priority</label>
-                <select id="npPriority">
-                    <option>High</option>
-                    <option>Medium</option>
-                    <option>Standard</option>
-                </select>
-            </div>
-
-            <div class="form-group">
-                <label>Video Duration (minutes)</label>
-                <input id="npVideoDuration" type="number" min="0" placeholder="e.g. 120">
-            </div>
-
-            <div class="form-group">
-                <label>Video Watched (minutes)</label>
-                <input id="npVideoWatched" type="number" min="0" placeholder="e.g. 60">
+                <label>Video Minutes Watched</label>
+                <input id="topicVideoMinutes" type="number" min="0" placeholder="0">
             </div>
 
             <div class="form-group">
                 <label>MCQs Attempted</label>
-                <input id="npMCQAttempted" type="number" min="0" placeholder="e.g. 50">
+                <input id="topicMcqAttempted" type="number" min="0" placeholder="0">
             </div>
 
             <div class="form-group">
                 <label>MCQs Correct</label>
-                <input id="npMCQCorrect" type="number" min="0" placeholder="e.g. 35">
+                <input id="topicMcqCorrect" type="number" min="0" placeholder="0">
+            </div>
+
+        </div>
+
+        <div class="form-group">
+            <label>
+                <input id="topicVideoWatched" type="checkbox" style="width:auto">
+                Video completed
+            </label>
+        </div>
+
+        <button class="btn btn-primary" onclick="addTopic()">Add Topic</button>
+
+    </div>
+
+
+    <!-- STUDY TIMER -->
+
+    <div class="card">
+
+        <h2>⏱️ NEET-PG Study Stopwatch</h2>
+
+        <div class="form-grid">
+
+            <div class="form-group">
+                <label>Subject</label>
+                <select id="studyTimerSubject" onchange="updateStudyTimerTopicOptions()"></select>
             </div>
 
             <div class="form-group">
-                <label>PYQs Attempted</label>
-                <input id="npPYQAttempted" type="number" min="0" placeholder="e.g. 20">
-            </div>
-
-            <div class="form-group">
-                <label>PYQs Correct</label>
-                <input id="npPYQCorrect" type="number" min="0" placeholder="e.g. 15">
-            </div>
-
-            <div class="form-group">
-                <label>Confidence</label>
-                <select id="npConfidence">
-                    <option value="1">1 — Very weak</option>
-                    <option value="2">2 — Weak</option>
-                    <option value="3" selected>3 — Moderate</option>
-                    <option value="4">4 — Good</option>
-                    <option value="5">5 — Strong</option>
-                </select>
+                <label>Topic</label>
+                <select id="studyTimerTopic"></select>
             </div>
 
         </div>
 
-        <div class="btn-row">
-            <button class="btn btn-primary" onclick="addNEETTopic()">Add Topic</button>
-            <button class="btn btn-secondary" onclick="clearNEETForm()">Clear</button>
+        <div class="timer">
+
+            <div class="timer-context" id="studyTimerContext">
+                Select subject and topic
+            </div>
+
+            <div class="timer-display" id="studyTimerDisplay">
+                00:00:00
+            </div>
+
+            <button class="btn btn-success" onclick="startStudyTimer()">▶ Start</button>
+            <button class="btn btn-warning" onclick="pauseStudyTimer()">⏸ Pause</button>
+            <button class="btn btn-primary" onclick="saveStudyTimer()">💾 Save Study Time</button>
+            <button class="btn btn-danger" onclick="resetStudyTimer()">↻ Reset</button>
+
         </div>
 
-        <p class="muted small">
-            You can update the topic later. The revision schedule starts when you mark the topic as studied.
-        </p>
     </div>
 
 
-    <!-- REVISION QUEUE -->
+    <!-- REVISION -->
 
     <div class="card">
-        <div class="section-title">
-            <h2>🔔 Revision Queue</h2>
-            <span class="badge" id="revisionBadge">0 due</span>
+
+        <h2>🔄 Revision Schedule</h2>
+
+        <div class="alert">
+            <strong>Spaced repetition:</strong>
+            after learning a topic, UPWARD schedules later reviews at increasing intervals.
+            The default sequence is approximately 1 → 3 → 7 → 14 → 30 → 60 days.
         </div>
 
-        <div class="grid grid-3">
-            <div>
-                <h3>🔴 Overdue</h3>
-                <div id="overdueList"></div>
-            </div>
+        <div id="revisionList" class="list"></div>
 
-            <div>
-                <h3>🟠 Due Today</h3>
-                <div id="dueTodayList"></div>
-            </div>
-
-            <div>
-                <h3>🟢 Upcoming</h3>
-                <div id="upcomingList"></div>
-            </div>
-        </div>
     </div>
 
 
-    <!-- SEARCH -->
+    <!-- ALL TOPICS -->
 
     <div class="card">
-        <h2>🔎 Find Topics</h2>
 
-        <div class="search-row">
-            <input id="npSearch" placeholder="Search subject, chapter or topic" oninput="renderNEETTopics()">
-
-            <select id="npFilterSubject" onchange="renderNEETTopics()">
-                <option value="">All Subjects</option>
-                <option>Medicine</option>
-                <option>Surgery</option>
-                <option>Pathology</option>
-                <option>PSM</option>
-                <option>Pharmacology</option>
-                <option>Microbiology</option>
-                <option>OBG</option>
-                <option>Anatomy</option>
-                <option>Physiology</option>
-                <option>Biochemistry</option>
-                <option>Pediatrics</option>
-                <option>Orthopedics</option>
-                <option>FMT</option>
-                <option>Dermatology</option>
-                <option>Psychiatry</option>
-                <option>Ophthalmology</option>
-                <option>Radiology</option>
-                <option>ENT</option>
-                <option>Anaesthesia</option>
-            </select>
-
-            <select id="npFilterStatus" onchange="renderNEETTopics()">
-                <option value="">All Status</option>
-                <option value="completed">Completed</option>
-                <option value="pending">Pending</option>
-                <option value="weak">Weak</option>
-                <option value="due">Revision Due</option>
-            </select>
-        </div>
-    </div>
-
-
-    <!-- TOPICS -->
-
-    <div class="card">
-        <div class="section-title">
-            <h2>📖 My Topics</h2>
-            <span class="muted small" id="topicCountText">0 topics</span>
-        </div>
-
-        <div id="neetTopicList"></div>
-    </div>
-
-</section>
-
-
-<!-- =========================================================
-     PROGRESS
-========================================================= -->
-
-<section id="page-progress" class="page">
-
-    <div class="card">
-        <h2>📈 UPWARD Progress</h2>
-
-        <div class="grid grid-4">
-            <div class="stat">
-                <div class="stat-label">Total Minutes</div>
-                <div class="stat-value" id="totalMinutes">0</div>
-            </div>
-
-            <div class="stat">
-                <div class="stat-label">XP</div>
-                <div class="stat-value" id="totalXP">0</div>
-            </div>
-
-            <div class="stat">
-                <div class="stat-label">Level</div>
-                <div class="stat-value" id="currentLevel">1</div>
-            </div>
-
-            <div class="stat">
-                <div class="stat-label">Longest Streak</div>
-                <div class="stat-value" id="longestStreak">0</div>
-            </div>
-        </div>
-    </div>
-
-    <div class="card">
-        <h2>📊 Last 7 Days</h2>
-        <canvas id="weeklyChart"></canvas>
-    </div>
-
-    <div class="card">
-        <h2>📈 Last 30 Days</h2>
-        <canvas id="monthlyChart"></canvas>
-    </div>
-
-    <div class="card">
-        <h2>🧩 Activity Balance</h2>
-        <div id="balanceChart"></div>
-    </div>
-
-</section>
-
-
-<!-- =========================================================
-     CHECK IN
-========================================================= -->
-
-<section id="page-checkin" class="page">
-
-    <div class="card">
-        <h2>❤️ Daily Check-in</h2>
-        <p class="muted small">A simple daily reflection. Stored only on this device.</p>
+        <h2>📑 Topics</h2>
 
         <div class="form-group">
-            <label>How are you feeling today?</label>
-
-            <div class="rating" id="ratingButtons">
-                <button onclick="setRating(1)">★</button>
-                <button onclick="setRating(2)">★</button>
-                <button onclick="setRating(3)">★</button>
-                <button onclick="setRating(4)">★</button>
-                <button onclick="setRating(5)">★</button>
-            </div>
+            <input id="topicSearch" oninput="renderTopics()" placeholder="Search topics...">
         </div>
 
-        <div class="form-group">
-            <label>What went well?</label>
-            <textarea id="checkinGood" placeholder="One small win..."></textarea>
-        </div>
+        <div id="topicList" class="list"></div>
 
-        <div class="form-group">
-            <label>What was difficult?</label>
-            <textarea id="checkinDifficult" placeholder="Anything you want to note..."></textarea>
-        </div>
-
-        <div class="form-group">
-            <label>One thing for tomorrow</label>
-            <textarea id="checkinTomorrow" placeholder="Keep it small and realistic..."></textarea>
-        </div>
-
-        <button class="btn btn-primary" onclick="saveCheckin()">Save Check-in</button>
     </div>
 
 </section>
 
 
-<!-- =========================================================
-     THIS WEEK
-========================================================= -->
-
-<section id="page-week" class="page">
-
-    <div class="card">
-        <h2>📅 This Week</h2>
-
-        <div class="grid grid-3">
-            <div class="stat">
-                <div class="stat-label">Minutes</div>
-                <div class="stat-value" id="weekMinutes">0</div>
-            </div>
-
-            <div class="stat">
-                <div class="stat-label">Activities</div>
-                <div class="stat-value" id="weekActivities">0</div>
-            </div>
-
-            <div class="stat">
-                <div class="stat-label">Active Days</div>
-                <div class="stat-value" id="weekActiveDays">0</div>
-            </div>
-        </div>
-    </div>
-
-    <div class="card">
-        <h2>Category Progress</h2>
-        <div id="weekCategories"></div>
-    </div>
-
-</section>
-
-
-<!-- =========================================================
-     STOPWATCH
-========================================================= -->
-
-<section id="page-stopwatch" class="page">
-
-    <div class="card">
-        <h2>⏱️ Universal Stopwatch</h2>
-
-        <div class="timer-selects">
-
-            <div>
-                <label>Mode</label>
-                <select id="timerMode" onchange="updateTimerFields()">
-                    <option value="general">General UPWARD Activity</option>
-                    <option value="neet">NEET-PG Topic Study</option>
-                </select>
-            </div>
-
-            <div id="timerGeneralFields">
-                <label>Activity</label>
-                <input id="timerActivity" placeholder="e.g. Walking">
-            </div>
-
-        </div>
-
-        <div id="timerNEETFields" style="display:none;margin-top:10px;">
-            <div class="grid grid-3">
-
-                <div>
-                    <label>Subject</label>
-                    <select id="timerSubject" onchange="populateTimerTopics()"></select>
-                </div>
-
-                <div>
-                    <label>Topic</label>
-                    <select id="timerTopic"></select>
-                </div>
-
-                <div>
-                    <label>Study Type</label>
-                    <select id="timerStudyType">
-                        <option>Video</option>
-                        <option>Reading</option>
-                        <option>MCQ</option>
-                        <option>PYQ</option>
-                        <option>Revision</option>
-                        <option>Notes</option>
-                        <option>Other</option>
-                    </select>
-                </div>
-
-            </div>
-        </div>
-
-        <div class="timer-display" id="timerDisplay">00:00:00</div>
-
-        <div class="btn-row" style="justify-content:center;">
-            <button class="btn btn-primary" id="timerStartBtn" onclick="startTimer()">▶ Start</button>
-            <button class="btn btn-warning" id="timerPauseBtn" onclick="pauseTimer()" disabled>⏸ Pause</button>
-            <button class="btn btn-success" id="timerStopBtn" onclick="stopTimer()" disabled>⏹ Stop & Save</button>
-            <button class="btn btn-secondary" onclick="resetTimer()">↻ Reset</button>
-        </div>
-
-        <p class="muted small" style="text-align:center;margin-top:12px;">
-            The stopwatch can continue while you move between UPWARD screens.
-        </p>
-    </div>
-
-    <div class="card">
-        <h2>Recent Study Sessions</h2>
-        <div id="recentSessions"></div>
-    </div>
-
-</section>
-
-
-<!-- =========================================================
+<!-- =====================================================
      DATA
-========================================================= -->
+===================================================== -->
 
-<section id="page-data" class="page">
+<section id="data" class="page">
+
+    <div class="page-title">💾 Data</div>
+
+    <p class="page-subtitle">
+        Your data is stored locally on this device/browser.
+    </p>
 
     <div class="card">
-        <h2>💾 Data Management</h2>
 
-        <div class="notice">
-            Your data is stored locally in your browser. Keep a backup of your exported JSON file.
-            GitHub version history protects your code, but it does <strong>not</strong> automatically back up your personal data.
-        </div>
+        <h2>Backup</h2>
 
-        <hr>
+        <button class="btn btn-primary" onclick="exportJSON()">⬇ Export JSON Backup</button>
 
-        <div class="btn-row">
-            <button class="btn btn-primary" onclick="exportJSON()">⬇ Export JSON Backup</button>
-            <button class="btn btn-secondary" onclick="document.getElementById('importFile').click()">⬆ Import JSON</button>
-            <button class="btn btn-secondary" onclick="exportCSV()">📄 Export Activities CSV</button>
-        </div>
+        <label class="btn btn-secondary" style="display:inline-block">
+            ⬆ Import JSON
+            <input type="file" id="importFile" accept=".json" onchange="importJSON(event)" style="display:none">
+        </label>
 
-        <input id="importFile" type="file" accept=".json,application/json" style="display:none" onchange="importJSON(event)">
+        <button class="btn btn-success" onclick="exportCSV()">⬇ Export CSV</button>
 
-        <hr>
+    </div>
 
-        <h3>Stored Data</h3>
+    <div class="card">
 
-        <div class="grid grid-3">
-            <div class="stat">
-                <div class="stat-label">General Activities</div>
-                <div class="stat-value" id="dataActivities">0</div>
-            </div>
+        <h2>App Settings</h2>
 
-            <div class="stat">
-                <div class="stat-label">NEET-PG Topics</div>
-                <div class="stat-value" id="dataTopics">0</div>
-            </div>
+        <button class="btn btn-secondary" onclick="toggleDarkMode()">🌙 Toggle Dark Mode</button>
 
-            <div class="stat">
-                <div class="stat-label">Check-ins</div>
-                <div class="stat-value" id="dataCheckins">0</div>
-            </div>
-        </div>
+        <button class="btn btn-secondary" onclick="requestNotifications()">
+            🔔 Enable Revision Notifications
+        </button>
 
-        <hr>
+        <button class="btn btn-danger" onclick="clearAllData()">
+            ⚠ Clear All Data
+        </button>
 
-        <button class="btn btn-danger" onclick="clearAllData()">🗑 Clear All UPWARD Data</button>
+    </div>
+
+    <div class="card">
+
+        <h2>About UPWARD</h2>
+
+        <p>
+            UPWARD is a personal activity, progress and study tracker.
+            Your entries are stored locally in your browser.
+        </p>
+
+        <p style="color:var(--muted);font-size:13px">
+            Small actions. Real progress.
+        </p>
+
     </div>
 
 </section>
 
 </main>
-</div>
 
-<div class="message" id="message"></div>
+<div id="toast"></div>
 
 
 <script>
 /* =========================================================
-   UPWARD PHASE 3
-   Storage keys
+   UPWARD DATABASE
 ========================================================= */
 
 const ACTIVITY_KEY = "upwardActivities";
 const CHECKIN_KEY = "upwardCheckins";
 const SPENDING_KEY = "upwardSpending";
-const NEET_KEY = "upwardNEETPG";
+const NEET_KEY = "upwardNeetPg";
 const DARK_KEY = "upwardDarkMode";
 
-const CATEGORIES = [
-    "Exercise",
-    "Walking",
-    "Learning",
-    "Reading",
-    "Work/Study",
-    "Recreation",
-    "Meditation",
-    "Social",
-    "Mindfulness",
-    "Other"
-];
+let activities = loadJSON(ACTIVITY_KEY, []);
+let checkins = loadJSON(CHECKIN_KEY, []);
+let spending = loadJSON(SPENDING_KEY, []);
 
-const DAILY_GOALS = {
+let neet = loadJSON(NEET_KEY, {
+    subjects: [],
+    topics: []
+});
+
+if(!neet || typeof neet !== "object"){
+    neet = {subjects:[],topics:[]};
+}
+
+if(!Array.isArray(neet.subjects)){
+    neet.subjects = [];
+}
+
+if(!Array.isArray(neet.topics)){
+    neet.topics = [];
+}
+
+
+/* =========================================================
+   HELPERS
+========================================================= */
+
+function loadJSON(key, fallback){
+    try{
+        const raw = localStorage.getItem(key);
+
+        if(!raw){
+            return fallback;
+        }
+
+        const parsed = JSON.parse(raw);
+
+        return parsed;
+    }catch(error){
+        console.error("Load error:", key, error);
+        return fallback;
+    }
+}
+
+function saveAll(){
+    localStorage.setItem(ACTIVITY_KEY, JSON.stringify(activities));
+    localStorage.setItem(CHECKIN_KEY, JSON.stringify(checkins));
+    localStorage.setItem(SPENDING_KEY, JSON.stringify(spending));
+    localStorage.setItem(NEET_KEY, JSON.stringify(neet));
+}
+
+function saveNeet(){
+    localStorage.setItem(NEET_KEY, JSON.stringify(neet));
+}
+
+function todayString(){
+    const d = new Date();
+
+    const y = d.getFullYear();
+    const m = String(d.getMonth()+1).padStart(2,"0");
+    const day = String(d.getDate()).padStart(2,"0");
+
+    return `${y}-${m}-${day}`;
+}
+
+function formatDate(dateString){
+
+    if(!dateString){
+        return "";
+    }
+
+    const d = new Date(dateString + "T00:00:00");
+
+    return d.toLocaleDateString(undefined,{
+        day:"numeric",
+        month:"short",
+        year:"numeric"
+    });
+}
+
+function escapeHTML(value){
+
+    return String(value ?? "")
+        .replace(/&/g,"&amp;")
+        .replace(/</g,"&lt;")
+        .replace(/>/g,"&gt;")
+        .replace(/"/g,"&quot;")
+        .replace(/'/g,"&#039;");
+}
+
+function showToast(message){
+
+    const toast = document.getElementById("toast");
+
+    toast.textContent = message;
+    toast.classList.add("show");
+
+    setTimeout(()=>{
+        toast.classList.remove("show");
+    },2500);
+}
+
+function generateId(prefix){
+
+    return prefix + "_" + Date.now() + "_" +
+        Math.random().toString(36).slice(2,8);
+}
+
+
+/* =========================================================
+   NAVIGATION
+========================================================= */
+
+function showPage(pageId){
+
+    document.querySelectorAll(".page").forEach(page=>{
+        page.classList.remove("active");
+    });
+
+    document.querySelectorAll(".nav-btn").forEach(button=>{
+        button.classList.remove("active");
+    });
+
+    const page = document.getElementById(pageId);
+
+    if(page){
+        page.classList.add("active");
+    }
+
+    const button = document.querySelector(
+        `.nav-btn[data-page="${pageId}"]`
+    );
+
+    if(button){
+        button.classList.add("active");
+    }
+
+    refreshPage(pageId);
+
+    window.scrollTo({
+        top:0,
+        behavior:"smooth"
+    });
+}
+
+function refreshPage(pageId){
+
+    if(pageId === "today"){
+        renderToday();
+    }
+
+    if(pageId === "trackers"){
+        renderTrackers();
+    }
+
+    if(pageId === "progress"){
+        renderProgress();
+    }
+
+    if(pageId === "checkin"){
+        renderCheckins();
+    }
+
+    if(pageId === "week"){
+        renderWeek();
+    }
+
+    if(pageId === "neetpg"){
+        renderNeetPG();
+    }
+}
+
+
+/* =========================================================
+   DARK MODE
+========================================================= */
+
+function toggleDarkMode(){
+
+    document.body.classList.toggle("dark");
+
+    localStorage.setItem(
+        DARK_KEY,
+        document.body.classList.contains("dark") ? "1" : "0"
+    );
+
+    drawCharts();
+}
+
+if(localStorage.getItem(DARK_KEY) === "1"){
+    document.body.classList.add("dark");
+}
+
+
+/* =========================================================
+   ACTIVITIES
+========================================================= */
+
+const categoryGoals = {
     "Exercise":30,
     "Walking":30,
     "Learning":30,
@@ -1309,317 +1324,72 @@ const DAILY_GOALS = {
     "Other":10
 };
 
-const NEET_SUBJECTS = [
-    "Medicine",
-    "Surgery",
-    "Pathology",
-    "PSM",
-    "Pharmacology",
-    "Microbiology",
-    "OBG",
-    "Anatomy",
-    "Physiology",
-    "Biochemistry",
-    "Pediatrics",
-    "Orthopedics",
-    "FMT",
-    "Dermatology",
-    "Psychiatry",
-    "Ophthalmology",
-    "Radiology",
-    "ENT",
-    "Anaesthesia"
-];
+function addActivity(){
 
-
-/* =========================================================
-   HELPERS
-========================================================= */
-
-function getJSON(key, fallback){
-    try{
-        const raw = localStorage.getItem(key);
-        if(!raw) return fallback;
-        const parsed = JSON.parse(raw);
-        return parsed ?? fallback;
-    }catch(e){
-        return fallback;
-    }
-}
-
-function saveJSON(key,value){
-    localStorage.setItem(key,JSON.stringify(value));
-}
-
-function todayISO(){
-    const d = new Date();
-    const y = d.getFullYear();
-    const m = String(d.getMonth()+1).padStart(2,"0");
-    const day = String(d.getDate()).padStart(2,"0");
-    return `${y}-${m}-${day}`;
-}
-
-function dateFromISO(iso){
-    const parts = iso.split("-").map(Number);
-    return new Date(parts[0],parts[1]-1,parts[2]);
-}
-
-function addDaysISO(iso,days){
-    const d = dateFromISO(iso);
-    d.setDate(d.getDate()+days);
-    return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}-${String(d.getDate()).padStart(2,"0")}`;
-}
-
-function formatDate(iso){
-    if(!iso) return "";
-    return dateFromISO(iso).toLocaleDateString(undefined,{
-        day:"numeric",
-        month:"short",
-        year:"numeric"
-    });
-}
-
-function formatShortDate(iso){
-    if(!iso) return "";
-    return dateFromISO(iso).toLocaleDateString(undefined,{
-        day:"numeric",
-        month:"short"
-    });
-}
-
-function escapeHTML(value){
-    return String(value ?? "")
-        .replace(/&/g,"&amp;")
-        .replace(/</g,"&lt;")
-        .replace(/>/g,"&gt;")
-        .replace(/"/g,"&quot;")
-        .replace(/'/g,"&#039;");
-}
-
-function uid(prefix="id"){
-    return prefix + "_" + Date.now().toString(36) + Math.random().toString(36).slice(2,8);
-}
-
-function clamp(value,min,max){
-    return Math.max(min,Math.min(max,value));
-}
-
-function minutesText(minutes){
-    minutes = Math.max(0,Math.round(Number(minutes)||0));
-
-    if(minutes < 60){
-        return minutes + "m";
-    }
-
-    const h = Math.floor(minutes/60);
-    const m = minutes % 60;
-
-    return m ? `${h}h ${m}m` : `${h}h`;
-}
-
-function showMessage(text){
-    const el = document.getElementById("message");
-    el.textContent = text;
-    el.classList.add("show");
-
-    clearTimeout(showMessage.timer);
-
-    showMessage.timer = setTimeout(()=>{
-        el.classList.remove("show");
-    },2500);
-}
-
-
-/* =========================================================
-   THEME
-========================================================= */
-
-function applyTheme(){
-    const dark = localStorage.getItem(DARK_KEY) === "true";
-
-    document.body.classList.toggle("dark",dark);
-
-    const button = document.getElementById("themeToggle");
-
-    if(button){
-        button.textContent = dark ? "☀️ Light" : "🌙 Dark";
-    }
-}
-
-function toggleTheme(){
-    const dark = document.body.classList.contains("dark");
-
-    localStorage.setItem(DARK_KEY,String(!dark));
-
-    applyTheme();
-
-    if(currentPage === "progress"){
-        renderProgress();
-    }
-}
-
-
-/* =========================================================
-   NAVIGATION
-========================================================= */
-
-let currentPage = "today";
-
-function showPage(page){
-    currentPage = page;
-
-    document.querySelectorAll(".page").forEach(section=>{
-        section.classList.remove("active");
-    });
-
-    const target = document.getElementById("page-"+page);
-
-    if(target){
-        target.classList.add("active");
-    }
-
-    document.querySelectorAll(".nav-btn").forEach(button=>{
-        button.classList.toggle(
-            "active",
-            button.dataset.page === page
-        );
-    });
-
-    render();
-
-    window.scrollTo({
-        top:0,
-        behavior:"smooth"
-    });
-}
-
-
-/* =========================================================
-   GENERAL ACTIVITIES
-========================================================= */
-
-function getActivities(){
-    let data = getJSON(ACTIVITY_KEY,[]);
-
-    if(!Array.isArray(data)){
-        data = [];
-    }
-
-    return data;
-}
-
-function saveActivities(data){
-    saveJSON(ACTIVITY_KEY,data);
-}
-
-function normalizeCategory(category){
-    if(category === "Work") return "Work/Study";
-    if(category === "Study") return "Work/Study";
-    if(category === "Work Study") return "Work/Study";
-
-    return CATEGORIES.includes(category) ? category : "Other";
-}
-
-function addGeneralActivity(){
     const name = document.getElementById("activityName").value.trim();
-    const category = normalizeCategory(
-        document.getElementById("activityCategory").value
-    );
-
-    const minutes = Number(
-        document.getElementById("activityMinutes").value
-    );
+    const category = document.getElementById("activityCategory").value;
+    const minutes = Number(document.getElementById("activityMinutes").value);
 
     if(!name){
-        showMessage("Please enter an activity.");
+        showToast("Please enter an activity name.");
         return;
     }
 
-    if(!minutes || minutes <= 0){
-        showMessage("Please enter valid minutes.");
+    if(!Number.isFinite(minutes) || minutes < 0){
+        showToast("Please enter valid minutes.");
         return;
     }
-
-    const activities = getActivities();
 
     activities.push({
-        id:uid("act"),
+        id:generateId("activity"),
         activityName:name,
-        category,
-        minutes:Math.round(minutes),
-        date:todayISO(),
+        category:category,
+        minutes:minutes,
+        date:todayString(),
         createdAt:new Date().toISOString()
     });
 
-    saveActivities(activities);
+    localStorage.setItem(
+        ACTIVITY_KEY,
+        JSON.stringify(activities)
+    );
 
     document.getElementById("activityName").value = "";
     document.getElementById("activityMinutes").value = "";
 
-    showMessage("Activity added ✓");
+    showToast("Activity added.");
 
-    render();
+    renderToday();
+    renderTrackers();
+    renderProgress();
 }
 
-function getMinutesForDate(date){
-    return getActivities()
-        .filter(a=>a.date === date)
-        .reduce((sum,a)=>sum + Number(a.minutes||0),0);
+function deleteActivity(id){
+
+    activities = activities.filter(a=>a.id !== id);
+
+    localStorage.setItem(
+        ACTIVITY_KEY,
+        JSON.stringify(activities)
+    );
+
+    renderToday();
+    renderTrackers();
+    renderProgress();
 }
 
-function getActivitiesForDate(date){
-    return getActivities().filter(a=>a.date === date);
+function getTodayActivities(){
+
+    const today = todayString();
+
+    return activities.filter(a=>a.date === today);
 }
 
-function getActivityDates(){
-    return [...new Set(
-        getActivities()
-            .map(a=>a.date)
-            .filter(Boolean)
-    )].sort();
-}
+function getCategoryMinutes(date, category){
 
-function calculateStreak(){
-    const dates = new Set(getActivityDates());
-
-    let streak = 0;
-    let d = todayISO();
-
-    while(dates.has(d)){
-        streak++;
-        d = addDaysISO(d,-1);
-    }
-
-    return streak;
-}
-
-function calculateLongestStreak(){
-    const dates = getActivityDates();
-
-    if(!dates.length) return 0;
-
-    let longest = 1;
-    let current = 1;
-
-    for(let i=1;i<dates.length;i++){
-        if(addDaysISO(dates[i-1],1) === dates[i]){
-            current++;
-        }else{
-            current = 1;
-        }
-
-        longest = Math.max(longest,current);
-    }
-
-    return longest;
-}
-
-function calculateXP(){
-    return getActivities()
-        .reduce((sum,a)=>{
-            const minutes = Number(a.minutes||0);
-            return sum + Math.max(1,Math.floor(minutes/5));
-        },0);
+    return activities
+        .filter(a=>a.date === date && a.category === category)
+        .reduce((sum,a)=>sum + Number(a.minutes || 0),0);
 }
 
 
@@ -1628,7 +1398,13 @@ function calculateXP(){
 ========================================================= */
 
 function renderToday(){
-    const today = todayISO();
+
+    const todayActivities = getTodayActivities();
+
+    const totalMinutes = todayActivities.reduce(
+        (sum,a)=>sum + Number(a.minutes || 0),
+        0
+    );
 
     document.getElementById("todayDate").textContent =
         new Date().toLocaleDateString(undefined,{
@@ -1638,92 +1414,127 @@ function renderToday(){
             year:"numeric"
         });
 
-    const activities = getActivitiesForDate(today);
-
     document.getElementById("todayActivities").textContent =
-        activities.length;
+        todayActivities.length;
 
     document.getElementById("todayMinutes").textContent =
-        getMinutesForDate(today);
+        totalMinutes;
 
-    document.getElementById("todayStreak").textContent =
-        calculateStreak() + " 🔥";
+    document.getElementById("currentStreak").textContent =
+        calculateActivityStreak();
 
-    const due = getRevisionBuckets().overdue.length +
-                getRevisionBuckets().today.length;
+    const goals = document.getElementById("todayGoals");
 
-    document.getElementById("todayDueCount").textContent = due;
+    goals.innerHTML = Object.entries(categoryGoals)
+        .map(([category,target])=>{
 
-    renderTodayGoals();
-    renderTodayDue();
-}
+            const actual = getCategoryMinutes(
+                todayString(),
+                category
+            );
 
-function renderTodayGoals(){
-    const container = document.getElementById("todayGoals");
-    const today = todayISO();
+            const percent = target > 0
+                ? Math.min(100,(actual/target)*100)
+                : 0;
 
-    let html = "";
+            return `
+                <div style="margin-bottom:12px">
+                    <div class="list-main">
+                        <strong>${escapeHTML(category)}</strong>
+                        <span class="badge">${actual} / ${target} min</span>
+                    </div>
 
-    CATEGORIES.forEach(category=>{
-        const target = DAILY_GOALS[category];
-        const actual = getActivitiesForDate(today)
-            .filter(a=>normalizeCategory(a.category)===category)
-            .reduce((sum,a)=>sum+Number(a.minutes||0),0);
-
-        const percent = target
-            ? clamp(actual/target*100,0,100)
-            : 0;
-
-        html += `
-            <div class="category-card" style="margin-bottom:10px;">
-                <div class="category-head">
-                    <strong>${escapeHTML(category)}</strong>
-                    <span class="small">${actual}/${target} min</span>
+                    <div class="progress">
+                        <div class="progress-bar"
+                             style="width:${percent}%"></div>
+                    </div>
                 </div>
-                <div class="progress-wrap">
-                    <div class="progress-bar" style="width:${percent}%"></div>
-                </div>
-            </div>
-        `;
-    });
+            `;
+        }).join("");
 
-    container.innerHTML = html;
-}
+    const list = document.getElementById("todayActivityList");
 
-function renderTodayDue(){
-    const container = document.getElementById("todayDueList");
-    const buckets = getRevisionBuckets();
+    if(!todayActivities.length){
 
-    const items = [
-        ...buckets.overdue.map(t=>({...t,_type:"Overdue"})),
-        ...buckets.today.map(t=>({...t,_type:"Due today"}))
-    ].slice(0,8);
+        list.innerHTML =
+            `<div class="empty">No activities recorded today.</div>`;
 
-    if(!items.length){
-        container.innerHTML = `
-            <div class="empty">
-                🎉 No NEET-PG revisions due today.
-            </div>
-        `;
         return;
     }
 
-    container.innerHTML = items.map(topic=>`
-        <div class="due-item ${topic._type==="Overdue" ? "overdue":"due-today"}">
-            <strong>${escapeHTML(topic.topic)}</strong>
-            <div class="small muted">
-                ${escapeHTML(topic.subject)} → ${escapeHTML(topic.chapter)}
+    list.innerHTML = todayActivities
+        .slice()
+        .reverse()
+        .map(a=>`
+
+            <div class="list-item">
+
+                <div class="list-main">
+
+                    <div>
+                        <div class="list-title">
+                            ${escapeHTML(a.activityName)}
+                        </div>
+
+                        <div class="list-meta">
+                            ${escapeHTML(a.category)}
+                            • ${Number(a.minutes || 0)} minutes
+                        </div>
+                    </div>
+
+                    <span class="badge success">+${Math.max(1,Math.round(Number(a.minutes || 0)/5))} XP</span>
+
+                </div>
+
+                <div class="list-actions">
+                    <button class="btn btn-danger btn-small"
+                            onclick="deleteActivity('${a.id}')">
+                        Delete
+                    </button>
+                </div>
+
             </div>
-            <div class="small">
-                ${topic._type} • Revision ${topic.revisionNumber}
-            </div>
-            <div class="btn-row" style="margin-top:7px;">
-                <button class="btn btn-primary" onclick="startRevision('${topic.id}')">
-                    🔁 Start Revision
-                </button>
-            </div>
-        </div>
-    `).join("");
+
+        `).join("");
+}
+
+
+/* =========================================================
+   STREAK
+========================================================= */
+
+function calculateActivityStreak(){
+
+    if(!activities.length){
+        return 0;
+    }
+
+    const dates = new Set(
+        activities
+            .map(a=>a.date)
+            .filter(Boolean)
+    );
+
+    let streak = 0;
+    let d = new Date();
+
+    while(true){
+
+        const date =
+            d.getFullYear() + "-" +
+            String(d.getMonth()+1).padStart(2,"0") + "-" +
+            String(d.getDate()).padStart(2,"0");
+
+        if(!dates.has(date)){
+            break;
+        }
+
+        streak++;
+
+        d.setDate(d.getDate()-1);
+    }
+
+    return streak;
 }
 
 
@@ -1732,1257 +1543,288 @@ function renderTodayDue(){
 ========================================================= */
 
 function renderTrackers(){
-    const container = document.getElementById("categoryTrackers");
 
-    let html = "";
+    const container = document.getElementById("trackerGoals");
 
-    CATEGORIES.forEach(category=>{
-        const minutes = getActivities()
-            .filter(a=>normalizeCategory(a.category)===category)
-            .reduce((sum,a)=>sum+Number(a.minutes||0),0);
+    container.innerHTML = Object.entries(categoryGoals)
+        .map(([category,target])=>{
 
-        const target = DAILY_GOALS[category] * 7;
-
-        const percent = target
-            ? clamp(minutes/target*100,0,100)
-            : 0;
-
-        html += `
-            <div class="category-card">
-                <div class="category-head">
-                    <strong>${escapeHTML(category)}</strong>
-                    <span>${minutesText(minutes)}</span>
-                </div>
-
-                <div class="progress-wrap">
-                    <div class="progress-bar" style="width:${percent}%"></div>
-                </div>
-
-                <div class="small muted" style="margin-top:6px;">
-                    Weekly reference target: ${target} min
-                </div>
-            </div>
-        `;
-    });
-
-    container.innerHTML = html;
-
-    const recent = getActivities()
-        .slice()
-        .sort((a,b)=>
-            String(b.createdAt||"").localeCompare(String(a.createdAt||""))
-        )
-        .slice(0,15);
-
-    const recentContainer = document.getElementById("recentActivities");
-
-    if(!recent.length){
-        recentContainer.innerHTML = `<div class="empty">No activities yet.</div>`;
-        return;
-    }
-
-    recentContainer.innerHTML = recent.map(a=>`
-        <div class="activity-item">
-            <div class="activity-main">
-                <div class="activity-name">${escapeHTML(a.activityName || "Activity")}</div>
-                <div class="small muted">
-                    ${escapeHTML(normalizeCategory(a.category))} • ${formatDate(a.date)}
-                </div>
-            </div>
-
-            <strong>${Number(a.minutes||0)} min</strong>
-        </div>
-    `).join("");
-}
-
-
-/* =========================================================
-   NEET PG DATA
-========================================================= */
-
-function getNEETTopics(){
-    let data = getJSON(NEET_KEY,[]);
-
-    if(!Array.isArray(data)){
-        data = [];
-    }
-
-    return data;
-}
-
-function saveNEETTopics(data){
-    saveJSON(NEET_KEY,data);
-}
-
-function createRevisionSchedule(topic){
-    const start = topic.studyDate || todayISO();
-
-    const intervals = [1,3,7,14,30,60,90];
-
-    return intervals.map((days,index)=>({
-        number:index+1,
-        dueDate:addDaysISO(start,days),
-        completed:false,
-        completedDate:null
-    }));
-}
-
-function ensureRevisionData(topic){
-    if(!Array.isArray(topic.revisions)){
-        topic.revisions = createRevisionSchedule(topic);
-    }
-
-    return topic;
-}
-
-function getAccuracy(topic){
-    const attempted = Number(topic.mcqAttempted||0);
-    const correct = Number(topic.mcqCorrect||0);
-
-    if(attempted <= 0) return 0;
-
-    return clamp(correct/attempted*100,0,100);
-}
-
-function getPYQAccuracy(topic){
-    const attempted = Number(topic.pyqAttempted||0);
-    const correct = Number(topic.pyqCorrect||0);
-
-    if(attempted <= 0) return 0;
-
-    return clamp(correct/attempted*100,0,100);
-}
-
-function isTopicComplete(topic){
-    const videoComplete =
-        Number(topic.videoDuration||0) > 0 &&
-        Number(topic.videoWatched||0) >= Number(topic.videoDuration||0);
-
-    const hasStudyDate = !!topic.studyDate;
-
-    return videoComplete || (
-        hasStudyDate &&
-        Number(topic.mcqAttempted||0) > 0
-    );
-}
-
-function isWeakTopic(topic){
-    const accuracy = getAccuracy(topic);
-    const confidence = Number(topic.confidence||3);
-
-    return (
-        (Number(topic.mcqAttempted||0) >= 10 && accuracy < 60) ||
-        confidence <= 2
-    );
-}
-
-
-/* =========================================================
-   ADD NEET TOPIC
-========================================================= */
-
-function addNEETTopic(){
-    const subject = document.getElementById("npSubject").value;
-    const chapter = document.getElementById("npChapter").value.trim();
-    const topicName = document.getElementById("npTopic").value.trim();
-
-    if(!chapter || !topicName){
-        showMessage("Enter chapter and topic.");
-        return;
-    }
-
-    const topics = getNEETTopics();
-
-    const topic = {
-        id:uid("topic"),
-        subject,
-        chapter,
-        topic:topicName,
-
-        weightage:Number(
-            document.getElementById("npWeightage").value
-        ) || 0,
-
-        priority:document.getElementById("npPriority").value,
-
-        videoDuration:Number(
-            document.getElementById("npVideoDuration").value
-        ) || 0,
-
-        videoWatched:Number(
-            document.getElementById("npVideoWatched").value
-        ) || 0,
-
-        mcqAttempted:Number(
-            document.getElementById("npMCQAttempted").value
-        ) || 0,
-
-        mcqCorrect:Number(
-            document.getElementById("npMCQCorrect").value
-        ) || 0,
-
-        pyqAttempted:Number(
-            document.getElementById("npPYQAttempted").value
-        ) || 0,
-
-        pyqCorrect:Number(
-            document.getElementById("npPYQCorrect").value
-        ) || 0,
-
-        confidence:Number(
-            document.getElementById("npConfidence").value
-        ) || 3,
-
-        studyMinutes:0,
-
-        studyDate:null,
-
-        revisions:[],
-
-        createdAt:new Date().toISOString(),
-
-        updatedAt:new Date().toISOString()
-    };
-
-    topics.push(topic);
-
-    saveNEETTopics(topics);
-
-    clearNEETForm();
-
-    showMessage("NEET-PG topic added ✓");
-
-    render();
-}
-
-function clearNEETForm(){
-    document.getElementById("npChapter").value = "";
-    document.getElementById("npTopic").value = "";
-    document.getElementById("npWeightage").value = "";
-    document.getElementById("npVideoDuration").value = "";
-    document.getElementById("npVideoWatched").value = "";
-    document.getElementById("npMCQAttempted").value = "";
-    document.getElementById("npMCQCorrect").value = "";
-    document.getElementById("npPYQAttempted").value = "";
-    document.getElementById("npPYQCorrect").value = "";
-    document.getElementById("npConfidence").value = "3";
-}
-
-
-/* =========================================================
-   NEET PG RENDERING
-========================================================= */
-
-function renderNEET(){
-    const topics = getNEETTopics();
-
-    const completed = topics.filter(isTopicComplete).length;
-
-    const totalMCQ = topics.reduce(
-        (sum,t)=>sum+Number(t.mcqAttempted||0),0
-    );
-
-    const totalCorrect = topics.reduce(
-        (sum,t)=>sum+Number(t.mcqCorrect||0),0
-    );
-
-    const accuracy = totalMCQ
-        ? Math.round(totalCorrect/totalMCQ*100)
-        : 0;
-
-    const studyMinutes = topics.reduce(
-        (sum,t)=>sum+Number(t.studyMinutes||0),0
-    );
-
-    document.getElementById("npTopics").textContent = topics.length;
-    document.getElementById("npCompleted").textContent = completed;
-    document.getElementById("npAccuracy").textContent = accuracy + "%";
-    document.getElementById("npStudyTime").textContent = minutesText(studyMinutes);
-
-    renderRevisionQueues();
-    renderNEETTopics();
-    populateTimerSubjects();
-}
-
-function renderNEETTopics(){
-    const allTopics = getNEETTopics();
-
-    const search = (
-        document.getElementById("npSearch").value || ""
-    ).trim().toLowerCase();
-
-    const subjectFilter =
-        document.getElementById("npFilterSubject").value;
-
-    const statusFilter =
-        document.getElementById("npFilterStatus").value;
-
-    const filtered = allTopics.filter(topic=>{
-        const searchable = [
-            topic.subject,
-            topic.chapter,
-            topic.topic
-        ].join(" ").toLowerCase();
-
-        if(search && !searchable.includes(search)){
-            return false;
-        }
-
-        if(subjectFilter && topic.subject !== subjectFilter){
-            return false;
-        }
-
-        if(statusFilter === "completed" && !isTopicComplete(topic)){
-            return false;
-        }
-
-        if(statusFilter === "pending" && isTopicComplete(topic)){
-            return false;
-        }
-
-        if(statusFilter === "weak" && !isWeakTopic(topic)){
-            return false;
-        }
-
-        if(statusFilter === "due"){
-            const due = topic.revisions?.some(r=>
-                !r.completed && r.dueDate <= todayISO()
+            const minutes = getCategoryMinutes(
+                todayString(),
+                category
             );
 
-            if(!due) return false;
-        }
+            const percent =
+                Math.min(100,(minutes/target)*100);
 
-        return true;
-    });
+            return `
+                <div style="margin-bottom:14px">
 
-    document.getElementById("topicCountText").textContent =
-        filtered.length + " topics";
+                    <div class="list-main">
+                        <strong>${escapeHTML(category)}</strong>
+                        <span>${minutes}/${target} min</span>
+                    </div>
 
-    const container = document.getElementById("neetTopicList");
+                    <div class="progress">
+                        <div class="progress-bar"
+                             style="width:${percent}%"></div>
+                    </div>
 
-    if(!filtered.length){
-        container.innerHTML = `
-            <div class="empty">
-                No topics found.
-            </div>
-        `;
+                </div>
+            `;
+        }).join("");
+
+    const history = document.getElementById("activityHistory");
+
+    if(!activities.length){
+
+        history.innerHTML =
+            `<div class="empty">No activity history yet.</div>`;
+
         return;
     }
 
-    container.innerHTML = filtered
+    const sorted = activities
         .slice()
-        .reverse()
-        .map(renderTopicCard)
-        .join("");
-}
-
-function renderTopicCard(topic){
-    ensureRevisionData(topic);
-
-    const videoDuration = Number(topic.videoDuration||0);
-    const videoWatched = Number(topic.videoWatched||0);
-
-    const videoPercent = videoDuration
-        ? clamp(videoWatched/videoDuration*100,0,100)
-        : 0;
-
-    const accuracy = getAccuracy(topic);
-
-    const nextRevision = getNextRevision(topic);
-
-    const weak = isWeakTopic(topic);
-
-    const completed = isTopicComplete(topic);
-
-    const priorityClass =
-        topic.priority === "High"
-            ? "badge-high"
-            : topic.priority === "Medium"
-                ? "badge-medium"
-                : "badge-standard";
-
-    return `
-        <div class="topic-row">
-
-            <div class="topic-top">
-
-                <div>
-                    <div class="topic-title">
-                        ${escapeHTML(topic.topic)}
-                    </div>
-
-                    <div class="topic-meta">
-                        ${escapeHTML(topic.subject)}
-                        → ${escapeHTML(topic.chapter)}
-                    </div>
-
-                    <div style="margin-top:7px;">
-                        <span class="badge ${priorityClass}">
-                            ${escapeHTML(topic.priority)}
-                        </span>
-
-                        ${topic.weightage
-                            ? `<span class="badge">⚖️ ${topic.weightage}</span>`
-                            : ""
-                        }
-
-                        ${weak
-                            ? `<span class="badge badge-high">🔴 Weak</span>`
-                            : ""
-                        }
-
-                        ${completed
-                            ? `<span class="badge badge-standard">✓ Studied</span>`
-                            : ""
-                        }
-                    </div>
-                </div>
-
-                <button
-                    class="btn btn-secondary"
-                    onclick="deleteNEETTopic('${topic.id}')">
-                    🗑
-                </button>
-
-            </div>
-
-            <div class="topic-stats">
-
-                <div class="mini-stat">
-                    Video
-                    <strong>${Math.round(videoPercent)}%</strong>
-                </div>
-
-                <div class="mini-stat">
-                    MCQs
-                    <strong>${Number(topic.mcqAttempted||0)}</strong>
-                </div>
-
-                <div class="mini-stat">
-                    Accuracy
-                    <strong>${Math.round(accuracy)}%</strong>
-                </div>
-
-                <div class="mini-stat">
-                    Study
-                    <strong>${minutesText(topic.studyMinutes)}</strong>
-                </div>
-
-                <div class="mini-stat">
-                    Confidence
-                    <strong>${Number(topic.confidence||3)}/5</strong>
-                </div>
-
-            </div>
-
-            <div style="margin-top:10px;">
-                <div class="small muted">
-                    Video: ${videoWatched}/${videoDuration || 0} min
-                </div>
-
-                <div class="progress-wrap" style="margin-top:4px;">
-                    <div class="progress-bar" style="width:${videoPercent}%"></div>
-                </div>
-            </div>
-
-            <div class="small" style="margin-top:10px;">
-                🔁 ${
-                    nextRevision
-                        ? `Next revision: <strong>${formatDate(nextRevision.dueDate)}</strong> — R${nextRevision.number}`
-                        : `<strong>Revision cycle complete</strong>`
-                }
-            </div>
-
-            <div class="topic-actions">
-
-                <button
-                    class="btn btn-primary"
-                    onclick="startTopicTimer('${topic.id}')">
-                    ⏱️ Study
-                </button>
-
-                <button
-                    class="btn btn-success"
-                    onclick="markTopicStudied('${topic.id}')">
-                    ✓ Mark Studied
-                </button>
-
-                <button
-                    class="btn btn-secondary"
-                    onclick="completeRevision('${topic.id}')">
-                    🔁 Complete Revision
-                </button>
-
-                <button
-                    class="btn btn-secondary"
-                    onclick="editTopic('${topic.id}')">
-                    ✏️ Edit
-                </button>
-
-            </div>
-
-        </div>
-    `;
-}
-
-
-/* =========================================================
-   TOPIC ACTIONS
-========================================================= */
-
-function findNEETTopic(id){
-    return getNEETTopics().find(t=>t.id===id);
-}
-
-function markTopicStudied(id){
-    const topics = getNEETTopics();
-
-    const topic = topics.find(t=>t.id===id);
-
-    if(!topic) return;
-
-    if(!topic.studyDate){
-        topic.studyDate = todayISO();
-        topic.revisions = createRevisionSchedule(topic);
-    }
-
-    topic.updatedAt = new Date().toISOString();
-
-    saveNEETTopics(topics);
-
-    showMessage("Topic marked studied. Revision schedule created 🔁");
-
-    render();
-}
-
-function deleteNEETTopic(id){
-    if(!confirm("Delete this NEET-PG topic?")) return;
-
-    const topics = getNEETTopics()
-        .filter(t=>t.id!==id);
-
-    saveNEETTopics(topics);
-
-    showMessage("Topic deleted.");
-
-    render();
-}
-
-function editTopic(id){
-    const topics = getNEETTopics();
-    const topic = topics.find(t=>t.id===id);
-
-    if(!topic) return;
-
-    const weightage = prompt(
-        "Weightage / marks:",
-        topic.weightage ?? ""
-    );
-
-    if(weightage !== null){
-        topic.weightage = Number(weightage)||0;
-    }
-
-    const confidence = prompt(
-        "Confidence 1–5:",
-        topic.confidence ?? 3
-    );
-
-    if(confidence !== null){
-        topic.confidence = clamp(
-            Number(confidence)||3,
-            1,
-            5
-        );
-    }
-
-    const mcqs = prompt(
-        "MCQs attempted:",
-        topic.mcqAttempted ?? 0
-    );
-
-    if(mcqs !== null){
-        topic.mcqAttempted = Math.max(0,Number(mcqs)||0);
-    }
-
-    const correct = prompt(
-        "MCQs correct:",
-        topic.mcqCorrect ?? 0
-    );
-
-    if(correct !== null){
-        topic.mcqCorrect = Math.max(0,Number(correct)||0);
-    }
-
-    topic.updatedAt = new Date().toISOString();
-
-    saveNEETTopics(topics);
-
-    showMessage("Topic updated ✓");
-
-    render();
-}
-
-
-/* =========================================================
-   REVISION SYSTEM
-========================================================= */
-
-function getNextRevision(topic){
-    ensureRevisionData(topic);
-
-    return topic.revisions.find(r=>!r.completed);
-}
-
-function getRevisionBuckets(){
-    const topics = getNEETTopics();
-
-    const today = todayISO();
-
-    const overdue = [];
-    const dueToday = [];
-    const upcoming = [];
-
-    topics.forEach(topic=>{
-        ensureRevisionData(topic);
-
-        topic.revisions.forEach(revision=>{
-            if(revision.completed) return;
-
-            const item = {
-                ...topic,
-                revisionNumber:revision.number,
-                dueDate:revision.dueDate,
-                revision
-            };
-
-            if(revision.dueDate < today){
-                overdue.push(item);
-            }else if(revision.dueDate === today){
-                dueToday.push(item);
-            }else{
-                upcoming.push(item);
-            }
+        .sort((a,b)=>{
+            return String(b.date).localeCompare(String(a.date));
         });
-    });
 
-    overdue.sort((a,b)=>a.dueDate.localeCompare(b.dueDate));
-    dueToday.sort((a,b)=>a.subject.localeCompare(b.subject));
-    upcoming.sort((a,b)=>a.dueDate.localeCompare(b.dueDate));
+    history.innerHTML = sorted
+        .slice(0,50)
+        .map(a=>`
 
-    return {
-        overdue,
-        today:dueToday,
-        upcoming
-    };
-}
+            <div class="list-item">
 
-function renderRevisionQueues(){
-    const buckets = getRevisionBuckets();
+                <div class="list-main">
 
-    document.getElementById("revisionBadge").textContent =
-        (buckets.overdue.length + buckets.today.length) + " due";
+                    <div>
+                        <div class="list-title">
+                            ${escapeHTML(a.activityName)}
+                        </div>
 
-    document.getElementById("overdueList").innerHTML =
-        renderDueItems(buckets.overdue.slice(0,10),"overdue");
+                        <div class="list-meta">
+                            ${escapeHTML(a.category)}
+                            • ${Number(a.minutes || 0)} min
+                            • ${formatDate(a.date)}
+                        </div>
+                    </div>
 
-    document.getElementById("dueTodayList").innerHTML =
-        renderDueItems(buckets.today.slice(0,10),"due-today");
+                    <button class="btn btn-danger btn-small"
+                            onclick="deleteActivity('${a.id}')">
+                        Delete
+                    </button>
 
-    document.getElementById("upcomingList").innerHTML =
-        renderDueItems(buckets.upcoming.slice(0,10),"upcoming");
-}
+                </div>
 
-function renderDueItems(items,type){
-    if(!items.length){
-        return `<div class="empty">None</div>`;
-    }
-
-    return items.map(item=>`
-        <div class="due-item ${type}">
-            <strong>${escapeHTML(item.topic)}</strong>
-
-            <div class="small muted">
-                ${escapeHTML(item.subject)}
-                → ${escapeHTML(item.chapter)}
             </div>
 
-            <div class="small">
-                Revision ${item.revisionNumber}
-                • ${formatDate(item.dueDate)}
-            </div>
-
-            <div style="margin-top:7px;">
-                <button
-                    class="btn btn-primary"
-                    onclick="startRevision('${item.id}')">
-                    🔁 Start
-                </button>
-            </div>
-        </div>
-    `).join("");
-}
-
-function startRevision(id){
-    const topics = getNEETTopics();
-    const topic = topics.find(t=>t.id===id);
-
-    if(!topic) return;
-
-    ensureRevisionData(topic);
-
-    const revision = topic.revisions.find(r=>!r.completed);
-
-    if(!revision){
-        showMessage("All scheduled revisions completed.");
-        return;
-    }
-
-    showPage("stopwatch");
-
-    document.getElementById("timerMode").value = "neet";
-    updateTimerFields();
-
-    document.getElementById("timerSubject").value = topic.subject;
-
-    populateTimerTopics();
-
-    document.getElementById("timerTopic").value = topic.id;
-
-    document.getElementById("timerStudyType").value = "Revision";
-
-    showMessage(`Revision ${revision.number} ready for ${topic.topic}.`);
-}
-
-function completeRevision(id){
-    const topics = getNEETTopics();
-    const topic = topics.find(t=>t.id===id);
-
-    if(!topic) return;
-
-    ensureRevisionData(topic);
-
-    const revision = topic.revisions.find(r=>!r.completed);
-
-    if(!revision){
-        showMessage("No pending revision.");
-        return;
-    }
-
-    if(revision.dueDate > todayISO()){
-        if(!confirm(
-            "This revision is not due yet. Mark it completed anyway?"
-        )){
-            return;
-        }
-    }
-
-    revision.completed = true;
-    revision.completedDate = todayISO();
-
-    /*
-       Adaptive principle:
-       - Strong confidence and good MCQ accuracy:
-         retain the planned longer interval.
-       - Weak performance:
-         bring the next revision closer.
-
-       The schedule itself remains based on
-       increasing spaced-retrieval intervals.
-    */
-
-    const next = topic.revisions.find(r=>!r.completed);
-
-    if(next){
-        const accuracy = getAccuracy(topic);
-        const confidence = Number(topic.confidence||3);
-
-        if(
-            confidence <= 2 ||
-            (topic.mcqAttempted >= 10 && accuracy < 60)
-        ){
-            const base = dateFromISO(revision.completedDate);
-
-            base.setDate(base.getDate()+3);
-
-            next.dueDate =
-                `${base.getFullYear()}-${String(base.getMonth()+1).padStart(2,"0")}-${String(base.getDate()).padStart(2,"0")}`;
-        }
-    }
-
-    saveNEETTopics(topics);
-
-    showMessage(`Revision ${revision.number} completed ✓`);
-
-    render();
+        `).join("");
 }
 
 
 /* =========================================================
-   NEET-PG STOPWATCH
+   XP / PROGRESS
 ========================================================= */
 
-let timerSeconds = 0;
-let timerInterval = null;
-let timerRunning = false;
+function calculateXP(){
 
-let timerContext = {
-    mode:"general",
-    topicId:null,
-    startedAt:null
-};
+    const activityXP = activities.reduce(
+        (sum,a)=>{
+            return sum + Math.max(
+                1,
+                Math.round(Number(a.minutes || 0)/5)
+            );
+        },
+        0
+    );
 
-function formatTimer(seconds){
-    seconds = Math.max(0,Math.floor(seconds));
+    const studyXP = neet.topics.reduce(
+        (sum,t)=>{
+            return sum + Math.round(
+                Number(t.studyMinutes || 0)/5
+            );
+        },
+        0
+    );
 
-    const h = Math.floor(seconds/3600);
-    const m = Math.floor((seconds%3600)/60);
-    const s = seconds%60;
-
-    return [
-        String(h).padStart(2,"0"),
-        String(m).padStart(2,"0"),
-        String(s).padStart(2,"0")
-    ].join(":");
+    return activityXP + studyXP;
 }
 
-function updateTimerDisplay(){
-    document.getElementById("timerDisplay").textContent =
-        formatTimer(timerSeconds);
+function renderProgress(){
+
+    const totalMinutes = activities.reduce(
+        (sum,a)=>sum + Number(a.minutes || 0),
+        0
+    );
+
+    const studyMinutes = neet.topics.reduce(
+        (sum,t)=>sum + Number(t.studyMinutes || 0),
+        0
+    );
+
+    const xp = calculateXP();
+
+    const level =
+        Math.floor(xp / 100) + 1;
+
+    document.getElementById("totalMinutes").textContent =
+        totalMinutes + studyMinutes;
+
+    document.getElementById("totalXP").textContent = xp;
+
+    document.getElementById("levelNumber").textContent = level;
+
+    drawCharts();
+
+    const balance = document.getElementById("categoryBalance");
+
+    balance.innerHTML = Object.keys(categoryGoals)
+        .map(category=>{
+
+            const total = activities
+                .filter(a=>a.category === category)
+                .reduce(
+                    (sum,a)=>sum + Number(a.minutes || 0),
+                    0
+                );
+
+            return `
+                <div style="margin-bottom:12px">
+                    <div class="list-main">
+                        <strong>${escapeHTML(category)}</strong>
+                        <span>${total} min</span>
+                    </div>
+
+                    <div class="progress">
+                        <div class="progress-bar"
+                             style="width:${Math.min(100,total/3)}%"></div>
+                    </div>
+                </div>
+            `;
+        }).join("");
 }
 
-function updateTimerButtons(){
-    document.getElementById("timerStartBtn").disabled =
-        timerRunning;
 
-    document.getElementById("timerPauseBtn").disabled =
-        !timerRunning;
+/* =========================================================
+   CHARTS
+========================================================= */
 
-    document.getElementById("timerStopBtn").disabled =
-        timerSeconds <= 0;
-}
+function getLastDates(number){
 
-function updateTimerFields(){
-    const mode = document.getElementById("timerMode").value;
+    const result = [];
 
-    document.getElementById("timerGeneralFields").style.display =
-        mode === "general" ? "block" : "none";
+    const d = new Date();
 
-    document.getElementById("timerNEETFields").style.display =
-        mode === "neet" ? "block" : "none";
+    for(let i=number-1;i>=0;i--){
 
-    if(mode === "neet"){
-        populateTimerSubjects();
-    }
-}
+        const date = new Date(d);
 
-function startTimer(){
-    if(timerRunning) return;
-
-    const mode = document.getElementById("timerMode").value;
-
-    timerContext.mode = mode;
-    timerContext.startedAt = timerContext.startedAt || new Date().toISOString();
-
-    if(mode === "neet"){
-        timerContext.topicId =
-            document.getElementById("timerTopic").value || null;
-
-        if(!timerContext.topicId){
-            showMessage("Select a NEET-PG topic first.");
-            return;
-        }
-    }
-
-    timerRunning = true;
-
-    timerInterval = setInterval(()=>{
-        timerSeconds++;
-        updateTimerDisplay();
-        updateTimerButtons();
-    },1000);
-
-    updateTimerButtons();
-}
-
-function pauseTimer(){
-    if(!timerRunning) return;
-
-    clearInterval(timerInterval);
-
-    timerInterval = null;
-    timerRunning = false;
-
-    updateTimerButtons();
-
-    showMessage("Stopwatch paused.");
-}
-
-function stopTimer(){
-    if(timerSeconds <= 0) return;
-
-    clearInterval(timerInterval);
-
-    timerInterval = null;
-    timerRunning = false;
-
-    const seconds = timerSeconds;
-    const minutes = Math.max(1,Math.round(seconds/60));
-
-    saveTimerSession(minutes);
-
-    timerSeconds = 0;
-    timerContext = {
-        mode:"general",
-        topicId:null,
-        startedAt:null
-    };
-
-    updateTimerDisplay();
-    updateTimerButtons();
-
-    showMessage(`${minutes} minute study session saved ✓`);
-
-    render();
-}
-
-function resetTimer(){
-    clearInterval(timerInterval);
-
-    timerInterval = null;
-    timerRunning = false;
-    timerSeconds = 0;
-
-    timerContext = {
-        mode:"general",
-        topicId:null,
-        startedAt:null
-    };
-
-    updateTimerDisplay();
-    updateTimerButtons();
-}
-
-function startTopicTimer(id){
-    const topic = findNEETTopic(id);
-
-    if(!topic) return;
-
-    showPage("stopwatch");
-
-    document.getElementById("timerMode").value = "neet";
-
-    updateTimerFields();
-
-    document.getElementById("timerSubject").value =
-        topic.subject;
-
-    populateTimerTopics();
-
-    document.getElementById("timerTopic").value =
-        topic.id;
-
-    document.getElementById("timerStudyType").value =
-        "Reading";
-
-    showMessage(`Ready to study ${topic.topic}.`);
-}
-
-function saveTimerSession(minutes){
-    if(timerContext.mode === "neet" && timerContext.topicId){
-
-        const topics = getNEETTopics();
-
-        const topic = topics.find(
-            t=>t.id===timerContext.topicId
+        date.setDate(
+            d.getDate()-i
         );
 
-        if(topic){
-
-            topic.studyMinutes =
-                Number(topic.studyMinutes||0) + minutes;
-
-            /*
-               If study begins for a topic and it has no study date,
-               create its revision schedule.
-            */
-
-            if(!topic.studyDate){
-                topic.studyDate = todayISO();
-                topic.revisions = createRevisionSchedule(topic);
-            }
-
-            topic.updatedAt = new Date().toISOString();
-
-            saveNEETTopics(topics);
-
-            addGeneralActivityRecord(
-                `${topic.subject}: ${topic.topic}`,
-                "Learning",
-                minutes
-            );
-
-            return;
-        }
+        result.push(
+            date.getFullYear() + "-" +
+            String(date.getMonth()+1).padStart(2,"0") + "-" +
+            String(date.getDate()).padStart(2,"0")
+        );
     }
 
-    const activity =
-        document.getElementById("timerActivity").value.trim()
-        || "Study / Activity";
-
-    addGeneralActivityRecord(
-        activity,
-        "Work/Study",
-        minutes
-    );
+    return result;
 }
 
-function addGeneralActivityRecord(name,category,minutes){
-    const activities = getActivities();
+function drawBarChart(canvasId, dates){
 
-    activities.push({
-        id:uid("act"),
-        activityName:name,
-        category:normalizeCategory(category),
-        minutes:Math.round(minutes),
-        date:todayISO(),
-        createdAt:new Date().toISOString()
-    });
+    const canvas = document.getElementById(canvasId);
 
-    saveActivities(activities);
-}
-
-
-/* =========================================================
-   TIMER TOPIC SELECTORS
-========================================================= */
-
-function populateTimerSubjects(){
-    const select = document.getElementById("timerSubject");
-
-    if(!select) return;
-
-    const current = select.value;
-
-    select.innerHTML =
-        NEET_SUBJECTS.map(subject=>
-            `<option>${escapeHTML(subject)}</option>`
-        ).join("");
-
-    if(current && NEET_SUBJECTS.includes(current)){
-        select.value = current;
-    }
-
-    populateTimerTopics();
-}
-
-function populateTimerTopics(){
-    const subject =
-        document.getElementById("timerSubject").value;
-
-    const topicSelect =
-        document.getElementById("timerTopic");
-
-    const topics = getNEETTopics()
-        .filter(t=>t.subject===subject);
-
-    const current = topicSelect.value;
-
-    if(!topics.length){
-        topicSelect.innerHTML =
-            `<option value="">No topics entered yet</option>`;
+    if(!canvas){
         return;
     }
-
-    topicSelect.innerHTML =
-        topics.map(topic=>
-            `<option value="${escapeHTML(topic.id)}">
-                ${escapeHTML(topic.chapter)} → ${escapeHTML(topic.topic)}
-            </option>`
-        ).join("");
-
-    if(topics.some(t=>t.id===current)){
-        topicSelect.value = current;
-    }
-}
-
-
-/* =========================================================
-   RECENT SESSIONS
-========================================================= */
-
-function renderRecentSessions(){
-    const container = document.getElementById("recentSessions");
-
-    const sessions = getActivities()
-        .filter(a=>
-            String(a.activityName||"")
-                .toLowerCase()
-                .includes(":")
-        )
-        .slice()
-        .reverse()
-        .slice(0,10);
-
-    if(!sessions.length){
-        container.innerHTML =
-            `<div class="empty">No NEET-PG stopwatch sessions yet.</div>`;
-        return;
-    }
-
-    container.innerHTML = sessions.map(a=>`
-        <div class="activity-item">
-            <div>
-                <div class="activity-name">
-                    ${escapeHTML(a.activityName)}
-                </div>
-                <div class="small muted">
-                    ${formatDate(a.date)}
-                </div>
-            </div>
-
-            <strong>${a.minutes} min</strong>
-        </div>
-    `).join("");
-}
-
-
-/* =========================================================
-   PROGRESS CHARTS
-========================================================= */
-
-function getLastNDates(n){
-    const dates = [];
-
-    for(let i=n-1;i>=0;i--){
-        dates.push(addDaysISO(todayISO(),-i));
-    }
-
-    return dates;
-}
-
-function setupCanvas(canvas,height=260){
-    const rect = canvas.getBoundingClientRect();
-
-    const width = Math.max(
-        300,
-        Math.floor(
-            rect.width ||
-            canvas.parentElement?.clientWidth ||
-            600
-        )
-    );
-
-    const dpr = Math.min(window.devicePixelRatio || 1,2);
-
-    canvas.width = width*dpr;
-    canvas.height = height*dpr;
-    canvas.style.height = height+"px";
 
     const ctx = canvas.getContext("2d");
 
-    ctx.setTransform(dpr,0,0,dpr,0,0);
-
-    return {
-        ctx,
-        width,
-        height
-    };
-}
-
-function cssVar(name){
-    return getComputedStyle(document.body)
-        .getPropertyValue(name)
-        .trim();
-}
-
-function drawWeeklyChart(){
-    const canvas = document.getElementById("weeklyChart");
-
-    if(!canvas) return;
-
-    const {ctx,width,height} =
-        setupCanvas(canvas,260);
-
-    const dates = getLastNDates(7);
-
-    const values =
-        dates.map(getMinutesForDate);
-
-    const max =
-        Math.max(60,...values);
-
-    const pad = {
-        left:45,
-        right:15,
-        top:20,
-        bottom:40
-    };
-
-    const chartW =
-        width-pad.left-pad.right;
-
-    const chartH =
-        height-pad.top-pad.bottom;
+    const width = canvas.width;
+    const height = canvas.height;
 
     ctx.clearRect(0,0,width,height);
 
-    const textColor = cssVar("--muted");
-    const gridColor = cssVar("--border");
-    const barColor = cssVar("--chart");
+    const values = dates.map(date=>{
+
+        const activityMinutes = activities
+            .filter(a=>a.date === date)
+            .reduce(
+                (sum,a)=>sum + Number(a.minutes || 0),
+                0
+            );
+
+        const studyMinutes = neet.topics
+            .filter(t=>t.lastStudyDate === date)
+            .reduce(
+                (sum,t)=>sum + Number(t.studyMinutesToday || 0),
+                0
+            );
+
+        return activityMinutes + studyMinutes;
+    });
+
+    const max = Math.max(
+        60,
+        ...values
+    );
+
+    const left = 45;
+    const bottom = 35;
+    const chartWidth = width-left-15;
+    const chartHeight = height-bottom-15;
+
+    ctx.strokeStyle =
+        document.body.classList.contains("dark")
+        ? "#4b5563"
+        : "#d1d5db";
+
+    ctx.fillStyle =
+        document.body.classList.contains("dark")
+        ? "#f9fafb"
+        : "#374151";
 
     ctx.font = "12px Arial";
 
-    for(let i=0;i<=4;i++){
-        const y =
-            pad.top + chartH - (chartH*i/4);
+    ctx.beginPath();
+    ctx.moveTo(left,15);
+    ctx.lineTo(left,height-bottom);
+    ctx.lineTo(width-10,height-bottom);
+    ctx.stroke();
 
-        ctx.strokeStyle = gridColor;
-        ctx.lineWidth = 1;
-
-        ctx.beginPath();
-        ctx.moveTo(pad.left,y);
-        ctx.lineTo(width-pad.right,y);
-        ctx.stroke();
-
-        const label =
-            Math.round(max*i/4);
-
-        ctx.fillStyle = textColor;
-        ctx.fillText(
-            label+"m",
-            5,
-            y+4
-        );
-    }
-
-    const gap = 8;
-    const barW =
-        (chartW-gap*(values.length-1))/values.length;
+    const barWidth =
+        chartWidth / dates.length * .65;
 
     values.forEach((value,i)=>{
-        const barH =
-            value/max*chartH;
 
         const x =
-            pad.left+i*(barW+gap);
+            left +
+            (chartWidth/dates.length)*i +
+            ((chartWidth/dates.length)-barWidth)/2;
 
-        const y =
-            pad.top+chartH-barH;
+        const barHeight =
+            (value/max)*chartHeight;
 
-        ctx.fillStyle = barColor;
+        ctx.fillStyle = "#667eea";
 
         ctx.fillRect(
             x,
-            y,
-            barW,
-            barH
+            height-bottom-barHeight,
+            barWidth,
+            barHeight
         );
 
-        ctx.fillStyle = textColor;
+        ctx.fillStyle =
+            document.body.classList.contains("dark")
+            ? "#f9fafb"
+            : "#374151";
 
         const label =
-            formatShortDate(dates[i]);
+            dates[i].slice(5);
 
         ctx.fillText(
             label,
@@ -2992,270 +1834,109 @@ function drawWeeklyChart(){
     });
 }
 
-function drawMonthlyChart(){
-    const canvas = document.getElementById("monthlyChart");
+function drawCharts(){
 
-    if(!canvas) return;
+    drawBarChart(
+        "sevenDayChart",
+        getLastDates(7)
+    );
 
-    const {ctx,width,height} =
-        setupCanvas(canvas,260);
-
-    const dates = getLastNDates(30);
-
-    const values =
-        dates.map(getMinutesForDate);
-
-    const max =
-        Math.max(60,...values);
-
-    const pad = {
-        left:42,
-        right:15,
-        top:20,
-        bottom:35
-    };
-
-    const chartW =
-        width-pad.left-pad.right;
-
-    const chartH =
-        height-pad.top-pad.bottom;
-
-    ctx.clearRect(0,0,width,height);
-
-    const textColor = cssVar("--muted");
-    const gridColor = cssVar("--border");
-    const lineColor = cssVar("--chart2");
-
-    for(let i=0;i<=4;i++){
-        const y =
-            pad.top+chartH-(chartH*i/4);
-
-        ctx.strokeStyle = gridColor;
-
-        ctx.beginPath();
-        ctx.moveTo(pad.left,y);
-        ctx.lineTo(width-pad.right,y);
-        ctx.stroke();
-
-        ctx.fillStyle = textColor;
-
-        ctx.font = "11px Arial";
-
-        ctx.fillText(
-            Math.round(max*i/4)+"m",
-            4,
-            y+4
-        );
-    }
-
-    ctx.strokeStyle = lineColor;
-    ctx.lineWidth = 3;
-    ctx.beginPath();
-
-    values.forEach((value,i)=>{
-        const x =
-            pad.left+
-            chartW*(i/(values.length-1));
-
-        const y =
-            pad.top+
-            chartH-
-            value/max*chartH;
-
-        if(i===0){
-            ctx.moveTo(x,y);
-        }else{
-            ctx.lineTo(x,y);
-        }
-    });
-
-    ctx.stroke();
-
-    values.forEach((value,i)=>{
-        if(i%5!==0 && i!==values.length-1) return;
-
-        const x =
-            pad.left+
-            chartW*(i/(values.length-1));
-
-        const y =
-            pad.top+
-            chartH-
-            value/max*chartH;
-
-        ctx.fillStyle = lineColor;
-
-        ctx.beginPath();
-        ctx.arc(x,y,4,0,Math.PI*2);
-        ctx.fill();
-
-        ctx.fillStyle = textColor;
-
-        ctx.font = "11px Arial";
-
-        ctx.fillText(
-            formatShortDate(dates[i]),
-            x-15,
-            height-10
-        );
-    });
-}
-
-function renderBalance(){
-    const container =
-        document.getElementById("balanceChart");
-
-    const totalByCategory = {};
-
-    CATEGORIES.forEach(category=>{
-        totalByCategory[category] =
-            getActivities()
-                .filter(a=>
-                    normalizeCategory(a.category)===category
-                )
-                .reduce(
-                    (sum,a)=>sum+Number(a.minutes||0),
-                    0
-                );
-    });
-
-    const max =
-        Math.max(
-            1,
-            ...Object.values(totalByCategory)
-        );
-
-    container.innerHTML =
-        CATEGORIES.map(category=>{
-            const value =
-                totalByCategory[category];
-
-            const percent =
-                value/max*100;
-
-            return `
-                <div class="category-card" style="margin-bottom:10px;">
-                    <div class="category-head">
-                        <strong>${escapeHTML(category)}</strong>
-                        <span>${minutesText(value)}</span>
-                    </div>
-
-                    <div class="progress-wrap">
-                        <div class="progress-bar"
-                             style="width:${percent}%"></div>
-                    </div>
-                </div>
-            `;
-        }).join("");
-}
-
-function renderProgress(){
-    const activities = getActivities();
-
-    const totalMinutes =
-        activities.reduce(
-            (sum,a)=>sum+Number(a.minutes||0),
-            0
-        );
-
-    const xp = calculateXP();
-
-    const level =
-        Math.floor(xp/100)+1;
-
-    document.getElementById("totalMinutes").textContent =
-        totalMinutes;
-
-    document.getElementById("totalXP").textContent =
-        xp;
-
-    document.getElementById("currentLevel").textContent =
-        level;
-
-    document.getElementById("longestStreak").textContent =
-        calculateLongestStreak();
-
-    drawWeeklyChart();
-    drawMonthlyChart();
-    renderBalance();
+    drawBarChart(
+        "thirtyDayChart",
+        getLastDates(30)
+    );
 }
 
 
 /* =========================================================
-   CHECK-IN
+   CHECKINS
 ========================================================= */
 
-let selectedRating = 0;
-
-function getCheckins(){
-    const data = getJSON(CHECKIN_KEY,{});
-
-    return (
-        data &&
-        typeof data === "object" &&
-        !Array.isArray(data)
-    )
-        ? data
-        : {};
-}
-
 function saveCheckin(){
-    const checkins = getCheckins();
 
-    checkins[todayISO()] = {
-        rating:selectedRating,
-        good:document.getElementById("checkinGood").value,
-        difficult:document.getElementById("checkinDifficult").value,
-        tomorrow:document.getElementById("checkinTomorrow").value,
-        savedAt:new Date().toISOString()
+    const mood =
+        Number(document.getElementById("checkMood").value);
+
+    const energy =
+        Number(document.getElementById("checkEnergy").value);
+
+    const note =
+        document.getElementById("checkNote").value.trim();
+
+    const existing =
+        checkins.findIndex(
+            c=>c.date === todayString()
+        );
+
+    const record = {
+        id:generateId("checkin"),
+        date:todayString(),
+        mood:mood,
+        energy:energy,
+        note:note,
+        createdAt:new Date().toISOString()
     };
 
-    saveJSON(CHECKIN_KEY,checkins);
+    if(existing >= 0){
+        checkins[existing] = record;
+    }else{
+        checkins.push(record);
+    }
 
-    showMessage("Check-in saved ❤️");
+    localStorage.setItem(
+        CHECKIN_KEY,
+        JSON.stringify(checkins)
+    );
+
+    document.getElementById("checkNote").value = "";
+
+    showToast("Check-in saved.");
+
+    renderCheckins();
 }
 
-function setRating(rating){
-    selectedRating = rating;
+function renderCheckins(){
 
-    document
-        .querySelectorAll("#ratingButtons button")
-        .forEach((button,index)=>{
-            button.classList.toggle(
-                "selected",
-                index < rating
-            );
-        });
-}
+    const list =
+        document.getElementById("checkinList");
 
-function renderCheckin(){
-    const checkins = getCheckins();
-    const data = checkins[todayISO()];
+    if(!checkins.length){
 
-    if(!data){
-        selectedRating = 0;
-        setRating(0);
-
-        document.getElementById("checkinGood").value = "";
-        document.getElementById("checkinDifficult").value = "";
-        document.getElementById("checkinTomorrow").value = "";
+        list.innerHTML =
+            `<div class="empty">No check-ins yet.</div>`;
 
         return;
     }
 
-    selectedRating = Number(data.rating||0);
+    list.innerHTML =
+        checkins
+            .slice()
+            .sort((a,b)=>String(b.date).localeCompare(String(a.date)))
+            .slice(0,30)
+            .map(c=>`
 
-    setRating(selectedRating);
+                <div class="list-item">
 
-    document.getElementById("checkinGood").value =
-        data.good || "";
+                    <div class="list-title">
+                        ${formatDate(c.date)}
+                    </div>
 
-    document.getElementById("checkinDifficult").value =
-        data.difficult || "";
+                    <div class="list-meta">
+                        Mood: ${c.mood}/5
+                        • Energy: ${c.energy}/5
+                    </div>
 
-    document.getElementById("checkinTomorrow").value =
-        data.tomorrow || "";
+                    ${
+                        c.note
+                        ? `<div style="margin-top:8px">
+                            ${escapeHTML(c.note)}
+                           </div>`
+                        : ""
+                    }
+
+                </div>
+
+            `).join("");
 }
 
 
@@ -3264,60 +1945,47 @@ function renderCheckin(){
 ========================================================= */
 
 function renderWeek(){
-    const dates = getLastNDates(7);
 
-    const activities =
-        getActivities().filter(a=>
-            dates.includes(a.date)
-        );
-
-    const minutes =
-        activities.reduce(
-            (sum,a)=>sum+Number(a.minutes||0),
-            0
-        );
-
-    const activeDays =
-        new Set(
-            activities.map(a=>a.date)
-        ).size;
-
-    document.getElementById("weekMinutes").textContent =
-        minutes;
-
-    document.getElementById("weekActivities").textContent =
-        activities.length;
-
-    document.getElementById("weekActiveDays").textContent =
-        activeDays;
+    const dates = getLastDates(7);
 
     const container =
-        document.getElementById("weekCategories");
+        document.getElementById("weekSummary");
 
-    container.innerHTML =
-        CATEGORIES.map(category=>{
-            const value =
+    container.innerHTML = dates
+        .map(date=>{
+
+            const minutes =
                 activities
-                    .filter(a=>
-                        normalizeCategory(a.category)===category
-                    )
+                    .filter(a=>a.date === date)
                     .reduce(
                         (sum,a)=>sum+Number(a.minutes||0),
                         0
                     );
 
+            const study =
+                neet.topics
+                    .filter(t=>t.lastStudyDate === date)
+                    .reduce(
+                        (sum,t)=>sum+Number(t.studyMinutesToday||0),
+                        0
+                    );
+
+            const total = minutes + study;
+
             return `
-                <div class="category-card" style="margin-bottom:10px;">
-                    <div class="category-head">
-                        <strong>${escapeHTML(category)}</strong>
-                        <span>${minutesText(value)}</span>
+                <div style="margin-bottom:14px">
+
+                    <div class="list-main">
+                        <strong>${formatDate(date)}</strong>
+                        <span>${total} min</span>
                     </div>
 
-                    <div class="progress-wrap">
+                    <div class="progress">
                         <div class="progress-bar"
-                             style="width:${clamp(value/210*100,0,100)}%">
+                             style="width:${Math.min(100,total/3)}%">
                         </div>
                     </div>
+
                 </div>
             `;
         }).join("");
@@ -3325,39 +1993,1534 @@ function renderWeek(){
 
 
 /* =========================================================
-   DATA EXPORT
+   UNIVERSAL STOPWATCH
+========================================================= */
+
+let universalTimer = {
+    running:false,
+    elapsed:0,
+    startedAt:null,
+    interval:null
+};
+
+function updateUniversalDisplay(){
+
+    const total =
+        Math.floor(universalTimer.elapsed/1000);
+
+    document.getElementById(
+        "universalTimerDisplay"
+    ).textContent = formatTime(total);
+}
+
+function formatTime(totalSeconds){
+
+    const hours =
+        Math.floor(totalSeconds/3600);
+
+    const minutes =
+        Math.floor((totalSeconds%3600)/60);
+
+    const seconds =
+        totalSeconds%60;
+
+    return [
+        String(hours).padStart(2,"0"),
+        String(minutes).padStart(2,"0"),
+        String(seconds).padStart(2,"0")
+    ].join(":");
+}
+
+function startUniversalTimer(){
+
+    if(universalTimer.running){
+        return;
+    }
+
+    universalTimer.running = true;
+    universalTimer.startedAt = Date.now();
+
+    universalTimer.interval =
+        setInterval(()=>{
+
+            universalTimer.elapsed += 1000;
+
+            updateUniversalDisplay();
+
+        },1000);
+
+    document.getElementById(
+        "universalTimerContext"
+    ).textContent =
+        document.getElementById("universalTimerName").value ||
+        "General activity";
+}
+
+function pauseUniversalTimer(){
+
+    if(!universalTimer.running){
+        return;
+    }
+
+    universalTimer.running = false;
+
+    clearInterval(
+        universalTimer.interval
+    );
+
+    universalTimer.interval = null;
+}
+
+function saveUniversalTimer(){
+
+    if(universalTimer.running){
+        pauseUniversalTimer();
+    }
+
+    const minutes =
+        Math.round(universalTimer.elapsed/60000);
+
+    if(minutes <= 0){
+        showToast("Timer has less than one minute.");
+        return;
+    }
+
+    const name =
+        document.getElementById("universalTimerName").value.trim()
+        || "Timed activity";
+
+    activities.push({
+        id:generateId("activity"),
+        activityName:name,
+        category:"Other",
+        minutes:minutes,
+        date:todayString(),
+        createdAt:new Date().toISOString()
+    });
+
+    localStorage.setItem(
+        ACTIVITY_KEY,
+        JSON.stringify(activities)
+    );
+
+    resetUniversalTimer();
+
+    showToast(minutes + " minutes saved.");
+}
+
+function resetUniversalTimer(){
+
+    clearInterval(
+        universalTimer.interval
+    );
+
+    universalTimer = {
+        running:false,
+        elapsed:0,
+        startedAt:null,
+        interval:null
+    };
+
+    updateUniversalDisplay();
+
+    document.getElementById(
+        "universalTimerContext"
+    ).textContent =
+        "No activity selected";
+}
+
+
+/* =========================================================
+   NEET PG SUBJECTS
+========================================================= */
+
+function addSubject(){
+
+    const name =
+        document.getElementById("subjectName").value.trim();
+
+    const weightage =
+        Number(document.getElementById("subjectWeightage").value);
+
+    if(!name){
+        showToast("Enter a subject name.");
+        return;
+    }
+
+    if(neet.subjects.some(
+        s=>s.name.toLowerCase() === name.toLowerCase()
+    )){
+        showToast("Subject already exists.");
+        return;
+    }
+
+    neet.subjects.push({
+        id:generateId("subject"),
+        name:name,
+        weightage:Number.isFinite(weightage)
+            ? weightage
+            : 0,
+        createdAt:new Date().toISOString()
+    });
+
+    saveNeet();
+
+    document.getElementById("subjectName").value = "";
+    document.getElementById("subjectWeightage").value = "";
+
+    showToast("Subject added.");
+
+    renderNeetPG();
+}
+
+function deleteSubject(id){
+
+    const subject =
+        neet.subjects.find(s=>s.id === id);
+
+    if(!subject){
+        return;
+    }
+
+    const topicCount =
+        neet.topics.filter(
+            t=>t.subjectId === id
+        ).length;
+
+    const message =
+        topicCount > 0
+        ? `Delete ${subject.name} and its ${topicCount} topic(s)?`
+        : `Delete ${subject.name}?`;
+
+    if(!confirm(message)){
+        return;
+    }
+
+    neet.subjects =
+        neet.subjects.filter(
+            s=>s.id !== id
+        );
+
+    neet.topics =
+        neet.topics.filter(
+            t=>t.subjectId !== id
+        );
+
+    saveNeet();
+
+    renderNeetPG();
+}
+
+function editSubject(id){
+
+    const subject =
+        neet.subjects.find(s=>s.id === id);
+
+    if(!subject){
+        return;
+    }
+
+    const name =
+        prompt("Subject name:",subject.name);
+
+    if(name === null){
+        return;
+    }
+
+    const weightage =
+        prompt(
+            "Subject weightage / marks:",
+            subject.weightage
+        );
+
+    if(weightage === null){
+        return;
+    }
+
+    subject.name =
+        name.trim() || subject.name;
+
+    subject.weightage =
+        Number(weightage) || 0;
+
+    saveNeet();
+
+    renderNeetPG();
+
+    showToast("Subject updated.");
+}
+
+
+/* =========================================================
+   TOPICS
+========================================================= */
+
+function addTopic(){
+
+    const subjectId =
+        document.getElementById("topicSubject").value;
+
+    const name =
+        document.getElementById("topicName").value.trim();
+
+    const weightage =
+        Number(document.getElementById("topicWeightage").value);
+
+    const videoMinutes =
+        Number(document.getElementById("topicVideoMinutes").value);
+
+    const mcqAttempted =
+        Number(document.getElementById("topicMcqAttempted").value);
+
+    const mcqCorrect =
+        Number(document.getElementById("topicMcqCorrect").value);
+
+    const videoWatched =
+        document.getElementById("topicVideoWatched").checked;
+
+    if(!subjectId){
+        showToast("Select a subject.");
+        return;
+    }
+
+    if(!name){
+        showToast("Enter a topic name.");
+        return;
+    }
+
+    const now = todayString();
+
+    const topic = {
+        id:generateId("topic"),
+        subjectId:subjectId,
+        name:name,
+        weightage:Number.isFinite(weightage)
+            ? weightage
+            : 0,
+
+        videoMinutes:Number.isFinite(videoMinutes)
+            ? videoMinutes
+            : 0,
+
+        videoWatched:videoWatched,
+
+        mcqAttempted:Number.isFinite(mcqAttempted)
+            ? mcqAttempted
+            : 0,
+
+        mcqCorrect:Number.isFinite(mcqCorrect)
+            ? Math.min(
+                Math.max(0,mcqCorrect),
+                Math.max(0,mcqAttempted)
+            )
+            : 0,
+
+        studyMinutes:0,
+        studyMinutesToday:0,
+        lastStudyDate:null,
+
+        createdAt:new Date().toISOString(),
+
+        revisionStage:0,
+        lastRevisionDate:null,
+        nextRevisionDate:null
+    };
+
+    neet.topics.push(topic);
+
+    saveNeet();
+
+    document.getElementById("topicName").value = "";
+    document.getElementById("topicWeightage").value = "";
+    document.getElementById("topicVideoMinutes").value = "";
+    document.getElementById("topicMcqAttempted").value = "";
+    document.getElementById("topicMcqCorrect").value = "";
+    document.getElementById("topicVideoWatched").checked = false;
+
+    /*
+       Start the first revision schedule from tomorrow.
+       This makes the topic immediately appear in the
+       upcoming revision system.
+    */
+
+    scheduleInitialRevision(topic);
+
+    saveNeet();
+
+    showToast("Topic added.");
+
+    renderNeetPG();
+}
+
+function scheduleInitialRevision(topic){
+
+    const d = new Date();
+
+    d.setDate(d.getDate()+1);
+
+    topic.nextRevisionDate =
+        dateToString(d);
+
+    topic.revisionStage = 0;
+}
+
+function deleteTopic(id){
+
+    if(!confirm("Delete this topic?")){
+        return;
+    }
+
+    neet.topics =
+        neet.topics.filter(
+            t=>t.id !== id
+        );
+
+    saveNeet();
+
+    renderNeetPG();
+
+    showToast("Topic deleted.");
+}
+
+function editTopic(id){
+
+    const topic =
+        neet.topics.find(t=>t.id === id);
+
+    if(!topic){
+        return;
+    }
+
+    const name =
+        prompt("Topic name:",topic.name);
+
+    if(name === null){
+        return;
+    }
+
+    const weightage =
+        prompt(
+            "Topic marks / weightage:",
+            topic.weightage
+        );
+
+    if(weightage === null){
+        return;
+    }
+
+    const attempted =
+        prompt(
+            "MCQs attempted:",
+            topic.mcqAttempted
+        );
+
+    if(attempted === null){
+        return;
+    }
+
+    const correct =
+        prompt(
+            "MCQs correct:",
+            topic.mcqCorrect
+        );
+
+    if(correct === null){
+        return;
+    }
+
+    topic.name =
+        name.trim() || topic.name;
+
+    topic.weightage =
+        Number(weightage) || 0;
+
+    topic.mcqAttempted =
+        Math.max(0,Number(attempted)||0);
+
+    topic.mcqCorrect =
+        Math.min(
+            Math.max(0,Number(correct)||0),
+            topic.mcqAttempted
+        );
+
+    saveNeet();
+
+    renderNeetPG();
+
+    showToast("Topic updated.");
+}
+
+function subjectName(subjectId){
+
+    const subject =
+        neet.subjects.find(
+            s=>s.id === subjectId
+        );
+
+    return subject
+        ? subject.name
+        : "Unknown subject";
+}
+
+
+/* =========================================================
+   DATE HELPERS
+========================================================= */
+
+function dateToString(d){
+
+    return d.getFullYear() + "-" +
+        String(d.getMonth()+1).padStart(2,"0") + "-" +
+        String(d.getDate()).padStart(2,"0");
+}
+
+function addDays(dateString,days){
+
+    const d =
+        new Date(dateString + "T00:00:00");
+
+    d.setDate(
+        d.getDate()+days
+    );
+
+    return dateToString(d);
+}
+
+
+/* =========================================================
+   REVISION SYSTEM
+========================================================= */
+
+/*
+   Spaced repetition sequence.
+
+   This is a practical study schedule based on the
+   spaced-repetition principle. It is NOT claimed to be
+   one universal international medical-exam standard.
+
+   After each completed revision:
+   1 day
+   3 days
+   7 days
+   14 days
+   30 days
+   60 days
+*/
+
+const revisionIntervals = [
+    1,
+    3,
+    7,
+    14,
+    30,
+    60
+];
+
+function revisionStatus(topic){
+
+    if(!topic.nextRevisionDate){
+        return "not scheduled";
+    }
+
+    const today = todayString();
+
+    if(topic.nextRevisionDate < today){
+        return "overdue";
+    }
+
+    if(topic.nextRevisionDate === today){
+        return "due";
+    }
+
+    return "upcoming";
+}
+
+function markRevisionDone(id){
+
+    const topic =
+        neet.topics.find(
+            t=>t.id === id
+        );
+
+    if(!topic){
+        return;
+    }
+
+    const today = todayString();
+
+    topic.lastRevisionDate = today;
+
+    let stage =
+        Number(topic.revisionStage || 0);
+
+    if(stage < revisionIntervals.length){
+        stage++;
+    }
+
+    topic.revisionStage = stage;
+
+    const intervalIndex =
+        Math.min(
+            stage,
+            revisionIntervals.length-1
+        );
+
+    const days =
+        revisionIntervals[intervalIndex];
+
+    topic.nextRevisionDate =
+        addDays(today,days);
+
+    saveNeet();
+
+    showToast(
+        `Revision recorded. Next revision in ${days} day(s).`
+    );
+
+    renderNeetPG();
+}
+
+function scheduleRevisionNow(id){
+
+    const topic =
+        neet.topics.find(
+            t=>t.id === id
+        );
+
+    if(!topic){
+        return;
+    }
+
+    topic.nextRevisionDate =
+        todayString();
+
+    saveNeet();
+
+    renderNeetPG();
+
+    showToast("Revision scheduled for today.");
+}
+
+function renderRevisionAlert(){
+
+    const container =
+        document.getElementById("revisionAlert");
+
+    const today = todayString();
+
+    const due =
+        neet.topics.filter(
+            t=>t.nextRevisionDate &&
+            t.nextRevisionDate <= today
+        );
+
+    if(!due.length){
+
+        container.innerHTML =
+            `<div class="alert success">
+                ✅ No revisions are due today.
+            </div>`;
+
+        return;
+    }
+
+    container.innerHTML =
+        `<div class="alert warning">
+            🔔 <strong>${due.length}</strong>
+            topic(s) are due or overdue for revision.
+            Check the Revision Schedule below.
+        </div>`;
+}
+
+function renderRevisionList(){
+
+    const container =
+        document.getElementById("revisionList");
+
+    if(!neet.topics.length){
+
+        container.innerHTML =
+            `<div class="empty">
+                Add topics to create your revision schedule.
+            </div>`;
+
+        return;
+    }
+
+    const today = todayString();
+
+    const sorted =
+        neet.topics
+            .filter(t=>t.nextRevisionDate)
+            .slice()
+            .sort((a,b)=>{
+                return String(a.nextRevisionDate)
+                    .localeCompare(
+                        String(b.nextRevisionDate)
+                    );
+            });
+
+    if(!sorted.length){
+
+        container.innerHTML =
+            `<div class="empty">
+                No revision dates scheduled.
+            </div>`;
+
+        return;
+    }
+
+    container.innerHTML =
+        sorted.map(topic=>{
+
+            const status =
+                revisionStatus(topic);
+
+            let badgeClass = "";
+
+            if(status === "overdue"){
+                badgeClass = "danger";
+            }else if(status === "due"){
+                badgeClass = "warning";
+            }else{
+                badgeClass = "success";
+            }
+
+            const stage =
+                Number(topic.revisionStage || 0);
+
+            return `
+
+                <div class="list-item">
+
+                    <div class="list-main">
+
+                        <div>
+
+                            <div class="list-title">
+                                ${escapeHTML(topic.name)}
+                            </div>
+
+                            <div class="list-meta">
+                                ${escapeHTML(subjectName(topic.subjectId))}
+                                • Revision stage ${stage + 1}
+                            </div>
+
+                        </div>
+
+                        <span class="badge ${badgeClass}">
+                            ${status}
+                        </span>
+
+                    </div>
+
+                    <div class="list-meta">
+                        Next revision:
+                        <strong>
+                            ${formatDate(topic.nextRevisionDate)}
+                        </strong>
+                    </div>
+
+                    <div class="list-actions">
+
+                        ${
+                            topic.nextRevisionDate <= today
+                            ? `
+                                <button
+                                    class="btn btn-success btn-small"
+                                    onclick="markRevisionDone('${topic.id}')">
+                                    ✓ Revision Done
+                                </button>
+                            `
+                            : ""
+                        }
+
+                        <button
+                            class="btn btn-secondary btn-small"
+                            onclick="scheduleRevisionNow('${topic.id}')">
+                            Revise Today
+                        </button>
+
+                    </div>
+
+                </div>
+
+            `;
+        }).join("");
+}
+
+
+/* =========================================================
+   TOPIC PROGRESS
+========================================================= */
+
+function mcqPercentage(topic){
+
+    if(!topic.mcqAttempted){
+        return 0;
+    }
+
+    return Math.round(
+        (topic.mcqCorrect/topic.mcqAttempted)*100
+    );
+}
+
+function topicProgress(topic){
+
+    let score = 0;
+
+    if(topic.videoWatched){
+        score += 25;
+    }
+
+    if(Number(topic.mcqAttempted) > 0){
+        score += 25;
+    }
+
+    if(Number(topic.studyMinutes) >= 30){
+        score += 25;
+    }
+
+    if(topic.lastRevisionDate){
+        score += 25;
+    }
+
+    return score;
+}
+
+
+/* =========================================================
+   TOPIC RENDERING
+========================================================= */
+
+function renderTopics(){
+
+    const container =
+        document.getElementById("topicList");
+
+    const search =
+        document.getElementById("topicSearch").value
+            .trim()
+            .toLowerCase();
+
+    let topics =
+        neet.topics.filter(t=>{
+
+            if(!search){
+                return true;
+            }
+
+            return (
+                t.name.toLowerCase().includes(search) ||
+                subjectName(t.subjectId)
+                    .toLowerCase()
+                    .includes(search)
+            );
+        });
+
+    if(!topics.length){
+
+        container.innerHTML =
+            `<div class="empty">
+                No topics found.
+            </div>`;
+
+        return;
+    }
+
+    container.innerHTML =
+        topics
+            .slice()
+            .reverse()
+            .map(topic=>{
+
+                const mcq =
+                    mcqPercentage(topic);
+
+                const progress =
+                    topicProgress(topic);
+
+                return `
+
+                    <div class="list-item">
+
+                        <div class="list-main">
+
+                            <div>
+
+                                <div class="list-title">
+                                    ${escapeHTML(topic.name)}
+                                </div>
+
+                                <div class="list-meta">
+                                    ${escapeHTML(subjectName(topic.subjectId))}
+                                    • Weightage: ${Number(topic.weightage || 0)}
+                                </div>
+
+                            </div>
+
+                            <span class="badge">
+                                ${progress}% tracked
+                            </span>
+
+                        </div>
+
+                        <div class="list-meta">
+
+                            📖 Study:
+                            ${Number(topic.studyMinutes || 0)} min
+
+                            • ❓ MCQs:
+                            ${Number(topic.mcqCorrect || 0)}
+                            /
+                            ${Number(topic.mcqAttempted || 0)}
+                            (${mcq}%)
+
+                            • 🎥 Video:
+                            ${
+                                topic.videoWatched
+                                ? "Watched"
+                                : "Not completed"
+                            }
+
+                        </div>
+
+                        <div class="progress">
+                            <div class="progress-bar"
+                                 style="width:${progress}%">
+                            </div>
+                        </div>
+
+                        <div class="list-actions">
+
+                            <button
+                                class="btn btn-primary btn-small"
+                                onclick="startTopicFromList('${topic.id}')">
+                                ⏱ Study
+                            </button>
+
+                            <button
+                                class="btn btn-secondary btn-small"
+                                onclick="markVideoWatched('${topic.id}')">
+                                🎥 Video
+                            </button>
+
+                            <button
+                                class="btn btn-secondary btn-small"
+                                onclick="editTopic('${topic.id}')">
+                                ✏ Edit
+                            </button>
+
+                            <button
+                                class="btn btn-danger btn-small"
+                                onclick="deleteTopic('${topic.id}')">
+                                Delete
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                `;
+            }).join("");
+}
+
+function markVideoWatched(id){
+
+    const topic =
+        neet.topics.find(
+            t=>t.id === id
+        );
+
+    if(!topic){
+        return;
+    }
+
+    topic.videoWatched = true;
+
+    saveNeet();
+
+    renderNeetPG();
+
+    showToast("Video marked as watched.");
+}
+
+
+/* =========================================================
+   STUDY TIMER
+========================================================= */
+
+let studyTimer = {
+    running:false,
+    elapsed:0,
+    interval:null,
+    subjectId:null,
+    topicId:null
+};
+
+function updateStudyTimerDisplay(){
+
+    const seconds =
+        Math.floor(
+            studyTimer.elapsed/1000
+        );
+
+    document.getElementById(
+        "studyTimerDisplay"
+    ).textContent =
+        formatTime(seconds);
+}
+
+function startStudyTimer(){
+
+    const subjectId =
+        document.getElementById(
+            "studyTimerSubject"
+        ).value;
+
+    const topicId =
+        document.getElementById(
+            "studyTimerTopic"
+        ).value;
+
+    if(!subjectId){
+        showToast("Select a subject.");
+        return;
+    }
+
+    if(!topicId){
+        showToast("Select a topic.");
+        return;
+    }
+
+    if(studyTimer.running){
+        return;
+    }
+
+    studyTimer.subjectId = subjectId;
+    studyTimer.topicId = topicId;
+    studyTimer.running = true;
+
+    updateStudyTimerContext();
+
+    studyTimer.interval =
+        setInterval(()=>{
+
+            studyTimer.elapsed += 1000;
+
+            updateStudyTimerDisplay();
+
+        },1000);
+}
+
+function pauseStudyTimer(){
+
+    if(!studyTimer.running){
+        return;
+    }
+
+    studyTimer.running = false;
+
+    clearInterval(
+        studyTimer.interval
+    );
+
+    studyTimer.interval = null;
+}
+
+function saveStudyTimer(){
+
+    if(studyTimer.running){
+        pauseStudyTimer();
+    }
+
+    const minutes =
+        Math.round(
+            studyTimer.elapsed/60000
+        );
+
+    if(minutes <= 0){
+        showToast("Less than one minute recorded.");
+        return;
+    }
+
+    const topic =
+        neet.topics.find(
+            t=>t.id === studyTimer.topicId
+        );
+
+    if(!topic){
+        showToast("Topic not found.");
+        return;
+    }
+
+    topic.studyMinutes =
+        Number(topic.studyMinutes || 0) +
+        minutes;
+
+    const today = todayString();
+
+    if(topic.lastStudyDate === today){
+
+        topic.studyMinutesToday =
+            Number(topic.studyMinutesToday || 0) +
+            minutes;
+
+    }else{
+
+        topic.lastStudyDate = today;
+        topic.studyMinutesToday = minutes;
+    }
+
+    saveNeet();
+
+    resetStudyTimer();
+
+    showToast(
+        `${minutes} study minute(s) saved.`
+    );
+
+    renderNeetPG();
+}
+
+function resetStudyTimer(){
+
+    clearInterval(
+        studyTimer.interval
+    );
+
+    studyTimer = {
+        running:false,
+        elapsed:0,
+        interval:null,
+        subjectId:null,
+        topicId:null
+    };
+
+    updateStudyTimerDisplay();
+
+    document.getElementById(
+        "studyTimerContext"
+    ).textContent =
+        "Select subject and topic";
+}
+
+function updateStudyTimerContext(){
+
+    const subject =
+        neet.subjects.find(
+            s=>s.id === studyTimer.subjectId
+        );
+
+    const topic =
+        neet.topics.find(
+            t=>t.id === studyTimer.topicId
+        );
+
+    document.getElementById(
+        "studyTimerContext"
+    ).textContent =
+        subject && topic
+        ? `${subject.name} → ${topic.name}`
+        : "Select subject and topic";
+}
+
+function startTopicFromList(topicId){
+
+    const topic =
+        neet.topics.find(
+            t=>t.id === topicId
+        );
+
+    if(!topic){
+        return;
+    }
+
+    document.getElementById(
+        "studyTimerSubject"
+    ).value =
+        topic.subjectId;
+
+    updateStudyTimerTopicOptions();
+
+    document.getElementById(
+        "studyTimerTopic"
+    ).value =
+        topic.id;
+
+    studyTimer.subjectId =
+        topic.subjectId;
+
+    studyTimer.topicId =
+        topic.id;
+
+    updateStudyTimerContext();
+
+    showToast(
+        "Topic selected. Press Start."
+    );
+
+    document.getElementById(
+        "studyTimerDisplay"
+    ).scrollIntoView({
+        behavior:"smooth",
+        block:"center"
+    });
+}
+
+
+/* =========================================================
+   NEET RENDER
+========================================================= */
+
+function renderNeetPG(){
+
+    document.getElementById(
+        "neetSubjectsCount"
+    ).textContent =
+        neet.subjects.length;
+
+    document.getElementById(
+        "neetTopicsCount"
+    ).textContent =
+        neet.topics.length;
+
+    const studyMinutes =
+        neet.topics.reduce(
+            (sum,t)=>{
+                return sum +
+                    Number(t.studyMinutes || 0);
+            },
+            0
+        );
+
+    document.getElementById(
+        "neetStudyMinutes"
+    ).textContent =
+        studyMinutes;
+
+    renderSubjectList();
+
+    renderSubjectSelects();
+
+    renderRevisionAlert();
+
+    renderRevisionList();
+
+    renderTopics();
+}
+
+function renderSubjectList(){
+
+    const container =
+        document.getElementById("subjectList");
+
+    if(!neet.subjects.length){
+
+        container.innerHTML =
+            `<div class="empty">
+                No subjects yet. Add your first subject above.
+            </div>`;
+
+        return;
+    }
+
+    container.innerHTML =
+        neet.subjects.map(subject=>{
+
+            const topics =
+                neet.topics.filter(
+                    t=>t.subjectId === subject.id
+                );
+
+            const minutes =
+                topics.reduce(
+                    (sum,t)=>{
+                        return sum +
+                            Number(t.studyMinutes || 0);
+                    },
+                    0
+                );
+
+            const completed =
+                topics.filter(
+                    t=>topicProgress(t) >= 75
+                ).length;
+
+            const percent =
+                topics.length
+                ? Math.round(
+                    (completed/topics.length)*100
+                )
+                : 0;
+
+            return `
+
+                <div class="list-item">
+
+                    <div class="list-main">
+
+                        <div>
+
+                            <div class="list-title">
+                                ${escapeHTML(subject.name)}
+                            </div>
+
+                            <div class="list-meta">
+                                Weightage / Marks:
+                                ${Number(subject.weightage || 0)}
+                                • ${topics.length} topic(s)
+                                • ${minutes} study min
+                            </div>
+
+                        </div>
+
+                        <span class="badge">
+                            ${percent}%
+                        </span>
+
+                    </div>
+
+                    <div class="progress">
+                        <div class="progress-bar"
+                             style="width:${percent}%">
+                        </div>
+                    </div>
+
+                    <div class="list-actions">
+
+                        <button
+                            class="btn btn-secondary btn-small"
+                            onclick="editSubject('${subject.id}')">
+                            ✏ Edit
+                        </button>
+
+                        <button
+                            class="btn btn-danger btn-small"
+                            onclick="deleteSubject('${subject.id}')">
+                            Delete
+                        </button>
+
+                    </div>
+
+                </div>
+
+            `;
+        }).join("");
+}
+
+function renderSubjectSelects(){
+
+    const topicSubject =
+        document.getElementById("topicSubject");
+
+    const studySubject =
+        document.getElementById("studyTimerSubject");
+
+    const currentTopicSubject =
+        topicSubject.value;
+
+    const currentStudySubject =
+        studySubject.value;
+
+    const options =
+        `<option value="">Select subject</option>` +
+        neet.subjects
+            .map(s=>`
+                <option value="${s.id}">
+                    ${escapeHTML(s.name)}
+                </option>
+            `)
+            .join("");
+
+    topicSubject.innerHTML = options;
+
+    studySubject.innerHTML = options;
+
+    if(neet.subjects.some(
+        s=>s.id === currentTopicSubject
+    )){
+        topicSubject.value =
+            currentTopicSubject;
+    }
+
+    if(neet.subjects.some(
+        s=>s.id === currentStudySubject
+    )){
+        studySubject.value =
+            currentStudySubject;
+    }
+
+    updateStudyTimerTopicOptions();
+}
+
+function updateStudyTimerTopicOptions(){
+
+    const subjectId =
+        document.getElementById(
+            "studyTimerSubject"
+        ).value;
+
+    const select =
+        document.getElementById(
+            "studyTimerTopic"
+        );
+
+    const current =
+        select.value;
+
+    const topics =
+        neet.topics.filter(
+            t=>t.subjectId === subjectId
+        );
+
+    select.innerHTML =
+        `<option value="">Select topic</option>` +
+        topics.map(t=>`
+            <option value="${t.id}">
+                ${escapeHTML(t.name)}
+            </option>
+        `).join("");
+
+    if(topics.some(t=>t.id === current)){
+        select.value = current;
+    }
+
+    if(
+        studyTimer.subjectId === subjectId &&
+        studyTimer.topicId &&
+        topics.some(t=>t.id === studyTimer.topicId)
+    ){
+        select.value =
+            studyTimer.topicId;
+    }
+
+    document.getElementById(
+        "studyTimerContext"
+    ).textContent =
+        "Select subject and topic";
+}
+
+
+/* =========================================================
+   NOTIFICATIONS
+========================================================= */
+
+async function requestNotifications(){
+
+    if(!("Notification" in window)){
+
+        showToast(
+            "Notifications are not supported by this browser."
+        );
+
+        return;
+    }
+
+    try{
+
+        const permission =
+            await Notification.requestPermission();
+
+        if(permission === "granted"){
+
+            showToast(
+                "Notification permission enabled."
+            );
+
+            checkRevisionNotification();
+
+        }else{
+
+            showToast(
+                "Notification permission was not granted."
+            );
+        }
+
+    }catch(error){
+
+        console.error(error);
+
+        showToast(
+            "Could not enable notifications."
+        );
+    }
+}
+
+function checkRevisionNotification(){
+
+    if(
+        !("Notification" in window) ||
+        Notification.permission !== "granted"
+    ){
+        return;
+    }
+
+    const today = todayString();
+
+    const due =
+        neet.topics.filter(
+            t=>t.nextRevisionDate &&
+            t.nextRevisionDate <= today
+        );
+
+    if(!due.length){
+        return;
+    }
+
+    try{
+
+        new Notification(
+            "UPWARD — Revision Due",
+            {
+                body:
+                    `${due.length} topic(s) are due for revision today.`,
+                icon:"./icon-192.png"
+            }
+        );
+
+    }catch(error){
+        console.log(error);
+    }
+}
+
+
+/* =========================================================
+   EXPORT / IMPORT
 ========================================================= */
 
 function exportJSON(){
+
     const backup = {
-        app:"UPWARD",
-        version:3,
+        version:4,
         exportedAt:new Date().toISOString(),
 
-        activities:getActivities(),
+        upwardActivities:activities,
+        upwardCheckins:checkins,
+        upwardSpending:spending,
+        upwardNeetPg:neet,
 
-        checkins:getCheckins(),
-
-        spending:getJSON(SPENDING_KEY,[]),
-
-        neetpg:getNEETTopics(),
-
-        darkMode:
-            localStorage.getItem(DARK_KEY)==="true"
+        settings:{
+            darkMode:
+                localStorage.getItem(DARK_KEY) === "1"
+        }
     };
 
-    downloadFile(
-        JSON.stringify(backup,null,2),
-        `UPWARD-backup-${todayISO()}.json`,
-        "application/json"
+    const blob =
+        new Blob(
+            [JSON.stringify(backup,null,2)],
+            {type:"application/json"}
+        );
+
+    downloadBlob(
+        blob,
+        `UPWARD-backup-${todayString()}.json`
     );
 
-    showMessage("JSON backup exported ✓");
+    showToast("JSON backup exported.");
 }
 
-function downloadFile(content,filename,type){
-    const blob =
-        new Blob([content],{type});
+function downloadBlob(blob,filename){
 
     const url =
         URL.createObjectURL(blob);
@@ -3380,170 +3543,207 @@ function downloadFile(content,filename,type){
 }
 
 function importJSON(event){
-    const file = event.target.files?.[0];
 
-    if(!file) return;
+    const file =
+        event.target.files[0];
 
-    const reader = new FileReader();
+    if(!file){
+        return;
+    }
 
-    reader.onload = ()=>{
+    const reader =
+        new FileReader();
+
+    reader.onload = function(){
+
         try{
+
             const data =
                 JSON.parse(reader.result);
 
-            let activities = null;
-
-            if(Array.isArray(data)){
-                activities = data;
-            }else if(Array.isArray(data.activities)){
-                activities = data.activities;
-            }else if(Array.isArray(data.upwardActivities)){
-                activities = data.upwardActivities;
+            if(!confirm(
+                "Import this backup? Existing matching data will be replaced."
+            )){
+                return;
             }
 
-            if(!activities){
-                throw new Error("No activity data found.");
+            if(Array.isArray(data.upwardActivities)){
+                activities =
+                    data.upwardActivities;
             }
 
-            const normalizedActivities =
-                activities.map((a,index)=>({
-                    id:a.id || uid("act"),
-                    activityName:
-                        a.activityName ||
-                        a.name ||
-                        "Activity",
-
-                    category:
-                        normalizeCategory(a.category),
-
-                    minutes:
-                        Math.max(
-                            0,
-                            Number(a.minutes||0)
-                        ),
-
-                    date:
-                        a.date ||
-                        todayISO(),
-
-                    createdAt:
-                        a.createdAt ||
-                        new Date().toISOString()
-                }));
-
-            saveActivities(normalizedActivities);
-
-            if(data.checkins){
-                saveJSON(
-                    CHECKIN_KEY,
-                    data.checkins
-                );
+            if(Array.isArray(data.upwardCheckins)){
+                checkins =
+                    data.upwardCheckins;
             }
 
-            if(data.spending){
-                saveJSON(
-                    SPENDING_KEY,
-                    data.spending
-                );
+            if(Array.isArray(data.upwardSpending)){
+                spending =
+                    data.upwardSpending;
             }
 
-            if(Array.isArray(data.neetpg)){
-                saveNEETTopics(data.neetpg);
+            if(
+                data.upwardNeetPg &&
+                typeof data.upwardNeetPg === "object"
+            ){
+
+                neet =
+                    data.upwardNeetPg;
+
+                if(!Array.isArray(neet.subjects)){
+                    neet.subjects = [];
+                }
+
+                if(!Array.isArray(neet.topics)){
+                    neet.topics = [];
+                }
             }
 
-            if(typeof data.darkMode === "boolean"){
+            saveAll();
+
+            if(
+                data.settings &&
+                data.settings.darkMode
+            ){
+
+                document.body.classList.add("dark");
+
                 localStorage.setItem(
                     DARK_KEY,
-                    String(data.darkMode)
+                    "1"
+                );
+
+            }else{
+
+                document.body.classList.remove("dark");
+
+                localStorage.setItem(
+                    DARK_KEY,
+                    "0"
                 );
             }
 
-            applyTheme();
+            refreshPage(
+                document.querySelector(
+                    ".page.active"
+                )?.id || "today"
+            );
 
-            showMessage("Backup imported successfully ✓");
-
-            render();
+            showToast("Backup imported successfully.");
 
         }catch(error){
-            alert(
+
+            console.error(error);
+
+            showToast(
                 "Import failed. Please select a valid UPWARD JSON backup."
             );
         }
-
-        event.target.value = "";
     };
 
     reader.readAsText(file);
-}
 
-function csvEscape(value){
-    const text = String(value ?? "");
-
-    if(
-        text.includes(",") ||
-        text.includes('"') ||
-        text.includes("\n")
-    ){
-        return '"' +
-            text.replace(/"/g,'""') +
-            '"';
-    }
-
-    return text;
+    event.target.value = "";
 }
 
 function exportCSV(){
+
     const rows = [
         [
+            "Type",
             "Date",
-            "Activity",
+            "Subject",
+            "Topic",
             "Category",
-            "Minutes"
+            "Minutes",
+            "Weightage",
+            "MCQs Attempted",
+            "MCQs Correct",
+            "Video Watched",
+            "Next Revision"
         ]
     ];
 
-    getActivities().forEach(a=>{
+    activities.forEach(a=>{
+
         rows.push([
-            a.date,
-            a.activityName,
-            normalizeCategory(a.category),
-            a.minutes
+            "Activity",
+            a.date || "",
+            "",
+            a.activityName || "",
+            a.category || "",
+            a.minutes || 0,
+            "",
+            "",
+            "",
+            "",
+            ""
+        ]);
+    });
+
+    neet.topics.forEach(t=>{
+
+        rows.push([
+            "NEET-PG Topic",
+            t.createdAt
+                ? t.createdAt.slice(0,10)
+                : "",
+            subjectName(t.subjectId),
+            t.name,
+            "Study",
+            t.studyMinutes || 0,
+            t.weightage || 0,
+            t.mcqAttempted || 0,
+            t.mcqCorrect || 0,
+            t.videoWatched
+                ? "Yes"
+                : "No",
+            t.nextRevisionDate || ""
         ]);
     });
 
     const csv =
-        rows.map(row=>
-            row.map(csvEscape).join(",")
-        ).join("\n");
+        rows
+            .map(row=>{
+                return row.map(value=>{
+                    const text =
+                        String(value ?? "")
+                            .replace(/"/g,'""');
 
-    downloadFile(
-        csv,
-        `UPWARD-activities-${todayISO()}.csv`,
-        "text/csv;charset=utf-8"
+                    return `"${text}"`;
+                }).join(",");
+            })
+            .join("\n");
+
+    const blob =
+        new Blob(
+            [csv],
+            {type:"text/csv;charset=utf-8"}
+        );
+
+    downloadBlob(
+        blob,
+        `UPWARD-data-${todayString()}.csv`
     );
 
-    showMessage("CSV exported ✓");
+    showToast("CSV exported.");
 }
 
 
 /* =========================================================
-   DATA PAGE
+   CLEAR DATA
 ========================================================= */
 
-function renderData(){
-    document.getElementById("dataActivities").textContent =
-        getActivities().length;
-
-    document.getElementById("dataTopics").textContent =
-        getNEETTopics().length;
-
-    document.getElementById("dataCheckins").textContent =
-        Object.keys(getCheckins()).length;
-}
-
 function clearAllData(){
+
     if(!confirm(
-        "This will delete UPWARD activities, check-ins, spending and NEET-PG data from this browser. Continue?"
+        "This will permanently delete UPWARD data stored in this browser. Continue?"
+    )){
+        return;
+    }
+
+    if(!confirm(
+        "Final confirmation: delete activities, check-ins, spending and NEET-PG data?"
     )){
         return;
     }
@@ -3553,62 +3753,159 @@ function clearAllData(){
     localStorage.removeItem(SPENDING_KEY);
     localStorage.removeItem(NEET_KEY);
 
-    resetTimer();
+    activities = [];
+    checkins = [];
+    spending = [];
 
-    showMessage("UPWARD data cleared.");
+    neet = {
+        subjects:[],
+        topics:[]
+    };
 
-    render();
-}
-
-
-/* =========================================================
-   MAIN RENDER
-========================================================= */
-
-function render(){
     renderToday();
     renderTrackers();
-    renderNEET();
     renderProgress();
-    renderCheckin();
+    renderCheckins();
     renderWeek();
-    renderRecentSessions();
-    renderData();
+    renderNeetPG();
 
-    updateTimerDisplay();
-    updateTimerButtons();
-    updateTimerFields();
+    showToast("All UPWARD data cleared.");
 }
 
 
 /* =========================================================
-   RESIZE
+   LEGACY DATA NORMALIZATION
 ========================================================= */
 
-window.addEventListener("resize",()=>{
-    if(currentPage === "progress"){
-        drawWeeklyChart();
-        drawMonthlyChart();
+function normalizeExistingActivities(){
+
+    if(!Array.isArray(activities)){
+        activities = [];
     }
-});
+
+    activities =
+        activities.map(a=>{
+
+            if(!a || typeof a !== "object"){
+                return null;
+            }
+
+            return {
+                id:a.id || generateId("activity"),
+                activityName:
+                    a.activityName ||
+                    a.name ||
+                    "Activity",
+                category:
+                    a.category ||
+                    "Other",
+                minutes:
+                    Number(a.minutes || 0),
+                date:
+                    a.date ||
+                    todayString(),
+                createdAt:
+                    a.createdAt ||
+                    new Date().toISOString()
+            };
+
+        }).filter(Boolean);
+}
+
+function normalizeNeetData(){
+
+    if(!neet || typeof neet !== "object"){
+        neet = {
+            subjects:[],
+            topics:[]
+        };
+    }
+
+    if(!Array.isArray(neet.subjects)){
+        neet.subjects = [];
+    }
+
+    if(!Array.isArray(neet.topics)){
+        neet.topics = [];
+    }
+
+    neet.subjects =
+        neet.subjects.map(s=>{
+
+            return {
+                id:s.id || generateId("subject"),
+                name:s.name || "Subject",
+                weightage:Number(s.weightage || 0),
+                createdAt:
+                    s.createdAt ||
+                    new Date().toISOString()
+            };
+
+        });
+
+    neet.topics =
+        neet.topics.map(t=>{
+
+            return {
+                id:t.id || generateId("topic"),
+                subjectId:t.subjectId || "",
+                name:t.name || "Topic",
+                weightage:Number(t.weightage || 0),
+                videoMinutes:Number(t.videoMinutes || 0),
+                videoWatched:Boolean(t.videoWatched),
+                mcqAttempted:Number(t.mcqAttempted || 0),
+                mcqCorrect:Number(t.mcqCorrect || 0),
+                studyMinutes:Number(t.studyMinutes || 0),
+                studyMinutesToday:Number(t.studyMinutesToday || 0),
+                lastStudyDate:t.lastStudyDate || null,
+                createdAt:
+                    t.createdAt ||
+                    new Date().toISOString(),
+                revisionStage:Number(t.revisionStage || 0),
+                lastRevisionDate:
+                    t.lastRevisionDate || null,
+                nextRevisionDate:
+                    t.nextRevisionDate || null
+            };
+
+        });
+}
 
 
 /* =========================================================
-   STARTUP
+   INITIALIZATION
 ========================================================= */
 
-document.addEventListener("DOMContentLoaded",()=>{
+normalizeExistingActivities();
+normalizeNeetData();
 
-    applyTheme();
+saveAll();
 
-    populateTimerSubjects();
+renderToday();
+renderTrackers();
+renderProgress();
+renderCheckins();
+renderWeek();
+renderNeetPG();
 
-    updateTimerDisplay();
-    updateTimerButtons();
+updateUniversalDisplay();
+updateStudyTimerDisplay();
 
-    render();
+setInterval(()=>{
 
-});
+    /*
+       Refresh revision status while app remains open.
+    */
+
+    if(
+        document.getElementById("neetpg")
+            .classList.contains("active")
+    ){
+        renderRevisionAlert();
+        renderRevisionList();
+    }
+
+},60000);
 
 
 /* =========================================================
@@ -3618,14 +3915,33 @@ document.addEventListener("DOMContentLoaded",()=>{
 if("serviceWorker" in navigator){
 
     window.addEventListener("load",()=>{
+
         navigator.serviceWorker
             .register("./sw.js")
-            .catch(()=>{
-                /* PWA still works normally if SW registration fails */
+            .then(registration=>{
+                console.log(
+                    "UPWARD service worker registered:",
+                    registration.scope
+                );
+            })
+            .catch(error=>{
+                console.log(
+                    "Service worker registration failed:",
+                    error
+                );
             });
-    });
 
+    });
 }
+
+
+/* =========================================================
+   INITIAL REVISION NOTIFICATION
+========================================================= */
+
+setTimeout(()=>{
+    checkRevisionNotification();
+},3000);
 
 </script>
 
