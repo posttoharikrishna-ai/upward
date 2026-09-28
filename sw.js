@@ -1,4 +1,4 @@
-const CACHE_NAME = "upward-v4-20260928a";
+const CACHE_NAME = "upward-v4-20260928b";
 
 const APP_FILES = [
     "./",
